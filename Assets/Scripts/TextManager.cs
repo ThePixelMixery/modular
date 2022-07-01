@@ -8,7 +8,7 @@ using TMPro;
 
 public class responseClass
 {
-    string response;
+    public string response;
     int accuracy;
     public responseClass(string Response, int Accuracy)
     {
@@ -56,6 +56,7 @@ public class TextManager : MonoBehaviour
     private float TimeLeft=10.0f;
 
     public responseClass[] responseArray;
+
 
 
     
@@ -150,6 +151,7 @@ public class TextManager : MonoBehaviour
         switch (Path, Test)
         {
             case(1,0):
+            ButtonUpdater(1,0);
             Situation.text = "*Phone Rings*";
             Option1.text = "Hi. What do you want?";
             Option2.text = "Hello, what can I do for you today?";
@@ -267,46 +269,42 @@ public class TextManager : MonoBehaviour
     void Start() 
     {
 
-        responseClass[] responses = new responseClass[3];
-        responses[0] = new responseClass("default 1", 0);
-        responses[1] = new responseClass("default 2", 1);
-        responses[2] = new responseClass("default 3", 2);
+        responseClass[] responseArray = new responseClass[3];
+        responseArray[0] = new responseClass("default 1", 0);
+        responseArray[1] = new responseClass("default 2", 1);
+        responseArray[2] = new responseClass("default 3", 2);
         
     
     }
 
-/*    
+    
     public void AnswerRandomised (responseClass[] responses)
     {
-            int rnd = Random.Range(0,i);
-            int temp = responses[i];
-        foreach (responseClass[] i in responses )
-        {
-            responses[i] = responses[rnd];
-            responses[rnd] = temp;
-        }
+        Random random = new Random();
+        responses = responses.OrderBy(x => random.Next()).ToArray();
+        
         Option1.text = responses[0].response;
         Option2.text = responses[1].response;
         Option3.text = responses[2].response;
     }
 
-    public void ButtonUpdater(int Path, int Stage, responseClass[] responses)
+    public void ButtonUpdater(int Path, int Stage)
     {
         switch(Path, Stage)
         {
             case(1,0):
-            responses[0].response = "Hi. What do you want?";
-            responses[1].response = "Hello, what can I do for you today?";
-            responses[2].response = "Hello, welcome to help desk. My name is X. How can I help you today?";
+            responseArray[0].response = "Hi. What do you want?";
+            responseArray[1].response = "Hello, what can I do for you today?";
+            responseArray[2].response = "Hello, welcome to help desk. My name is X. How can I help you today?";
             
-            AnswerRandomised(responses);
+            AnswerRandomised(responseArray);
             break;
 
             default:
             break;
         }
     }
-*/
+
 
 }
 
