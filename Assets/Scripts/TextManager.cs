@@ -28,12 +28,9 @@ public class TextManager : MonoBehaviour
     public TextMeshProUGUI Option3;
     public TextMeshProUGUI TimerText;
 
-    public Image Correct1;
-    public Image Correct2;
-    public Image Correct3;
-    public Image Incorrect1;
-    public Image Incorrect2;
-    public Image Incorrect3;
+    public Image Correct;
+    public Image Semicorrect;
+    public Image Incorrect;
 
     public Canvas TextCan;
     public Canvas AudioCan;
@@ -66,7 +63,7 @@ public class TextManager : MonoBehaviour
         TimeLeft -= Time.deltaTime;
         TimerText.text = TimeLeft.ToString("#.00");        
         }
-        AnswerOutput(responseArray);
+        AnswerOutput(1);
 
     }
 
@@ -78,38 +75,44 @@ public class TextManager : MonoBehaviour
 
     public void Resetter()
     {
-        Correct1.gameObject.SetActive(false);
-        Correct2.gameObject.SetActive(false);
-        Correct3.gameObject.SetActive(false);
-        Incorrect1.gameObject.SetActive(false);
-        Incorrect2.gameObject.SetActive(false);
-        Incorrect3.gameObject.SetActive(false);
+        Correct.gameObject.SetActive(false);
+        Semicorrect.gameObject.SetActive(false);
+        Incorrect.gameObject.SetActive(false);
         Advance.interactable = false;
         TimeLeft = 10.0f;
         if(SameTest==true) 
         {Stage++;}
-        else{Test++;}
+        else{Test++;Stage=0;}
 
         TestChanger(Path,Test,Stage);
     }
 
 
-    public void AnswerOutput(responseClass[] responses)
+    public void AnswerOutput(int Answer)
     {
         Advance.interactable = true;
-        foreach (responseClass response in responses)
+        if (Answer-1 == responseArray[0].accuracy)
         {
-            if (response.accuracy == 2)
+            if (Path >= 4 || Path <= 6)
             {
-                if (Path >= 4 || Path <= 6)
-                {
-                    //Point based
-                }
-                else if (Path >= 7)
-                {
-                    // Narrative Changes
-                }
+                //Point based
             }
+            else if (Path >= 7)
+            {
+                // Narrative Changes
+            }
+            else
+            {
+                //Control changes
+            }
+        }
+        else if(Answer-1 == responseArray[1].accuracy)
+        {
+
+        }
+        else
+        {
+
         }
     }
 
