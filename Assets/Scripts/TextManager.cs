@@ -15,7 +15,6 @@ public class responseClass
         response = Response;
         accuracy = Accuracy;
     }
-
 }
 
     
@@ -52,11 +51,9 @@ public class TextManager : MonoBehaviour
     public int Path;
     public int Test;
     public int Stage;
-    private int Correct;
     private float TimeLeft=10.0f;
 
     public responseClass[] responseArray;
-
 
 
     
@@ -75,12 +72,11 @@ public class TextManager : MonoBehaviour
     public void Pathchanger(int newPath)
     {
         Path = newPath;
-        PracProgressor(Path,Stage);
+        PracProgressor(Path,Test,Stage);
     }
 
-    public void StageAdvancer()
+    public void Resetter()
     {
-        Stage++;
         Correct1.gameObject.SetActive(false);
         Correct2.gameObject.SetActive(false);
         Correct3.gameObject.SetActive(false);
@@ -91,7 +87,7 @@ public class TextManager : MonoBehaviour
         TimeLeft = 10.0f;
 
 
-        PracProgressor(Path,Stage);
+        PracProgressor(Path,Test,Stage);
     }
 
     public void AnswerOutput(int Answer)
@@ -146,122 +142,100 @@ public class TextManager : MonoBehaviour
         ToPlay.Play();
     }
 
-    public void PracProgressor (int Path, int Test)
+    public void PracProgressor (int Path, int Test, int Stage)
     {
-        switch (Path, Test)
+        switch (Path)
         {
-            case(1,0):
-            ButtonUpdater(1,0);
-            Situation.text = "*Phone Rings*";
-            Option1.text = "Hi. What do you want?";
-            Option2.text = "Hello, what can I do for you today?";
-            Option3.text = "Hello, welcome to help desk. My name is X. How can I help you today?";
+            case(1):
+            switch  (Test)
+            {
+                case(0):
+                switch (Stage)
+                    {
+                    case 0:
+                    Situation.text = "*Phone Rings*";
+                    break;
 
-            break;
+                    case(1):
+                    Situation.text = "I'm having trouble with my internet speed";
+                    Stage++;
+                    break;
 
-            case(1,1):
-            Correct = 2;
-            Situation.text = "I' can't get my mouse and keyboard to connect to my computer";
-            Option1.text = "I understand your frustration Can I have your name and number?";
-            Option2.text = "Can I grab your name and number?";
-            Option3.text = "Name and number, please.";
-            break;
+                    case(2):
+                    Situation.text = "My name is Lacie Green and my number is 04 6281 1611";
+                    break;
 
-            case(1,2):
-            Correct = 1;
-            Situation.text = "My name is Lacie Green and my number is 04 6281 1611";
-            Option1.text = "Lacie Green, 0462811611";
-            Option2.text = "Lacie Bean, 0462811611?";
-            Option3.text = "Lacie Green 0462711611?";
-            break;
+                    case(3):
+                    Situation.text = "When can I expect a solution?";
+                    break;
 
-            case(1,3):
-            Correct = 3;
-            Situation.text = "When can I expect a solution?";
-            Option1.text = "My colleague will call you back shortly, thank you for using our service";
-            Option2.text = "We'll call you back sometime today";
-            Option3.text = "We'll call you back when we can, bye";
-            break;
+                    default:
+                    break;
+                }
+                break;
+                
+                case(1);
+                TextCan.gameObject.SetActive(false);
+                AudioCan.gameObject.SetActive(true);
+                switch (Stage)
+                    {
+                    case(0):
+                    ToPlay = Clip1;
+                    break;
 
-            case(1,4):
-            TextCan.gameObject.SetActive(false);
-            AudioCan.gameObject.SetActive(true);
-            ToPlay = Clip1;
-            Correct = 1;
-            Option1.text = "Hello, welcome to help desk. My name is X. How can I help you today?";
-            Option2.text = "Hello, what can I do for you today?";
-            Option3.text = "Hi. What do you want?";
-            break;
+                    case(1):
+                    ToPlay = Clip2;
+                    break;
 
-            case(1,5):
-            ToPlay = Clip2;
-            Correct = 2;
-            Option1.text = "I understand your frustration Can I have your name and number?";
-            Option2.text = "Can I grab your name and number?";
-            Option3.text = "Name and number, please.";
-            break;
+                    case(2):
+                    ToPlay = Clip3;
+                    break;
 
-            case(1,6):
-            ToPlay = Clip3;
-            Correct = 1;
-            Option1.text = "Lacie Green, 0462811611";
-            Option2.text = "Lacie Bean, 0462811611?";
-            Option3.text = "Lacie Green 0462711611?";
-            break;
+                    case(3):
+                    ToPlay = Clip4;
+                    break;
 
-            case(1,7):
-            ToPlay = Clip4;
-            Correct = 3;
-            Option1.text = "My colleague will call you back shortly, thank you for using our service";
-            Option2.text = "We'll call you back sometime today";
-            Option3.text = "We'll call you back when we can, bye";
-            break;
+                    default:
+                    break;
+                }                                
+                break;
 
-            case(1,8):
-            TimerCan.gameObject.SetActive(true);
-            RunTimer();
-            ToPlay = Clip1;
-            Correct = 1;
-            Option1.text = "Hello, welcome to help desk. My name is X. How can I help you today?";
-            Option2.text = "Hello, what can I do for you today?";
-            Option3.text = "Hi. What do you want?";
-            break;
+                case(2);
+                AudioCan.gameObject.SetActive(false);
+                TimerCan.gameObject.SetActive(true);
 
-            case(1,9):
-            RunTimer();
-            ToPlay = Clip2;
-            Correct = 2;
-            Option1.text = "I understand your frustration Can I have your name and number?";
-            Option2.text = "Can I grab your name and number?";
-            Option3.text = "Name and number, please.";
-            break;
+                switch (Stage)
+                    {
+                    case(0):
+                    ToPlay = Clip1;
+                    break;
 
-            case(1,10):
-            RunTimer();
-            ToPlay = Clip3;
-            Correct = 1;
-            Option1.text = "Lacie Green, 0462811611";
-            Option2.text = "Lacie Bean, 0462811611?";
-            Option3.text = "Lacie Green 0462711611?";
-            break;
+                    case(1):
+                    ToPlay = Clip2;
+                    break;
 
-            case(1,11):
-            RunTimer();
-            ToPlay = Clip4;
-            Correct = 3;
-            Option1.text = "My colleague will call you back shortly, thank you for using our service";
-            Option2.text = "We'll call you back sometime today";
-            Option3.text = "We'll call you back when we can, bye";
-            break;
+                    case(2):
+                    ToPlay = Clip3;
+                    break;
 
+                    case(3):
+                    ToPlay = Clip4;
+                    break;
 
+                    default:
+                    break;
+                }
+                RunTimer();                            
+                break;
+
+                default:
+                break;
+            }
             default: 
             Situation.text = "Oops, something is wrong. Contact the researcher right away!";
             break;
-
-
         }
-        
+        ButtonUpdater(Path, Stage);
     }
 
    
@@ -269,40 +243,66 @@ public class TextManager : MonoBehaviour
     void Start() 
     {
 
-        responseClass[] responseArray = new responseClass[3];
-        responseArray[0] = new responseClass("default 1", 0);
-        responseArray[1] = new responseClass("default 2", 1);
-        responseArray[2] = new responseClass("default 3", 2);
+        responseClass[] responses = new responseClass[3];
+        responses[0] = new responseClass("default 1", 0);
+        responses[1] = new responseClass("default 2", 1);
+        responses[2] = new responseClass("default 3", 2);
         
     
     }
-
     
     public void AnswerRandomised (responseClass[] responses)
     {
-        Random random = new Random();
-        responses = responses.OrderBy(x => random.Next()).ToArray();
-        
+    for (int i = 0; i < 10; i++)
+
+        {
+        int a = Random.Range (0, 3);
+        int b = Random.Range (0,3);
+        responseClass temp = responses[a];
+        responses[a] = responses[b];
+        responses[b] = temp;
+        }
+
         Option1.text = responses[0].response;
         Option2.text = responses[1].response;
         Option3.text = responses[2].response;
     }
 
-    public void ButtonUpdater(int Path, int Stage)
+    public void ButtonUpdater(int Path, int Stage, responseClass[] responses)
     {
         switch(Path, Stage)
         {
             case(1,0):
-            responseArray[0].response = "Hi. What do you want?";
-            responseArray[1].response = "Hello, what can I do for you today?";
-            responseArray[2].response = "Hello, welcome to help desk. My name is X. How can I help you today?";
+            responses[0].response = "Hi. What do you want?";
+            responses[1].response = "Hello, what can I do for you today?";
+            responses[2].response = "Hello, welcome to help desk. My name is X. How can I help you today?";
             
-            AnswerRandomised(responseArray);
             break;
+            
+            case(1,1):
+            responses[0].response = "Name and number, please";
+            responses[1].response = "Can I grab your name and number?";
+            responses[2].response = "I understand your frustration Can I have your name and number?";
+            break;
+
+            case(1,2):
+            responses[0].response = "Lacie Bean, 0462811611?";
+            responses[1].response = "Lacie Green, 0462711611?";
+            responses[2].response = "Lacie Green, 0462811611?";
+            break;
+
+            case(1,3):
+            responses[0].response = "We'll call you back when we can, bye"";
+            responses[1].response = "Lacie Bean, 0462811611?";
+            responses[2].response = "Lacie Green 0462711611?";
+            break;
+
 
             default:
             break;
         }
+        AnswerRandomised(responses);
+            
     }
 
 
