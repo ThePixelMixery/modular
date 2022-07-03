@@ -50,6 +50,8 @@ public class TextManager : MonoBehaviour
     public int Stage;
     private float TimeLeft=10.0f;
     private bool SameTest = true;
+    private int CorrectAnswer;
+    private int SemicorrectAnswer;
 
     public responseClass[] responseArray;
 
@@ -70,7 +72,6 @@ public class TextManager : MonoBehaviour
     public void Pathchanger(int newPath)
     {
         Path = newPath;
-        TestChanger(Path,Test,Stage);
     }
 
     public void Resetter()
@@ -84,14 +85,28 @@ public class TextManager : MonoBehaviour
         {Stage++;}
         else{Test++;Stage=0;}
 
-        TestChanger(Path,Test,Stage);
+        TestChanger();
     }
-
 
     public void AnswerOutput(int Answer)
     {
         Advance.interactable = true;
-        if (Answer-1 == responseArray[0].accuracy)
+        if (Answer == CorrectAnswer)
+        {
+            if (Path >= 4 || Path <= 6)
+            {
+                //Point based
+            }
+            else if (Path >= 7)
+            {
+                // Narrative Changes
+            }
+            else
+            {
+                Incorrect.gameObject.SetActive(false);
+            }
+        }
+        else if(Answer == SemicorrectAnswer)
         {
             if (Path >= 4 || Path <= 6)
             {
@@ -104,15 +119,25 @@ public class TextManager : MonoBehaviour
             else
             {
                 //Control changes
+                Semicorrect.gameObject.SetActive(false);
             }
-        }
-        else if(Answer-1 == responseArray[1].accuracy)
-        {
 
         }
         else
         {
-
+            if (Path >= 4 || Path <= 6)
+            {
+                //Point based
+            }
+            else if (Path >= 7)
+            {
+                // Narrative Changes
+            }
+            else
+            {
+                //Control changes
+                Correct.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -121,7 +146,7 @@ public class TextManager : MonoBehaviour
         ToPlay.Play();
     }
 
-    public void TestChanger (int Path, int Test, int Stage)
+    public void TestChanger()
     {
         switch (Path)
         {
@@ -129,6 +154,7 @@ public class TextManager : MonoBehaviour
             switch (Test)
             {
                 case(0):
+                TextCan.gameObject.SetActive(true);
                 switch (Stage)
                     {
                     case 0:
@@ -221,65 +247,78 @@ public class TextManager : MonoBehaviour
             break;
         }
 
-        ButtonUpdater(Path, Stage, responseArray);
+        ButtonUpdater(responseArray);
     }
 
     void Start() 
     {
 
-        responseClass[] responses = new responseClass[3];
-        responses[0] = new responseClass("default 1", 0);
-        responses[1] = new responseClass("default 2", 1);
-        responses[2] = new responseClass("default 3", 2); 
+        responseClass[] responseArray = new responseClass[3];
+        responseArray[0] = new responseClass("default 1", 0);
+        responseArray[1] = new responseClass("default 2", 1);
+        responseArray[2] = new responseClass("default 3", 2); 
     }
     
-    public void AnswerRandomised (responseClass[] responses)
+    public void AnswerRandomised ()
     {
+    
     for (int i = 0; i < 10; i++)
         {
         int a = Random.Range (0, 3);
         int b = Random.Range (0,3);
-        responseClass temp = responses[a];
-        responses[a] = responses[b];
-        responses[b] = temp;
+        responseClass temp = responseArray[a];
+        responseArray[a] = responseArray[b];
+        responseArray[b] = temp;
         }
-        Option1.text = responses[0].response;
-        Option2.text = responses[1].response;
-        Option3.text = responses[2].response;
+    Option1.text = responseArray[0].response;
+    Option2.text = responseArray[1].response;
+    Option3.text = responseArray[2].response;
+
+    for (int i=0; i < 3; i++)
+        {
+        if (responseArray[i].accuracy==2)
+            {
+                CorrectAnswer = responseArray[i].accuracy+1;
+            }
+        else if (responseArray[i].accuracy==1)
+            {
+                SemicorrectAnswer = responseArray[i].accuracy+1;
+            }
+        }
     }
 
-    public void ButtonUpdater(int Path, int Stage, responseClass[] responses)
+    public void ButtonUpdater(responseClass[] responseArray)
     {
         switch(Path, Stage)
         {
             case(1,0):
-            responses[0].response = "Hi. What do you want?";
-            responses[1].response = "Hello, what can I do for you today?";
-            responses[2].response = "Hello, welcome to help desk. My name is X. How can I help you today?";
+            responseArray[0].response = "Hi. What do you want?";
+            responseArray[1].response = "Hello, what can I do for you today?";
+            responseArray[2].response = "Hello, welcome to help desk. My name is X. How can I help you today?";
             break;
             
             case(1,1):
-            responses[0].response = "Name and number, please";
-            responses[1].response = "Can I grab your name and number?";
-            responses[2].response = "I understand your frustration Can I have your name and number?";
+            responseArray[0].response = "Name and number, please";
+            responseArray[1].response = "Can I grab your name and number?";
+            responseArray[2].response = "I understand your frustration Can I have your name and number?";
             break;
 
             case(1,2):
-            responses[0].response = "Lacie Bean, 0462811611?";
-            responses[1].response = "Lacie Green, 0462711611?";
-            responses[2].response = "Lacie Green, 0462811611?";
+            responseArray[0].response = "Lacie Bean, 0462811611?";
+            responseArray[1].response = "Lacie Green, 0462711611?";
+            responseArray[2].response = "Lacie Green, 0462811611?";
             break;
 
             case(1,3):
-            responses[0].response = "We'll call you back when we can, bye";
-            responses[1].response = "Lacie Bean, 0462811611?";
-            responses[2].response = "Lacie Green 0462711611?";
+            responseArray[0].response = "We'll call you back when we can, bye";
+            responseArray[1].response = "Lacie Bean, 0462811611?";
+            responseArray[2].response = "Lacie Green 0462711611?";
             break;
 
             default:
             break;
         }
-        AnswerRandomised(responses);
+        AnswerRandomised();
             
     }
 
