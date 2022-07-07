@@ -15,6 +15,10 @@ public class responseClass
         response = Response;
         accuracy = Accuracy;
     }
+    public void UpdateText(string NewResponse)
+    {
+        response = NewResponse;
+    }
 }
 
     
@@ -52,21 +56,24 @@ public class TextManager : MonoBehaviour
     private bool SameTest = true;
     private int CorrectAnswer;
     private int SemicorrectAnswer;
+    private int IncorrectAnswer;
+    private float Cliplength;
+
 
     public responseClass[] responseArray;
 
 
     
-    void RunTimer()
+    IEnumerator RunTimer(float Cliplength)
     {
+        yield return new WaitForSeconds(Cliplength);
         TimeLeft = 10.0f;
         while (TimeLeft >= 0.0f)
         {
         TimeLeft -= Time.deltaTime;
-        TimerText.text = TimeLeft.ToString("#.00");        
+        TimerText.text = TimeLeft.ToString("#:00");        
         }
-        AnswerOutput(1);
-
+        AnswerOutput(3);
     }
 
     public void Pathchanger(int newPath)
@@ -80,6 +87,12 @@ public class TextManager : MonoBehaviour
         Semicorrect.gameObject.SetActive(false);
         Incorrect.gameObject.SetActive(false);
         Advance.interactable = false;
+        int ResetAcc = 0;
+        for (int i = 0; i < 3; i++)
+        {
+            responseArray[i].accuracy = ResetAcc;
+            ResetAcc++;
+        }        
         TimeLeft = 10.0f;
         if(SameTest==true) 
         {Stage++;}
@@ -90,61 +103,69 @@ public class TextManager : MonoBehaviour
 
     public void AnswerOutput(int Answer)
     {
-        Advance.interactable = true;
         if (Answer == CorrectAnswer)
         {
-            if (Path >= 4 || Path <= 6)
+            if (Path <= 3)
             {
-                //Point based
+                //Control
+                Correct.gameObject.SetActive(true);
+
             }
-            else if (Path >= 7)
+            else if (Path >= 4 || Path <= 6)
             {
-                // Narrative Changes
+               // Narrative Changes
             }
             else
             {
-                Incorrect.gameObject.SetActive(false);
+              //Point based
             }
         }
         else if(Answer == SemicorrectAnswer)
         {
-            if (Path >= 4 || Path <= 6)
+            if (Path <= 3)
             {
-                //Point based
+                //Control
+                Semicorrect.gameObject.SetActive(true);
             }
-            else if (Path >= 7)
+            else if (Path >= 4 || Path <= 6)
             {
-                // Narrative Changes
+               // Narrative Changes
             }
             else
             {
-                //Control changes
-                Semicorrect.gameObject.SetActive(false);
+              //Point based
             }
 
         }
         else
         {
-            if (Path >= 4 || Path <= 6)
+            if (Path <= 3)
             {
-                //Point based
+                //Control
+                Incorrect.gameObject.SetActive(true);
             }
-            else if (Path >= 7)
+            else if (Path >= 4 || Path <= 6)
             {
-                // Narrative Changes
+               // Narrative Changes
             }
             else
             {
-                //Control changes
-                Correct.gameObject.SetActive(false);
+              //Point based
             }
         }
+        Advance.interactable = true;
     }
 
     public void PlayAudio()
     {
         ToPlay.Play();
+        if (Path == 2)
+        {
+            RunTimer(Cliplength);
+        }
     }
+
+    
 
     public void TestChanger()
     {
@@ -163,7 +184,6 @@ public class TextManager : MonoBehaviour
 
                     case(1):
                     Situation.text = "I'm having trouble with my internet speed";
-                    Stage++;
                     break;
 
                     case(2):
@@ -187,19 +207,23 @@ public class TextManager : MonoBehaviour
                     {
                     case(0):
                     SameTest=true;
+                    Cliplength = Clip1.clip.length;
                     ToPlay = Clip1;
                     break;
 
                     case(1):
                     ToPlay = Clip2;
+                    Cliplength = Clip2.clip.length;
                     break;
 
                     case(2):
                     ToPlay = Clip3;
+                    Cliplength = Clip3.clip.length;
                     break;
 
                     case(3):
                     ToPlay = Clip4;
+                    Cliplength = Clip4.clip.length;
                     SameTest = false;
                     break;
 
@@ -234,8 +258,7 @@ public class TextManager : MonoBehaviour
 
                     default:
                     break;
-                }
-                RunTimer();                            
+                }                          
                 break;
 
                 default:
@@ -245,54 +268,68 @@ public class TextManager : MonoBehaviour
             default: 
             Situation.text = "Oops, something is wrong. Contact the researcher right away!";
             break;
-        }
 
-        ButtonUpdater(responseArray);
+        }
+        ButtonUpdater();
     }
 
     void Start() 
     {
-
-        responseClass[] responseArray = new responseClass[3];
-        responseArray[0] = new responseClass("default 1", 0);
-        responseArray[1] = new responseClass("default 2", 1);
-        responseArray[2] = new responseClass("default 3", 2); 
+        responseArray = new responseClass[3];
+        responseArray[0] = new responseClass("Incorrect", 0);
+        responseArray[1] = new responseClass("Semicorrect", 1);
+        responseArray[2] = new responseClass("Correct", 2); 
     }
     
-    public void AnswerRandomised ()
+    public void AnswerRandomised()
     {
     
-    for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 10; i++)
         {
-        int a = Random.Range (0, 3);
+        int a = Random.Range (0,3);
         int b = Random.Range (0,3);
         responseClass temp = responseArray[a];
         responseArray[a] = responseArray[b];
         responseArray[b] = temp;
         }
-    Option1.text = responseArray[0].response;
-    Option2.text = responseArray[1].response;
-    Option3.text = responseArray[2].response;
+        Option1.text = responseArray[0].response;
+        Option2.text = responseArray[1].response;
+        Option3.text = responseArray[2].response;
+        AnswerChecker();
+    }
 
-    for (int i=0; i < 3; i++)
+    public void AnswerChecker()
+    {
+        int i = 0;
+        for (i = 0; i < 3; i++)
         {
-        if (responseArray[i].accuracy==2)
+        switch(responseArray[i].accuracy)
             {
-                CorrectAnswer = responseArray[i].accuracy+1;
-            }
-        else if (responseArray[i].accuracy==1)
-            {
-                SemicorrectAnswer = responseArray[i].accuracy+1;
-            }
+                case(0):
+                IncorrectAnswer = i;
+                break;
+
+                case(1):
+                SemicorrectAnswer = i;
+                break;
+
+                case(2):
+                CorrectAnswer = i;
+                break;
+
+                default:
+                Debug.Log("I don't feel so good");
+                break;
+            }   
         }
     }
 
-    public void ButtonUpdater(responseClass[] responseArray)
+    public void ButtonUpdater()
     {
         switch(Path, Stage)
         {
             case(1,0):
-            responseArray[0].response = "Hi. What do you want?";
+            responseArray[0].response ="Hi. What do you want?";
             responseArray[1].response = "Hello, what can I do for you today?";
             responseArray[2].response = "Hello, welcome to help desk. My name is X. How can I help you today?";
             break;
@@ -304,15 +341,15 @@ public class TextManager : MonoBehaviour
             break;
 
             case(1,2):
-            responseArray[0].response = "Lacie Bean, 0462811611?";
-            responseArray[1].response = "Lacie Green, 0462711611?";
+            responseArray[0].response = "Lacie Green, 0462711611?";
+            responseArray[1].response = "Lacie Bean, 0462811611?";
             responseArray[2].response = "Lacie Green, 0462811611?";
             break;
 
             case(1,3):
             responseArray[0].response = "We'll call you back when we can, bye";
-            responseArray[1].response = "Lacie Bean, 0462811611?";
-            responseArray[2].response = "Lacie Green 0462711611?";
+            responseArray[1].response = "Someone from the correct department will call you back soon";
+            responseArray[2].response = "I'm transferring you to the correct department, please hold";
             break;
 
             default:
