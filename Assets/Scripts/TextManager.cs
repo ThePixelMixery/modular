@@ -27,9 +27,14 @@ public class TextManager : MonoBehaviour
 {
     
     public TextMeshProUGUI Situation;
+    
+    public Button Option1Button;
     public TextMeshProUGUI Option1;
+    public Button Option2Button;
     public TextMeshProUGUI Option2;
+    public Button Option3Button;
     public TextMeshProUGUI Option3;
+    
     public TextMeshProUGUI TimerText;
 
     public Image Correct;
@@ -52,7 +57,8 @@ public class TextManager : MonoBehaviour
     public int Path;
     public int Test;
     public int Stage;
-    private float TimeLeft=10.0f;
+    private bool timerRunning = false;
+    private float TimeLeft;
     private bool SameTest = true;
     private int CorrectAnswer;
     private int SemicorrectAnswer;
@@ -64,16 +70,16 @@ public class TextManager : MonoBehaviour
 
 
     
-    IEnumerator RunTimer(float Cliplength)
+    IEnumerator RunTimer()
     {
         yield return new WaitForSeconds(Cliplength);
-        TimeLeft = 10.0f;
-        while (TimeLeft >= 0.0f)
-        {
-        TimeLeft -= Time.deltaTime;
-        TimerText.text = TimeLeft.ToString("#:00");        
-        }
-        AnswerOutput(3);
+        Debug.Log("Started timer!");
+        Option1.gameObject.SetActive(true);
+        Option2.gameObject.SetActive(true);
+        Option3.gameObject.SetActive(true);
+
+        TimeLeft = 5.0f;
+        timerRunning= true;
     }
 
     public void Pathchanger(int newPath)
@@ -87,22 +93,33 @@ public class TextManager : MonoBehaviour
         Semicorrect.gameObject.SetActive(false);
         Incorrect.gameObject.SetActive(false);
         Advance.interactable = false;
+        Option1Button.interactable=true;
+        Option1Button.interactable=true;
+        Option1Button.interactable=true;
         int ResetAcc = 0;
         for (int i = 0; i < 3; i++)
         {
             responseArray[i].accuracy = ResetAcc;
             ResetAcc++;
         }        
-        TimeLeft = 10.0f;
         if(SameTest==true) 
         {Stage++;}
         else{Test++;Stage=0;}
+        if (Test == 2)
+        {
+            Option1.gameObject.SetActive(false);
+            Option2.gameObject.SetActive(false);
+            Option3.gameObject.SetActive(false);
+        }
 
         TestChanger();
     }
 
     public void AnswerOutput(int Answer)
     {
+        Option1Button.interactable=false;
+        Option2Button.interactable=false;
+        Option3Button.interactable=false;
         if (Answer == CorrectAnswer)
         {
             if (Path <= 3)
@@ -159,9 +176,9 @@ public class TextManager : MonoBehaviour
     public void PlayAudio()
     {
         ToPlay.Play();
-        if (Path == 2)
+        if (Test == 2)
         {
-            RunTimer(Cliplength);
+            StartCoroutine(RunTimer());
         }
     }
 
@@ -203,6 +220,9 @@ public class TextManager : MonoBehaviour
                 case(1):
                 TextCan.gameObject.SetActive(false);
                 AudioCan.gameObject.SetActive(true);
+                Option1.gameObject.SetActive(false);
+                Option2.gameObject.SetActive(false);
+                Option3.gameObject.SetActive(false);
                 switch (Stage)
                     {
                     case(0):
@@ -233,26 +253,33 @@ public class TextManager : MonoBehaviour
                 break;
 
                 case(2):
-                AudioCan.gameObject.SetActive(false);
                 TimerCan.gameObject.SetActive(true);
+
+                Option1.gameObject.SetActive(false);
+                Option2.gameObject.SetActive(false);
+                Option3.gameObject.SetActive(false);
 
                 switch (Stage)
                     {
                     case(0):
-                    SameTest = true;
+                    SameTest=true;
+                    Cliplength = Clip1.clip.length;
                     ToPlay = Clip1;
                     break;
 
                     case(1):
                     ToPlay = Clip2;
+                    Cliplength = Clip2.clip.length;
                     break;
 
                     case(2):
                     ToPlay = Clip3;
+                    Cliplength = Clip3.clip.length;
                     break;
 
                     case(3):
                     ToPlay = Clip4;
+                    Cliplength = Clip4.clip.length;
                     SameTest = false;
                     break;
 
@@ -279,6 +306,27 @@ public class TextManager : MonoBehaviour
         responseArray[0] = new responseClass("Incorrect", 0);
         responseArray[1] = new responseClass("Semicorrect", 1);
         responseArray[2] = new responseClass("Correct", 2); 
+        
+    }
+
+    void Update()
+    {
+        if (timerRunning == true)
+        {
+            if (TimeLeft >= 0.5f)
+            {
+            TimeLeft -= Time.deltaTime;
+            float seconds = Mathf.FloorToInt(TimeLeft%60);
+            TimerText.text = seconds.ToString();
+            }
+            else
+            {
+                Debug.Log("Timer ran out!");
+                TimeLeft = 0f;
+                timerRunning = false;
+                AnswerOutput(3);
+            }
+        }
     }
     
     public void AnswerRandomised()

@@ -536,6 +536,42 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 612268272}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1494587597}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1483637045}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &100072497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2526,8 +2562,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Situation: {fileID: 0}
+  Option1Button: {fileID: 0}
   Option1: {fileID: 0}
+  Option2Button: {fileID: 0}
   Option2: {fileID: 0}
+  Option3Button: {fileID: 0}
   Option3: {fileID: 0}
   TimerText: {fileID: 0}
   Correct: {fileID: 0}
@@ -4416,7 +4455,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Time left
+  m_text: 5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4850,8 +4889,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Situation: {fileID: 1268482804}
+  Option1Button: {fileID: 612268272}
   Option1: {fileID: 146081748}
+  Option2Button: {fileID: 1494587597}
   Option2: {fileID: 713939441}
+  Option3Button: {fileID: 1483637045}
   Option3: {fileID: 761234896}
   TimerText: {fileID: 750670883}
   Correct: {fileID: 502335808}
@@ -4866,7 +4908,7 @@ MonoBehaviour:
   Clip3: {fileID: 1649391508}
   Clip4: {fileID: 337396917}
   Path: 0
-  Test: 1
+  Test: 0
   Stage: 0
 --- !u!4 &787406311
 Transform:
@@ -7216,7 +7258,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1516812339
 Transform:
   m_ObjectHideFlags: 0
