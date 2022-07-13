@@ -59,6 +59,9 @@ public class TextManager : MonoBehaviour
     private int IncorrectAnswer;
     private float Cliplength;
 
+    //Week 2 is diagnostic
+    //Week 3 is Validation
+
 
     public responseClass[] responseArray;
 
@@ -147,10 +150,12 @@ public class TextManager : MonoBehaviour
             else if (Path >= 4 || Path <= 6)
             {
                // Narrative Changes
+               // Refresh narrative or refresh situation
             }
             else
             {
               //Point based
+              //Achievement response
             }
         }
         Advance.interactable = true;
@@ -233,7 +238,7 @@ public class TextManager : MonoBehaviour
                 break;
 
                 case(2):
-                AudioCan.gameObject.SetActive(false);
+                AudioCan.gameObject.SetActive(true);
                 TimerCan.gameObject.SetActive(true);
 
                 switch (Stage)
