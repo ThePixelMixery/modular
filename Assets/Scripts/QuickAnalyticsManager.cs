@@ -8,6 +8,14 @@ using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 
+class GlobalTrustCertificate : CertificateHandler
+{
+  protected override bool ValidateCertificate(byte[] certificateData)
+  {
+    return true;
+  }
+}
+
 // Log key events to a local file for later analysis.
 public class QuickAnalyticsManager : MonoBehaviour
 {
@@ -15,30 +23,51 @@ public class QuickAnalyticsManager : MonoBehaviour
   
     public bool enableLogging = true;
     public CaptureDetail maxLogRate = CaptureDetail.HighRateEvent;
-    public string logFileBaseName = "Ludology";
+    public string logFileBaseName = "ludology";
    
     public string serverName;
     
     private StreamWriter logFile;
-    private string DTFormatString = "dd-MM-yyyy-HH-mm-ss.fff";
+    private static string DTFormatString = "dd-MM-yyyy-HH-mm-ss.fff";
     
     // Singleton.
     private static QuickAnalyticsManager _S = null;
 
     private string logDirectory;
+
+    public static string timeStamp ()
+    {
+      return System.DateTime.Now.ToString (DTFormatString);
+    }
     
-    void Awake ()
+    private void activate ()
     {
       if (_S == null)
       {
         _S = this;
         logDirectory = Application.persistentDataPath + "/" + "logFiles/";
         Directory.CreateDirectory (logDirectory);
-        string logFileName = logDirectory + logFileBaseName + "." + System.DateTime.Now.ToString (DTFormatString) + ".log";
+        string logFileName = logDirectory + logFileBaseName + "." + timeStamp () + ".log";
         logFile = new StreamWriter (logFileName, true);
         
-        StartCoroutine (uploadFiles ());
+        uploadAndCleanFiles (logDirectory, serverName, this);
+        Application.logMessageReceived += LogCallback;
       }
+    }
+
+    private void deactivate ()
+    {
+      if (_S != null)
+      {
+        Application.logMessageReceived -= LogCallback;
+        logFile.Close ();
+        _S = null;
+      }
+    }
+    
+    void Awake ()
+    {
+      activate ();
     }
     
     public static void logEntry (string id, CaptureDetail level, params System.Object [] parms)
@@ -63,6 +92,8 @@ public class QuickAnalyticsManager : MonoBehaviour
       if (_S != null)
       {
         _S.logEntryInternal (id, level, message);
+        Debug.Log(id + level + message);
+        
       }
     }
     
@@ -81,9 +112,14 @@ public class QuickAnalyticsManager : MonoBehaviour
       }
     }
 
+    void OnEnable()
+    {
+      activate ();
+    }
+
     public void OnDisable ()
     {
-      logFile.Close ();
+      deactivate ();
     }
     
     private static bool TrustCertificate(object sender, X509Certificate x509Certificate, X509Chain x509Chain, SslPolicyErrors sslPolicyErrors)
@@ -92,34 +128,53 @@ public class QuickAnalyticsManager : MonoBehaviour
       return true;
     }
     
-    IEnumerator uploadFiles ()
+    public static void uploadAndCleanFiles (string directory, string serverName, MonoBehaviour parent)
+    {
+        string [] files = Directory.GetFiles (directory);
+        parent.StartCoroutine (uploadFiles (files, serverName));
+    }
+    
+    public static void uploadAndCleanList (List <string> files, string serverName, MonoBehaviour parent)
+    {
+      parent.StartCoroutine (uploadFiles (files.ToArray (), serverName));
+    }
+    
+    static IEnumerator uploadFiles (string [] files, string serverName)
     {
       ServicePointManager.ServerCertificateValidationCallback = TrustCertificate;
 
-      string [] logfiles = Directory.GetFiles (logDirectory);
-      
-      foreach (string fn in logfiles)
+      foreach (string fn in files)
       {
         Debug.Log ("Need to upload: " + fn);
 
-        string data = null;
+        byte [] data = null;
         try
         {
-          data = File.ReadAllText (fn);
+          data = File.ReadAllBytes (fn);
         }
-        catch (System.Exception e)
+        catch (System.Exception)
         {
           // cannot access file, may happen because file is current active log.
+        }
+
+        // Empty log file - can't upload, and need to clear it.
+        if ((data != null) && (data.Length == 0))
+        {
+          File.Delete (fn);
+          data = null;
         }
         
         if (data != null)
         {
           string postUri = "https://" + serverName + "/upload";
-          using (UnityWebRequest request = UnityWebRequest.Post (postUri, data))
+          using (UnityWebRequest request = new UnityWebRequest (postUri, UnityWebRequest.kHttpVerbPOST))
           {
+            UploadHandlerRaw MyUploadHandler = new UploadHandlerRaw (data);
+            MyUploadHandler.contentType= "application/x-www-form-urlencoded";
+            request.uploadHandler= MyUploadHandler;
             request.SetRequestHeader ("filename", Path.GetFileName (fn));    
             request.SetRequestHeader ("deviceid", SystemInfo.deviceUniqueIdentifier);    
-            request.certificateHandler = new UnityTrustCertificate ();
+            request.certificateHandler = new GlobalTrustCertificate ();
 
             yield return request.SendWebRequest();
             
@@ -136,5 +191,11 @@ public class QuickAnalyticsManager : MonoBehaviour
         }
       } 
       yield return null;
+    }
+    
+    void LogCallback(string condition, string stackTrace, LogType type)
+    {
+//      Debug.Log ("Log: " + condition + "---" + stackTrace + "+++" + type);
+      logEntry ("ApplicationLevelLog", QuickAnalyticsManager.CaptureDetail.LowRateEvent, condition, stackTrace, type.ToString ()); 
     }
 }
