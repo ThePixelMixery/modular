@@ -59,6 +59,8 @@ public class TextManager : MonoBehaviour
     private int IncorrectAnswer;
     private float Cliplength;
 
+    ReferencedScript caller = GetComponent<CallerScript>();
+ 
     //Week 2 is diagnostic
     //Week 3 is Validation
 
@@ -77,6 +79,7 @@ public class TextManager : MonoBehaviour
         TimerText.text = TimeLeft.ToString("#:00");        
         }
         AnswerOutput(3);
+        Caller.Call("Sound", "Over");    
     }
 
     public void Pathchanger(int newPath)
@@ -122,6 +125,7 @@ public class TextManager : MonoBehaviour
             {
               //Point based
             }
+            QuickAnalyticsManager.logEntry ("Answer", QuickAnalyticsManager.CaptureDetail.LowRateEvent, Correct);
         }
         else if(Answer == SemicorrectAnswer)
         {
@@ -138,7 +142,7 @@ public class TextManager : MonoBehaviour
             {
               //Point based
             }
-
+            QuickAnalyticsManager.logEntry ("Answer", QuickAnalyticsManager.CaptureDetail.LowRateEvent, Correct);
         }
         else
         {
