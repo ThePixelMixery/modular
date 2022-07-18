@@ -31,6 +31,7 @@ public class TextManager : MonoBehaviour
     public TextMeshProUGUI Option2;
     public TextMeshProUGUI Option3;
     public TextMeshProUGUI TimerText;
+    public TMP_InputField Login;
 
     public Image Correct;
     public Image Semicorrect;
@@ -61,14 +62,27 @@ public class TextManager : MonoBehaviour
 
     public GameObject callerObject;
     CallerScript caller;
+
  
     //Week 2 is diagnostic
     //Week 3 is Validation
 
+    private responseClass[] responseArray;
 
-    public responseClass[] responseArray;
-
-
+    private string[] ParticipantIDs = {
+        //1-6
+        "ERNADR", " AXXAMD", " NMZNNO", " XZCUEV", " IWOIUU", " ASSALI",
+        //7-12
+        "YKMCIM", " EYUCIK", " NLYACP", " OPBOTN", " VTYKBX", " ACCAJY", 
+        //13-18
+        "USYMZW", " IOGWFC", " HEXFLK", " WIMEOK", " NFSAXV", " LFUMCR", 
+        //19-24
+        "EUQMLO", " QBLUKF", " UGMGRI", " UGMGSI", " VAFBFQ", " NZMAGB", 
+        //25-30
+        "HUNNQU", " RLUCUX", " QMWOEU", " CLJSYT", " IZRGCR", " XDGISR", 
+        //31-36
+        "UXDIFR", " JBSGMR", " IUMSIW", " BRQQBL", " PKVDIU",  "JHYIPL"
+        };
     
     IEnumerator RunTimer(float Cliplength)
     {
@@ -80,7 +94,7 @@ public class TextManager : MonoBehaviour
         TimerText.text = TimeLeft.ToString("#:00");        
         }
         AnswerOutput(3);
-        caller.Call("Sound", "Over");    
+        caller.CallDetails("Sound", "Over");    
     }
 
     public void Pathchanger(int newPath)
@@ -125,7 +139,7 @@ public class TextManager : MonoBehaviour
             {
               //Point based
             }
-            caller.Call("Answer", "Correct"); 
+            caller.CallDetails("Answer", "Correct"); 
         }
         else if(Answer == SemicorrectAnswer)
         {
@@ -142,7 +156,7 @@ public class TextManager : MonoBehaviour
             {
               //Point based
             }
-            caller.Call("Answer", "Semicorrect"); 
+            caller.CallDetails("Answer", "Semicorrect"); 
         }
         else
         {
@@ -161,14 +175,14 @@ public class TextManager : MonoBehaviour
               //Point based
               //Achievement response
             }
-            caller.Call("Answer", "Incorrect"); 
+            caller.CallDetails("Answer", "Incorrect"); 
         }
         Advance.interactable = true;
     }
 
     public void PlayAudio()
     {
-        caller.Call("Sound", "Started"); 
+        caller.CallDetails("Sound", "Started"); 
         ToPlay.Play();
         if (Path == 2)
         {
@@ -292,6 +306,8 @@ public class TextManager : MonoBehaviour
         responseArray[2] = new responseClass("Correct", 2); 
 
         caller = callerObject.GetComponent<CallerScript>();
+
+
     }
     
     public void AnswerRandomised()
@@ -372,7 +388,10 @@ public class TextManager : MonoBehaviour
             
     }
 
-
+    public void IDChecker(string ID)
+    {
+        
+    }
 }
 
 
