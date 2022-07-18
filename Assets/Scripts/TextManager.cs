@@ -59,7 +59,8 @@ public class TextManager : MonoBehaviour
     private int IncorrectAnswer;
     private float Cliplength;
 
-    ReferencedScript caller = GetComponent<CallerScript>();
+    public GameObject callerObject;
+    CallerScript caller;
  
     //Week 2 is diagnostic
     //Week 3 is Validation
@@ -79,7 +80,7 @@ public class TextManager : MonoBehaviour
         TimerText.text = TimeLeft.ToString("#:00");        
         }
         AnswerOutput(3);
-        Caller.Call("Sound", "Over");    
+        caller.Call("Sound", "Over");    
     }
 
     public void Pathchanger(int newPath)
@@ -103,7 +104,6 @@ public class TextManager : MonoBehaviour
         if(SameTest==true) 
         {Stage++;}
         else{Test++;Stage=0;}
-
         TestChanger();
     }
 
@@ -125,7 +125,7 @@ public class TextManager : MonoBehaviour
             {
               //Point based
             }
-            QuickAnalyticsManager.logEntry ("Answer", QuickAnalyticsManager.CaptureDetail.LowRateEvent, Correct);
+            caller.Call("Answer", "Correct"); 
         }
         else if(Answer == SemicorrectAnswer)
         {
@@ -142,7 +142,7 @@ public class TextManager : MonoBehaviour
             {
               //Point based
             }
-            QuickAnalyticsManager.logEntry ("Answer", QuickAnalyticsManager.CaptureDetail.LowRateEvent, Correct);
+            caller.Call("Answer", "Semicorrect"); 
         }
         else
         {
@@ -161,12 +161,14 @@ public class TextManager : MonoBehaviour
               //Point based
               //Achievement response
             }
+            caller.Call("Answer", "Incorrect"); 
         }
         Advance.interactable = true;
     }
 
     public void PlayAudio()
     {
+        caller.Call("Sound", "Started"); 
         ToPlay.Play();
         if (Path == 2)
         {
@@ -288,6 +290,8 @@ public class TextManager : MonoBehaviour
         responseArray[0] = new responseClass("Incorrect", 0);
         responseArray[1] = new responseClass("Semicorrect", 1);
         responseArray[2] = new responseClass("Correct", 2); 
+
+        caller = callerObject.GetComponent<CallerScript>();
     }
     
     public void AnswerRandomised()
