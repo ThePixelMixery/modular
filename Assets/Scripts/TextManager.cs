@@ -83,6 +83,7 @@ public class TextManager : MonoBehaviour
         //31-36
         "UXDIFR", " JBSGMR", " IUMSIW", " BRQQBL", " PKVDIU",  "JHYIPL"
         };
+
     
     IEnumerator RunTimer(float Cliplength)
     {
@@ -305,6 +306,7 @@ public class TextManager : MonoBehaviour
         responseArray[1] = new responseClass("Semicorrect", 1);
         responseArray[2] = new responseClass("Correct", 2); 
 
+        callerObject = GameObject.Find("CallerManager");
         caller = callerObject.GetComponent<CallerScript>();
 
 
