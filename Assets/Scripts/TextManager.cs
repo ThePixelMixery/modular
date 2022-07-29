@@ -37,6 +37,8 @@ public class TextManager : MonoBehaviour
     public Image Semicorrect;
     public Image Incorrect;
 
+    public Canvas LoginCan;
+    public Canvas MenuCan;
     public Canvas TextCan;
     public Canvas AudioCan;
     public Canvas TimerCan;
@@ -191,7 +193,6 @@ public class TextManager : MonoBehaviour
         }
     }
 
-    
 
     public void TestChanger()
     {
@@ -390,11 +391,25 @@ public class TextManager : MonoBehaviour
             
     }
 
-    public void IDChecker(string ID)
+    public void IDChecker()
     {
-        
+        string LoginAttempt = Login.text;
+        foreach (string i in ParticipantIDs)
+        {
+            if (i == LoginAttempt)
+            {
+                successfulLogin();
+            }
+
+        }
+        Debug.Log("Unsuccessful Login");
+    }
+
+    public void successfulLogin()
+    {
+        LoginCan.gameObject.SetActive(false);
+        MenuCan.gameObject.SetActive(true);
+        Button Control1button = GameObject.Find("Button_1C").GetComponent<Button>();
+        Control1button.interactable = true;
     }
 }
-
-
-

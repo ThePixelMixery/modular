@@ -9,7 +9,7 @@ public class CallerScript : MonoBehaviour
     public string GameEvent; 
     public string tag1; 
     public string tag2;
-    private GameObject IDInput;
+    private TMP_InputField IDInput;
 
     public void Call()
     {
@@ -22,15 +22,12 @@ public class CallerScript : MonoBehaviour
     
     public void ParticipantID()
     {
+        tag2 = IDInput.text;
         QuickAnalyticsManager.logEntry("Log-In", QuickAnalyticsManager.CaptureDetail.LowRateEvent, "Generic", tag2);
     }
     void Start()
     {
-        if (GameObject.Find("InputField_ID") != null)
-        {
-            IDInput = GameObject.Find("InputField_ID");
-            tag2 = IDInput.GetComponent<InputField>().text;
-        }
-        else{Debug.Log ("I didn't find it~");}
+        IDInput = gameObject.GetComponent<TMP_InputField>();
+        Debug.Log(IDInput.name + "Found");
     }
 }
