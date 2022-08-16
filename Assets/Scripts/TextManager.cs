@@ -42,6 +42,7 @@ public class TextManager : MonoBehaviour
     public Canvas TextCan;
     public Canvas AudioCan;
     public Canvas TimerCan;
+    public Canvas SubmitCan;
 
     public Button Advance;
 
@@ -288,6 +289,14 @@ public class TextManager : MonoBehaviour
                 }                          
                 break;
 
+                case(4):
+                TextCan.gameObject.SetActive(false);
+                AudioCan.gameObject.SetActive(false);
+                TimerCan.gameObject.SetActive(false);
+                
+                SubmitCan.gameObject.SetActive(true);
+                break;
+                
                 default:
                 break;
             }
