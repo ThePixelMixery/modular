@@ -72,11 +72,11 @@ public class QuickAnalyticsManager : MonoBehaviour
         }
     }
 
-    void Awake()
+    /*    void Awake()
     {
         activate();
     }
-
+*/
     public static void logEntry(
         string id,
         CaptureDetail level,

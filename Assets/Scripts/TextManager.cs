@@ -53,9 +53,11 @@ public class TextManager : MonoBehaviour
 
     private AudioSource ToPlay;
 
+
     public int Path;
     public int Test;
     public int Stage;
+
     private float TimeLeft=10.0f;
     private bool SameTest = true;
     private int CorrectAnswer;
@@ -63,9 +65,7 @@ public class TextManager : MonoBehaviour
     private int IncorrectAnswer;
     private float Cliplength;
 
-    public GameObject callerObject;
-    CallerScript caller;
-
+    SaveToJson SaveToSaveToJson;
  
     //Week 2 is diagnostic
     //Week 3 is Validation
@@ -98,7 +98,8 @@ public class TextManager : MonoBehaviour
         TimerText.text = TimeLeft.ToString("#:00");        
         }
         AnswerOutput(3);
-        caller.CallDetails("Sound", "Over");    
+        LogEntry.EntryCode("Answer","TimerFail","PlayerFeedback"); 
+        SaveToJson.writeNewEntry();   
     }
 
     public void Pathchanger(int newPath)
@@ -143,7 +144,8 @@ public class TextManager : MonoBehaviour
             {
               //Point based
             }
-            caller.CallDetails("Answer", "Correct"); 
+            LogEntry.EntryCode("Answer","Correct","PlayerFeedback");
+            SaveToJson.writeNewEntry();
         }
         else if(Answer == SemicorrectAnswer)
         {
@@ -160,7 +162,8 @@ public class TextManager : MonoBehaviour
             {
               //Point based
             }
-            caller.CallDetails("Answer", "Semicorrect"); 
+            LogEntry.EntryCode("Answer","Semicorrect","PlayerFeedback");
+            SaveToJson.writeNewEntry();
         }
         else
         {
@@ -179,14 +182,16 @@ public class TextManager : MonoBehaviour
               //Point based
               //Achievement response
             }
-            caller.CallDetails("Answer", "Incorrect"); 
+            LogEntry.EntryCode("Answer","Incorrect","PlayerFeedback"); 
+            SaveToJson.writeNewEntry();
         }
         Advance.interactable = true;
     }
 
     public void PlayAudio()
     {
-        caller.CallDetails("Sound", "Started"); 
+        LogEntry.EntryCode("Sound", "Started", "PlayerFeedback"); 
+        SaveToJson.writeNewEntry();
         ToPlay.Play();
         if (Path == 2)
         {
@@ -316,8 +321,7 @@ public class TextManager : MonoBehaviour
         responseArray[1] = new responseClass("Semicorrect", 1);
         responseArray[2] = new responseClass("Correct", 2); 
 
-        callerObject = GameObject.Find("CallerManager");
-        caller = callerObject.GetComponent<CallerScript>();
+        SaveToJson SaveToJson = GameObject.Find("jsonManager").GetComponent<SaveToJson>();
 
 
     }
