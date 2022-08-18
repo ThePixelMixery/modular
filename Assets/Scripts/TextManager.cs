@@ -65,7 +65,7 @@ public class TextManager : MonoBehaviour
     private int IncorrectAnswer;
     private float Cliplength;
 
-    SaveToJson SaveToJson;
+    LogScript LogScript;
  
     //Week 2 is diagnostic
     //Week 3 is Validation
@@ -98,7 +98,7 @@ public class TextManager : MonoBehaviour
         TimerText.text = TimeLeft.ToString("#:00");        
         }
         AnswerOutput(3);
-        SaveToJson.logEntry("Answer","TimerFail","PlayerFeedback"); 
+        LogScript.WriteNewLogEntry("Answer","TimerFail","PlayerFeedback"); 
     }
 
     public void Pathchanger(int newPath)
@@ -143,7 +143,7 @@ public class TextManager : MonoBehaviour
             {
               //Point based
             }
-            SaveToJson.logEntry("Answer","Correct","PlayerFeedback");
+            LogScript.WriteNewLogEntry("Answer","Correct","PlayerFeedback");
         }
         else if(Answer == SemicorrectAnswer)
         {
@@ -160,7 +160,7 @@ public class TextManager : MonoBehaviour
             {
               //Point based
             }
-            SaveToJson.logEntry("Answer","Semicorrect","PlayerFeedback");
+            LogScript.WriteNewLogEntry("Answer","Semicorrect","PlayerFeedback");
         }
         else
         {
@@ -179,14 +179,14 @@ public class TextManager : MonoBehaviour
               //Point based
               //Achievement response
             }
-            SaveToJson.logEntry("Answer","Incorrect","PlayerFeedback"); 
+            LogScript.WriteNewLogEntry("Answer","Incorrect","PlayerFeedback"); 
         }
         Advance.interactable = true;
     }
 
     public void PlayAudio()
     {
-        SaveToJson.logEntry("Sound", "Started", "PlayerFeedback"); 
+        LogScript.WriteNewLogEntry("Sound", "Started", "PlayerFeedback"); 
         ToPlay.Play();
         if (Path == 2)
         {
@@ -316,9 +316,9 @@ public class TextManager : MonoBehaviour
         responseArray[1] = new responseClass("Semicorrect", 1);
         responseArray[2] = new responseClass("Correct", 2); 
 
-        SaveToJson = GameObject.Find("JsonManager").GetComponent<SaveToJson>();
-        if(SaveToJson==null){
-        Debug.Log("I could not find JsonManager");}
+        LogScript = GameObject.Find("LogObject").GetComponent<LogScript>();
+        if(LogScript==null){
+        Debug.Log("I could not find LogScript");}
 
 
     }
@@ -416,7 +416,7 @@ public class TextManager : MonoBehaviour
 
     public void successfulLogin()
     {
-        SaveToJson.Send();
+        LogScript.WriteNewLogEntry("Login", "Session", "Start");
         LoginCan.gameObject.SetActive(false);
         MenuCan.gameObject.SetActive(true);
         Button Control1button = GameObject.Find("Button_1C").GetComponent<Button>();
