@@ -65,7 +65,7 @@ public class TextManager : MonoBehaviour
     private int IncorrectAnswer;
     private float Cliplength;
 
-    SaveToJson SaveToSaveToJson;
+    SaveToJson SaveToJson;
  
     //Week 2 is diagnostic
     //Week 3 is Validation
@@ -74,17 +74,17 @@ public class TextManager : MonoBehaviour
 
     private string[] ParticipantIDs = {
         //1-6
-        "ERNADR", " AXXAMD", " NMZNNO", " XZCUEV", " IWOIUU", " ASSALI",
+        "ERNADR", "AXXAMD", "NMZNNO", "XZCUEV", "IWOIUU", "ASSALI",
         //7-12
-        "YKMCIM", " EYUCIK", " NLYACP", " OPBOTN", " VTYKBX", " ACCAJY", 
+        "YKMCIM", "EYUCIK", "NLYACP", "OPBOTN", "VTYKBX", "ACCAJY", 
         //13-18
-        "USYMZW", " IOGWFC", " HEXFLK", " WIMEOK", " NFSAXV", " LFUMCR", 
+        "USYMZW", "IOGWFC", "HEXFLK", "WIMEOK", "NFSAXV", "LFUMCR", 
         //19-24
-        "EUQMLO", " QBLUKF", " UGMGRI", " UGMGSI", " VAFBFQ", " NZMAGB", 
+        "EUQMLO", "QBLUKF", "UGMGRI", "UGMGSI", "VAFBFQ", "NZMAGB", 
         //25-30
-        "HUNNQU", " RLUCUX", " QMWOEU", " CLJSYT", " IZRGCR", " XDGISR", 
+        "HUNNQU", "RLUCUX", "QMWOEU", "CLJSYT", "IZRGCR", "XDGISR", 
         //31-36
-        "UXDIFR", " JBSGMR", " IUMSIW", " BRQQBL", " PKVDIU",  "JHYIPL"
+        "UXDIFR", "JBSGMR", "IUMSIW", "BRQQBL", "PKVDIU", "JHYIPL"
         };
 
     
@@ -98,8 +98,7 @@ public class TextManager : MonoBehaviour
         TimerText.text = TimeLeft.ToString("#:00");        
         }
         AnswerOutput(3);
-        LogEntry.EntryCode("Answer","TimerFail","PlayerFeedback"); 
-        SaveToJson.writeNewEntry();   
+        SaveToJson.logEntry("Answer","TimerFail","PlayerFeedback"); 
     }
 
     public void Pathchanger(int newPath)
@@ -144,8 +143,7 @@ public class TextManager : MonoBehaviour
             {
               //Point based
             }
-            LogEntry.EntryCode("Answer","Correct","PlayerFeedback");
-            SaveToJson.writeNewEntry();
+            SaveToJson.logEntry("Answer","Correct","PlayerFeedback");
         }
         else if(Answer == SemicorrectAnswer)
         {
@@ -162,8 +160,7 @@ public class TextManager : MonoBehaviour
             {
               //Point based
             }
-            LogEntry.EntryCode("Answer","Semicorrect","PlayerFeedback");
-            SaveToJson.writeNewEntry();
+            SaveToJson.logEntry("Answer","Semicorrect","PlayerFeedback");
         }
         else
         {
@@ -182,16 +179,14 @@ public class TextManager : MonoBehaviour
               //Point based
               //Achievement response
             }
-            LogEntry.EntryCode("Answer","Incorrect","PlayerFeedback"); 
-            SaveToJson.writeNewEntry();
+            SaveToJson.logEntry("Answer","Incorrect","PlayerFeedback"); 
         }
         Advance.interactable = true;
     }
 
     public void PlayAudio()
     {
-        LogEntry.EntryCode("Sound", "Started", "PlayerFeedback"); 
-        SaveToJson.writeNewEntry();
+        SaveToJson.logEntry("Sound", "Started", "PlayerFeedback"); 
         ToPlay.Play();
         if (Path == 2)
         {
@@ -321,7 +316,9 @@ public class TextManager : MonoBehaviour
         responseArray[1] = new responseClass("Semicorrect", 1);
         responseArray[2] = new responseClass("Correct", 2); 
 
-        SaveToJson SaveToJson = GameObject.Find("jsonManager").GetComponent<SaveToJson>();
+        SaveToJson = GameObject.Find("JsonManager").GetComponent<SaveToJson>();
+        if(SaveToJson==null){
+        Debug.Log("I could not find JsonManager");}
 
 
     }
@@ -407,19 +404,19 @@ public class TextManager : MonoBehaviour
     public void IDChecker()
     {
         string LoginAttempt = Login.text;
-        foreach (string i in ParticipantIDs)
+        for(int i=0; i<ParticipantIDs.Length; i++ )
         {
-            if (i == LoginAttempt)
+            if (ParticipantIDs[i] == LoginAttempt)
             {
                 successfulLogin();
             }
-
         }
-        Debug.Log("Unsuccessful Login");
+        
     }
 
     public void successfulLogin()
     {
+        SaveToJson.Send();
         LoginCan.gameObject.SetActive(false);
         MenuCan.gameObject.SetActive(true);
         Button Control1button = GameObject.Find("Button_1C").GetComponent<Button>();

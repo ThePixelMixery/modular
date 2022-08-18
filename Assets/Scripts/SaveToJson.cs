@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using Firebase;
 using Firebase.Database;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SaveToJson : MonoBehaviour
 {
     DatabaseReference reference;
+
+    TMP_InputField IDInput;
+
+    log logEntryScript;
 
     string participantId;
 
@@ -16,14 +20,15 @@ public class SaveToJson : MonoBehaviour
         // Get the root reference location of the database.
         reference = FirebaseDatabase.DefaultInstance.RootReference;
         Debug.Log (reference);
+        IDInput =
+            GameObject.Find("InputField_ID").GetComponent<TMP_InputField>();
+        Debug.Log (IDInput);
+
+        log = GameObject.Find("LogObject").GetComponent<LogEntry>();
+        Debug.Log (log);
     }
 
-    public static void logEntry(string id, string tag1, string tag2)
-    {
-
-        Debug.Log(id + ", " + tag1 + ", "+ tag2);
-    }
-    public void writeNewEntry()
+    public void Send()
     {
         LogEntry logEntry = new LogEntry();
         string json = JsonUtility.ToJson(logEntry);
@@ -36,14 +41,8 @@ public class SaveToJson : MonoBehaviour
 
     public void ParticipantID()
     {
-        InputField IDInput =
-            GameObject.Find("InputField_ID").GetComponent<InputField>();
-        participantId = IDInput.text;
+        participantId = IDInput.GetComponent<TMP_InputField>().text;
+
         Debug.Log (participantId);
     }
-    public static void logEntry(
-        string newGameEvent,
-        string newTag1,
-        string newTag2
-    )
 }

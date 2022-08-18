@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class LogEntry : MonoBehaviour
 {
-    public static string gameEvent;
+    public string gameEvent;
 
-    public static string tag1;
+    public string tag1;
 
-    public static string tag2;
+    public string tag2;
 
     public LogEntry()
     {

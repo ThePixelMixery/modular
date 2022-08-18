@@ -588,10 +588,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: Level Select
-  tag1: Story2
-  tag2: 
-  IDInput: {fileID: 0}
 --- !u!1 &100072494
 GameObject:
   m_ObjectHideFlags: 0
@@ -763,10 +759,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: NextButton
-  tag1: Generic
-  tag2: 
-  IDInput: {fileID: 0}
 --- !u!1 &115730698
 GameObject:
   m_ObjectHideFlags: 0
@@ -978,6 +970,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 118656632}
   m_CullTransparentMesh: 1
+--- !u!1 &136057783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 136057785}
+  - component: {fileID: 136057784}
+  m_Layer: 0
+  m_Name: LogObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &136057784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136057783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70269283ab5b2f94eade9ff3814ac25c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &136057785
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136057783}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &136951116
 GameObject:
   m_ObjectHideFlags: 0
@@ -2024,10 +2060,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: LevelSelect
-  tag1: Point3
-  tag2: 
-  IDInput: {fileID: 0}
 --- !u!1 &309937869
 GameObject:
   m_ObjectHideFlags: 0
@@ -2751,7 +2783,6 @@ GameObject:
   - component: {fileID: 384946380}
   - component: {fileID: 384946379}
   - component: {fileID: 384946378}
-  - component: {fileID: 384946377}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -2759,42 +2790,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &384946377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 384946376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7be70705007fa9548886e4543e548e63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Situation: {fileID: 0}
-  Option1: {fileID: 0}
-  Option2: {fileID: 0}
-  Option3: {fileID: 0}
-  TimerText: {fileID: 0}
-  Login: {fileID: 0}
-  Correct: {fileID: 0}
-  Semicorrect: {fileID: 0}
-  Incorrect: {fileID: 0}
-  LoginCan: {fileID: 0}
-  MenuCan: {fileID: 0}
-  TextCan: {fileID: 0}
-  AudioCan: {fileID: 0}
-  TimerCan: {fileID: 0}
-  SubmitCan: {fileID: 0}
-  Advance: {fileID: 0}
-  Clip1: {fileID: 0}
-  Clip2: {fileID: 0}
-  Clip3: {fileID: 0}
-  Clip4: {fileID: 0}
-  Path: 0
-  Test: 0
-  Stage: 0
-  json: {fileID: 0}
 --- !u!114 &384946378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4083,10 +4078,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: Answer
-  tag1: Opt1
-  tag2: 
-  IDInput: {fileID: 0}
 --- !u!1 &616532480
 GameObject:
   m_ObjectHideFlags: 0
@@ -4388,6 +4379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7af84173e1b37f64384a1e614f7721e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IDInput: {fileID: 0}
 --- !u!4 &708195709
 Transform:
   m_ObjectHideFlags: 0
@@ -4960,10 +4952,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: LevelSelect
-  tag1: Control3
-  tag2: 
-  IDInput: {fileID: 0}
 --- !u!1 &750670882
 GameObject:
   m_ObjectHideFlags: 0
@@ -5288,7 +5276,6 @@ MonoBehaviour:
   Path: 1
   Test: 2
   Stage: 0
-  json: {fileID: 0}
 --- !u!4 &787406311
 Transform:
   m_ObjectHideFlags: 0
@@ -5561,10 +5548,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: Login
-  tag1: Generic
-  tag2: 
-  IDInput: {fileID: 0}
 --- !u!114 &804374034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5722,6 +5705,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 840290648}
+  - component: {fileID: 840290649}
   m_Layer: 0
   m_Name: logManager
   m_TagString: Untagged
@@ -5744,6 +5728,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &840290649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 840290647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df5817ccb96d3b149895681c5e3233d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableLogging: 1
+  maxLogRate: 1
+  logFileBaseName: ludology
+  serverName: 
 --- !u!1 &866065343
 GameObject:
   m_ObjectHideFlags: 0
@@ -5939,10 +5939,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: LevelSelect
-  tag1: Points2
-  tag2: 
-  IDInput: {fileID: 0}
 --- !u!1 &883018172
 GameObject:
   m_ObjectHideFlags: 0
@@ -6034,6 +6030,30 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 708195708}
+        m_TargetAssemblyTypeName: SaveToJson, Assembly-CSharp
+        m_MethodName: Send
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: SaveToJson, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6819,10 +6839,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: Feedback
-  tag1: Useful
-  tag2: 
-  IDInput: {fileID: 0}
 --- !u!1 &1162491545
 GameObject:
   m_ObjectHideFlags: 0
@@ -7088,10 +7104,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: Feedback
-  tag1: Enjoyable
-  tag2: 
-  IDInput: {fileID: 0}
 --- !u!1 &1268482802
 GameObject:
   m_ObjectHideFlags: 0
@@ -7550,10 +7562,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: 'Feedback '
-  tag1: Submission
-  tag2: 
-  IDInput: {fileID: 0}
 --- !u!114 &1352670383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7896,10 +7904,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: Answer
-  tag1: Opt3
-  tag2: 
-  IDInput: {fileID: 0}
 --- !u!1 &1494587595
 GameObject:
   m_ObjectHideFlags: 0
@@ -8059,10 +8063,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: Answer
-  tag1: Opt2
-  tag2: 
-  IDInput: {fileID: 0}
 --- !u!1 &1516812338
 GameObject:
   m_ObjectHideFlags: 0
@@ -8700,10 +8700,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: LevelSelect
-  tag1: Control1
-  tag2: 
-  IDInput: {fileID: 0}
 --- !u!1 &1657212331
 GameObject:
   m_ObjectHideFlags: 0
@@ -8816,10 +8812,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: Feedback
-  tag1: Repeat
-  tag2: 
-  IDInput: {fileID: 0}
 --- !u!1 &1675077927
 GameObject:
   m_ObjectHideFlags: 0
@@ -9209,10 +9201,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: LevelSelect
-  tag1: Points1
-  tag2: 
-  IDInput: {fileID: 0}
 --- !u!1 &1689881772
 GameObject:
   m_ObjectHideFlags: 0
@@ -9747,10 +9735,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: LevelSelect
-  tag1: Story1
-  tag2: 
-  IDInput: {fileID: 0}
 --- !u!1 &1806376632
 GameObject:
   m_ObjectHideFlags: 0
@@ -10644,10 +10628,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: LevelSelect
-  tag1: Story3
-  tag2: 
-  IDInput: {fileID: 0}
 --- !u!1 &1944271204
 GameObject:
   m_ObjectHideFlags: 0
@@ -11484,10 +11464,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: LevelSelect
-  tag1: Control2
-  tag2: 
-  IDInput: {fileID: 0}
 --- !u!1 &2063902069
 GameObject:
   m_ObjectHideFlags: 0
