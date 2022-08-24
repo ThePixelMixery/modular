@@ -65,7 +65,7 @@ public class TextManager : MonoBehaviour
     private int IncorrectAnswer;
     private float Cliplength;
 
-    LogScript LogScript;
+//    LogScript LogScript;
  
     //Week 2 is diagnostic
     //Week 3 is Validation
@@ -316,9 +316,9 @@ public class TextManager : MonoBehaviour
         responseArray[1] = new responseClass("Semicorrect", 1);
         responseArray[2] = new responseClass("Correct", 2); 
 
-        LogScript = GameObject.Find("LogObject").GetComponent<LogScript>();
-        if(LogScript==null){
-        Debug.Log("I could not find LogScript");}
+ //       LogScript = GameObject.Find("LogObject").GetComponent<LogScript>();
+  //      if(LogScript==null){
+  //      Debug.Log("I could not find LogScript");}
 
 
     }
@@ -416,7 +416,8 @@ public class TextManager : MonoBehaviour
 
     public void successfulLogin()
     {
-        LogScript.WriteNewLogEntry("Login", "Session", "Start");
+        LogScript.ParticipantID();
+        LogScript.WriteNewLogEntry("Login", "Sessions", "Start");
         LoginCan.gameObject.SetActive(false);
         MenuCan.gameObject.SetActive(true);
         Button Control1button = GameObject.Find("Button_1C").GetComponent<Button>();
