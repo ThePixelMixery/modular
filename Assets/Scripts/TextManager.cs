@@ -53,9 +53,11 @@ public class TextManager : MonoBehaviour
 
     private AudioSource ToPlay;
 
+
     public int Path;
     public int Test;
     public int Stage;
+
     private float TimeLeft=10.0f;
     private bool SameTest = true;
     private int CorrectAnswer;
@@ -63,9 +65,7 @@ public class TextManager : MonoBehaviour
     private int IncorrectAnswer;
     private float Cliplength;
 
-    public GameObject callerObject;
-    CallerScript caller;
-
+//    LogScript LogScript;
  
     //Week 2 is diagnostic
     //Week 3 is Validation
@@ -74,17 +74,17 @@ public class TextManager : MonoBehaviour
 
     private string[] ParticipantIDs = {
         //1-6
-        "ERNADR", " AXXAMD", " NMZNNO", " XZCUEV", " IWOIUU", " ASSALI",
+        "ERNADR", "AXXAMD", "NMZNNO", "XZCUEV", "IWOIUU", "ASSALI",
         //7-12
-        "YKMCIM", " EYUCIK", " NLYACP", " OPBOTN", " VTYKBX", " ACCAJY", 
+        "YKMCIM", "EYUCIK", "NLYACP", "OPBOTN", "VTYKBX", "ACCAJY", 
         //13-18
-        "USYMZW", " IOGWFC", " HEXFLK", " WIMEOK", " NFSAXV", " LFUMCR", 
+        "USYMZW", "IOGWFC", "HEXFLK", "WIMEOK", "NFSAXV", "LFUMCR", 
         //19-24
-        "EUQMLO", " QBLUKF", " UGMGRI", " UGMGSI", " VAFBFQ", " NZMAGB", 
+        "EUQMLO", "QBLUKF", "UGMGRI", "UGMGSI", "VAFBFQ", "NZMAGB", 
         //25-30
-        "HUNNQU", " RLUCUX", " QMWOEU", " CLJSYT", " IZRGCR", " XDGISR", 
+        "HUNNQU", "RLUCUX", "QMWOEU", "CLJSYT", "IZRGCR", "XDGISR", 
         //31-36
-        "UXDIFR", " JBSGMR", " IUMSIW", " BRQQBL", " PKVDIU",  "JHYIPL"
+        "UXDIFR", "JBSGMR", "IUMSIW", "BRQQBL", "PKVDIU", "JHYIPL"
         };
 
     
@@ -98,7 +98,7 @@ public class TextManager : MonoBehaviour
         TimerText.text = TimeLeft.ToString("#:00");        
         }
         AnswerOutput(3);
-        caller.CallDetails("Sound", "Over");    
+        LogScript.WriteNewLogEntry("Answer","TimerFail","PlayerFeedback"); 
     }
 
     public void Pathchanger(int newPath)
@@ -143,7 +143,7 @@ public class TextManager : MonoBehaviour
             {
               //Point based
             }
-            caller.CallDetails("Answer", "Correct"); 
+            LogScript.WriteNewLogEntry("Answer","Correct","PlayerFeedback");
         }
         else if(Answer == SemicorrectAnswer)
         {
@@ -160,7 +160,7 @@ public class TextManager : MonoBehaviour
             {
               //Point based
             }
-            caller.CallDetails("Answer", "Semicorrect"); 
+            LogScript.WriteNewLogEntry("Answer","Semicorrect","PlayerFeedback");
         }
         else
         {
@@ -179,14 +179,14 @@ public class TextManager : MonoBehaviour
               //Point based
               //Achievement response
             }
-            caller.CallDetails("Answer", "Incorrect"); 
+            LogScript.WriteNewLogEntry("Answer","Incorrect","PlayerFeedback"); 
         }
         Advance.interactable = true;
     }
 
     public void PlayAudio()
     {
-        caller.CallDetails("Sound", "Started"); 
+        LogScript.WriteNewLogEntry("Sound", "Started", "PlayerFeedback"); 
         ToPlay.Play();
         if (Path == 2)
         {
@@ -316,8 +316,9 @@ public class TextManager : MonoBehaviour
         responseArray[1] = new responseClass("Semicorrect", 1);
         responseArray[2] = new responseClass("Correct", 2); 
 
-        callerObject = GameObject.Find("CallerManager");
-        caller = callerObject.GetComponent<CallerScript>();
+ //       LogScript = GameObject.Find("LogObject").GetComponent<LogScript>();
+  //      if(LogScript==null){
+  //      Debug.Log("I could not find LogScript");}
 
 
     }
@@ -403,19 +404,20 @@ public class TextManager : MonoBehaviour
     public void IDChecker()
     {
         string LoginAttempt = Login.text;
-        foreach (string i in ParticipantIDs)
+        for(int i=0; i<ParticipantIDs.Length; i++ )
         {
-            if (i == LoginAttempt)
+            if (ParticipantIDs[i] == LoginAttempt)
             {
                 successfulLogin();
             }
-
         }
-        Debug.Log("Unsuccessful Login");
+        
     }
 
     public void successfulLogin()
     {
+        LogScript.ParticipantID();
+        LogScript.WriteNewLogEntry("Login", "Sessions", "Start");
         LoginCan.gameObject.SetActive(false);
         MenuCan.gameObject.SetActive(true);
         Button Control1button = GameObject.Find("Button_1C").GetComponent<Button>();

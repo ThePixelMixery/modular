@@ -527,8 +527,8 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 83920395}
-        m_TargetAssemblyTypeName: CallerScript, Assembly-CSharp
-        m_MethodName: Call
+        m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
+        m_MethodName: logIt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -585,12 +585,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 83920390}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
+  m_Script: {fileID: 11500000, guid: bfda8d778abbc544aa0ac3b22b9615bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: Level Select
-  tag1: Story2
-  tag2: 
+  gameEvent: Mode
+  tag1: Narrative
+  tag2: Two
 --- !u!1 &100072494
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,11 +759,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 100072494}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
+  m_Script: {fileID: 11500000, guid: bfda8d778abbc544aa0ac3b22b9615bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: NextButton
-  tag1: Generic
+  gameEvent: Next
+  tag1: Game
   tag2: 
 --- !u!1 &115730698
 GameObject:
@@ -976,6 +976,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 118656632}
   m_CullTransparentMesh: 1
+--- !u!1 &136057783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 136057785}
+  - component: {fileID: 136057784}
+  m_Layer: 0
+  m_Name: LogObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &136057784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136057783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb1631531481bbc4a8432f96a87645d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &136057785
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136057783}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &136951116
 GameObject:
   m_ObjectHideFlags: 0
@@ -1961,8 +2005,8 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 302058026}
-        m_TargetAssemblyTypeName: CallerScript, Assembly-CSharp
-        m_MethodName: Call
+        m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
+        m_MethodName: logIt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2019,12 +2063,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 302058021}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
+  m_Script: {fileID: 11500000, guid: bfda8d778abbc544aa0ac3b22b9615bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: LevelSelect
-  tag1: Point3
-  tag2: 
+  gameEvent: Mode
+  tag1: Points
+  tag2: Three
 --- !u!1 &309937869
 GameObject:
   m_ObjectHideFlags: 0
@@ -2159,7 +2203,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Thank you, you may now (instructions)
+  m_text: Thank you, you may now close the window
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2748,7 +2792,6 @@ GameObject:
   - component: {fileID: 384946380}
   - component: {fileID: 384946379}
   - component: {fileID: 384946378}
-  - component: {fileID: 384946377}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -2756,42 +2799,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &384946377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 384946376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7be70705007fa9548886e4543e548e63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Situation: {fileID: 0}
-  Option1: {fileID: 0}
-  Option2: {fileID: 0}
-  Option3: {fileID: 0}
-  TimerText: {fileID: 0}
-  Login: {fileID: 0}
-  Correct: {fileID: 0}
-  Semicorrect: {fileID: 0}
-  Incorrect: {fileID: 0}
-  LoginCan: {fileID: 0}
-  MenuCan: {fileID: 0}
-  TextCan: {fileID: 0}
-  AudioCan: {fileID: 0}
-  TimerCan: {fileID: 0}
-  SubmitCan: {fileID: 0}
-  Advance: {fileID: 0}
-  Clip1: {fileID: 0}
-  Clip2: {fileID: 0}
-  Clip3: {fileID: 0}
-  Clip4: {fileID: 0}
-  Path: 0
-  Test: 0
-  Stage: 0
-  callerObject: {fileID: 0}
 --- !u!114 &384946378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3382,6 +3389,7 @@ GameObject:
   - component: {fileID: 565031166}
   - component: {fileID: 565031165}
   - component: {fileID: 565031164}
+  - component: {fileID: 565031167}
   m_Layer: 5
   m_Name: Button_Start
   m_TagString: Untagged
@@ -3490,6 +3498,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 565031167}
+        m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
+        m_MethodName: logIt
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &565031165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3528,6 +3548,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 565031162}
   m_CullTransparentMesh: 1
+--- !u!114 &565031167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565031162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfda8d778abbc544aa0ac3b22b9615bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: Start
+  tag1: Game
+  tag2: 
 --- !u!1 &573475569
 GameObject:
   m_ObjectHideFlags: 0
@@ -4019,8 +4054,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 612268275}
-        m_TargetAssemblyTypeName: CallerScript, Assembly-CSharp
-        m_MethodName: Call
+        m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
+        m_MethodName: logIt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4077,12 +4112,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 612268270}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
+  m_Script: {fileID: 11500000, guid: bfda8d778abbc544aa0ac3b22b9615bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: Answer
-  tag1: Opt1
-  tag2: 
+  gameEvent: Option
+  tag1: Game
+  tag2: 1
 --- !u!1 &616532480
 GameObject:
   m_ObjectHideFlags: 0
@@ -4851,8 +4886,8 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 740782607}
-        m_TargetAssemblyTypeName: CallerScript, Assembly-CSharp
-        m_MethodName: Call
+        m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
+        m_MethodName: logIt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4909,12 +4944,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 740782602}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
+  m_Script: {fileID: 11500000, guid: bfda8d778abbc544aa0ac3b22b9615bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: LevelSelect
-  tag1: Control3
-  tag2: 
+  gameEvent: Mode
+  tag1: Control
+  tag2: Three
 --- !u!1 &750670882
 GameObject:
   m_ObjectHideFlags: 0
@@ -5239,7 +5274,6 @@ MonoBehaviour:
   Path: 1
   Test: 2
   Stage: 0
-  callerObject: {fileID: 1123096499}
 --- !u!4 &787406311
 Transform:
   m_ObjectHideFlags: 0
@@ -5512,9 +5546,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: Login
-  tag1: Generic
-  tag2: 
 --- !u!114 &804374034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5576,37 +5607,13 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 804374033}
-        m_TargetAssemblyTypeName: CallerScript, Assembly-CSharp
-        m_MethodName: ParticipantID
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
   m_OnSelect:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 804374033}
-        m_TargetAssemblyTypeName: CallerScript, Assembly-CSharp
-        m_MethodName: Call
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_OnDeselect:
     m_PersistentCalls:
       m_Calls: []
@@ -5675,54 +5682,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 804374031}
   m_CullTransparentMesh: 1
---- !u!1 &822890358
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 822890360}
-  - component: {fileID: 822890359}
-  m_Layer: 0
-  m_Name: AnalysisManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &822890359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 822890358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df5817ccb96d3b149895681c5e3233d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableLogging: 1
-  maxLogRate: 0
-  logFileBaseName: ludology
-  serverName: gamificationresearch.epizy.com
---- !u!4 &822890360
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 822890358}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1334.4235, y: 399.53003, z: -4.186304}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 16
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &866065343
 GameObject:
   m_ObjectHideFlags: 0
@@ -5857,8 +5816,8 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 866065348}
-        m_TargetAssemblyTypeName: CallerScript, Assembly-CSharp
-        m_MethodName: Call
+        m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
+        m_MethodName: logIt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5915,12 +5874,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 866065343}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
+  m_Script: {fileID: 11500000, guid: bfda8d778abbc544aa0ac3b22b9615bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: LevelSelect
-  tag1: Points2
-  tag2: 
+  gameEvent: Mode
+  tag1: Point
+  tag2: Two
 --- !u!1 &883018172
 GameObject:
   m_ObjectHideFlags: 0
@@ -5933,7 +5892,6 @@ GameObject:
   - component: {fileID: 883018176}
   - component: {fileID: 883018175}
   - component: {fileID: 883018174}
-  - component: {fileID: 883018177}
   m_Layer: 5
   m_Name: Button_login
   m_TagString: Untagged
@@ -6006,18 +5964,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 883018177}
-        m_TargetAssemblyTypeName: CallerScript, Assembly-CSharp
-        m_MethodName: Call
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 787406310}
         m_TargetAssemblyTypeName: TextManager, Assembly-CSharp
         m_MethodName: IDChecker
@@ -6068,21 +6014,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 883018172}
   m_CullTransparentMesh: 1
---- !u!114 &883018177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 883018172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GameEvent: LogIn
-  tag1: Generic
-  tag2: 
 --- !u!1 &885946288
 GameObject:
   m_ObjectHideFlags: 0
@@ -6801,8 +6732,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1063662709}
-        m_TargetAssemblyTypeName: CallerScript, Assembly-CSharp
-        m_MethodName: Call
+        m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
+        m_MethodName: logIt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6822,59 +6753,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1063662706}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
+  m_Script: {fileID: 11500000, guid: bfda8d778abbc544aa0ac3b22b9615bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: Feedback
-  tag1: Useful
-  tag2: 
---- !u!1 &1123096499
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1123096501}
-  - component: {fileID: 1123096500}
-  m_Layer: 0
-  m_Name: CallerManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1123096500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1123096499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GameEvent: 
-  tag1: 
-  tag2: 
---- !u!4 &1123096501
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1123096499}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1334.4235, y: 399.53003, z: -4.186304}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 17
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  gameEvent: Useful
+  tag1: Game
+  tag2: Feedback
 --- !u!1 &1162491545
 GameObject:
   m_ObjectHideFlags: 0
@@ -7116,8 +7000,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1265432857}
-        m_TargetAssemblyTypeName: CallerScript, Assembly-CSharp
-        m_MethodName: Call
+        m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
+        m_MethodName: logIt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7137,12 +7021,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1265432854}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
+  m_Script: {fileID: 11500000, guid: bfda8d778abbc544aa0ac3b22b9615bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: Feedback
-  tag1: Enjoyable
-  tag2: 
+  gameEvent: Enjoyed
+  tag1: Game
+  tag2: Feedback
 --- !u!1 &1268482802
 GameObject:
   m_ObjectHideFlags: 0
@@ -7598,12 +7482,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1352670380}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
+  m_Script: {fileID: 11500000, guid: bfda8d778abbc544aa0ac3b22b9615bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: 'Feedback '
-  tag1: Submission
-  tag2: 
+  gameEvent: Submit
+  tag1: Session
+  tag2: End
 --- !u!114 &1352670383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7649,8 +7533,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1352670382}
-        m_TargetAssemblyTypeName: CallerScript, Assembly-CSharp
-        m_MethodName: Call
+        m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
+        m_MethodName: logIt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7787,6 +7671,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480936067}
   m_CullTransparentMesh: 1
+--- !u!1 &1481779710
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1481779711}
+  m_Layer: 0
+  m_Name: LoggerObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1481779711
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481779710}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1148.6323, y: 324.44754, z: -2.260771}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1483637043
 GameObject:
   m_ObjectHideFlags: 0
@@ -7885,8 +7800,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1483637048}
-        m_TargetAssemblyTypeName: CallerScript, Assembly-CSharp
-        m_MethodName: Call
+        m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
+        m_MethodName: logIt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7943,12 +7858,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1483637043}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
+  m_Script: {fileID: 11500000, guid: bfda8d778abbc544aa0ac3b22b9615bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: Answer
-  tag1: Opt3
-  tag2: 
+  gameEvent: Option
+  tag1: Game
+  tag2: 3
 --- !u!1 &1494587595
 GameObject:
   m_ObjectHideFlags: 0
@@ -8047,8 +7962,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1494587600}
-        m_TargetAssemblyTypeName: CallerScript, Assembly-CSharp
-        m_MethodName: Call
+        m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
+        m_MethodName: logIt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8105,12 +8020,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1494587595}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
+  m_Script: {fileID: 11500000, guid: bfda8d778abbc544aa0ac3b22b9615bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: Answer
-  tag1: Opt2
-  tag2: 
+  gameEvent: Option
+  tag1: Game
+  tag2: 2
 --- !u!1 &1516812338
 GameObject:
   m_ObjectHideFlags: 0
@@ -8687,8 +8602,8 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 1652069982}
-        m_TargetAssemblyTypeName: CallerScript, Assembly-CSharp
-        m_MethodName: Call
+        m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
+        m_MethodName: logIt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8745,12 +8660,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1652069977}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
+  m_Script: {fileID: 11500000, guid: bfda8d778abbc544aa0ac3b22b9615bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: LevelSelect
-  tag1: Control1
-  tag2: 
+  gameEvent: Mode
+  tag1: Control
+  tag2: One
 --- !u!1 &1657212331
 GameObject:
   m_ObjectHideFlags: 0
@@ -8839,8 +8754,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1657212334}
-        m_TargetAssemblyTypeName: CallerScript, Assembly-CSharp
-        m_MethodName: Call
+        m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
+        m_MethodName: logIt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8860,12 +8775,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1657212331}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
+  m_Script: {fileID: 11500000, guid: bfda8d778abbc544aa0ac3b22b9615bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: Feedback
-  tag1: Repeat
-  tag2: 
+  gameEvent: Replay
+  tag1: Game
+  tag2: Feedback
 --- !u!1 &1675077927
 GameObject:
   m_ObjectHideFlags: 0
@@ -9194,8 +9109,8 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 1683968721}
-        m_TargetAssemblyTypeName: CallerScript, Assembly-CSharp
-        m_MethodName: Call
+        m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
+        m_MethodName: logIt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9252,12 +9167,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1683968716}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
+  m_Script: {fileID: 11500000, guid: bfda8d778abbc544aa0ac3b22b9615bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: LevelSelect
-  tag1: Points1
-  tag2: 
+  gameEvent: Mode
+  tag1: Points
+  tag2: One
 --- !u!1 &1689881772
 GameObject:
   m_ObjectHideFlags: 0
@@ -9731,8 +9646,8 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 1772980620}
-        m_TargetAssemblyTypeName: CallerScript, Assembly-CSharp
-        m_MethodName: Call
+        m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
+        m_MethodName: logIt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9789,12 +9704,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1772980615}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
+  m_Script: {fileID: 11500000, guid: bfda8d778abbc544aa0ac3b22b9615bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: LevelSelect
-  tag1: Story1
-  tag2: 
+  gameEvent: Mode
+  tag1: Narrative
+  tag2: One
 --- !u!1 &1806376632
 GameObject:
   m_ObjectHideFlags: 0
@@ -10627,8 +10542,8 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 1942288285}
-        m_TargetAssemblyTypeName: CallerScript, Assembly-CSharp
-        m_MethodName: Call
+        m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
+        m_MethodName: logIt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10685,12 +10600,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1942288280}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
+  m_Script: {fileID: 11500000, guid: bfda8d778abbc544aa0ac3b22b9615bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: LevelSelect
-  tag1: Story3
-  tag2: 
+  gameEvent: Mode
+  tag1: Narrative
+  tag2: Three
 --- !u!1 &1944271204
 GameObject:
   m_ObjectHideFlags: 0
@@ -11466,8 +11381,8 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 2056476252}
-        m_TargetAssemblyTypeName: CallerScript, Assembly-CSharp
-        m_MethodName: Call
+        m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
+        m_MethodName: logIt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11524,12 +11439,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2056476247}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f912c37680db2d447884362fffb8c529, type: 3}
+  m_Script: {fileID: 11500000, guid: bfda8d778abbc544aa0ac3b22b9615bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEvent: LevelSelect
-  tag1: Control2
-  tag2: 
+  gameEvent: Mode
+  tag1: Control
+  tag2: Two
 --- !u!1 &2063902069
 GameObject:
   m_ObjectHideFlags: 0

@@ -58,3 +58,6 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Weird Firebase bundle
+*9_4_0.bundle
+
