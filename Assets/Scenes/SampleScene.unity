@@ -5272,7 +5272,7 @@ MonoBehaviour:
   Clip3: {fileID: 1649391508}
   Clip4: {fileID: 337396917}
   Path: 1
-  Test: 2
+  Test: 0
   Stage: 0
 --- !u!4 &787406311
 Transform:
