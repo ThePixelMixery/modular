@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "397871464714",
+    "firebase_url": "https://gamification-research-default-rtdb.firebaseio.com",
+    "project_id": "gamification-research",
+    "storage_bucket": "gamification-research.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397871464714:android:5c6bc1e277c10c47513af3",
+        "android_client_info": {
+          "package_name": "com.Deakin.gamification"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "397871464714-psm68beusn13m4jmj6q14ls43jhg4jag.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDHiizq_r1R-v1ZBYR9YTZrri0Y8ku4X8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "397871464714-psm68beusn13m4jmj6q14ls43jhg4jag.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
