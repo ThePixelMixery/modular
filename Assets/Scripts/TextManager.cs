@@ -27,10 +27,10 @@ public class TextManager : MonoBehaviour
 {
     
     public TextMeshProUGUI Situation;
-    public TextMeshProUGUI Option1;
-    public TextMeshProUGUI Option2;
-    public TextMeshProUGUI Option3;
-    public TextMeshProUGUI TimerText;
+    public Button Option1;
+    public Button Option2;
+    public Button Option3;
+    
     public TMP_InputField Login;
 
     public Image Correct;
@@ -42,6 +42,7 @@ public class TextManager : MonoBehaviour
     public Canvas TextCan;
     public Canvas AudioCan;
     public Canvas TimerCan;
+    public Canvas PracCan;
     public Canvas SubmitCan;
 
     public Button Advance;
@@ -58,14 +59,12 @@ public class TextManager : MonoBehaviour
     public int Test;
     public int Stage;
 
-    private float TimeLeft=10.0f;
     private bool SameTest = true;
     private int CorrectAnswer;
     private int SemicorrectAnswer;
     private int IncorrectAnswer;
     private float Cliplength;
 
-//    LogScript LogScript;
  
     //Week 2 is diagnostic
     //Week 3 is Validation
@@ -88,22 +87,11 @@ public class TextManager : MonoBehaviour
         };
 
     
-    IEnumerator RunTimer(float Cliplength)
-    {
-        yield return new WaitForSeconds(Cliplength);
-        TimeLeft = 10.0f;
-        while (TimeLeft >= 0.0f)
-        {
-        TimeLeft -= Time.deltaTime;
-        TimerText.text = TimeLeft.ToString("#:00");        
-        }
-        AnswerOutput(3);
-        LogScript.WriteNewLogEntry("Answer","TimerFail","PlayerFeedback"); 
-    }
 
     public void Pathchanger(int newPath)
     {
         Path = newPath;
+//        Timer.SetTimer();
     }
 
     public void Resetter()
@@ -118,7 +106,7 @@ public class TextManager : MonoBehaviour
             responseArray[i].accuracy = ResetAcc;
             ResetAcc++;
         }        
-        TimeLeft = 10.0f;
+ //       TimeLeft = 10.0f;
         if(SameTest==true) 
         {Stage++;}
         else{Test++;Stage=0;}
@@ -182,6 +170,9 @@ public class TextManager : MonoBehaviour
             LogScript.WriteNewLogEntry("Answer","Incorrect","PlayerFeedback"); 
         }
         Advance.interactable = true;
+        Option1.interactable = false;
+        Option2.interactable = false;
+        Option3.interactable = false;
     }
 
     public void PlayAudio()
@@ -190,7 +181,7 @@ public class TextManager : MonoBehaviour
         ToPlay.Play();
         if (Path == 2)
         {
-            RunTimer(Cliplength);
+//            RunTimer(Cliplength);
         }
     }
 
@@ -290,10 +281,11 @@ public class TextManager : MonoBehaviour
                 break;
 
                 case(4):
+                
                 TextCan.gameObject.SetActive(false);
                 AudioCan.gameObject.SetActive(false);
                 TimerCan.gameObject.SetActive(false);
-                
+                PracCan.gameObject.SetActive(false);
                 SubmitCan.gameObject.SetActive(true);
                 break;
                 
@@ -316,10 +308,6 @@ public class TextManager : MonoBehaviour
         responseArray[1] = new responseClass("Semicorrect", 1);
         responseArray[2] = new responseClass("Correct", 2); 
 
- //       LogScript = GameObject.Find("LogObject").GetComponent<LogScript>();
-  //      if(LogScript==null){
-  //      Debug.Log("I could not find LogScript");}
-
 
     }
     
@@ -334,9 +322,9 @@ public class TextManager : MonoBehaviour
         responseArray[a] = responseArray[b];
         responseArray[b] = temp;
         }
-        Option1.text = responseArray[0].response;
-        Option2.text = responseArray[1].response;
-        Option3.text = responseArray[2].response;
+        Option1.GetComponentInChildren<Text>().text = responseArray[0].response;
+        Option2.GetComponentInChildren<Text>().text = responseArray[1].response;
+        Option3.GetComponentInChildren<Text>().text = responseArray[2].response;
         AnswerChecker();
     }
 
