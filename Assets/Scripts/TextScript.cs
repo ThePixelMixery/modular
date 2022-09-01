@@ -21,9 +21,8 @@ public class responseClass
     }
 }
 
-    
 
-public class TextManager : MonoBehaviour
+public class TextScript : MonoBehaviour
 {
     
     public TextMeshProUGUI Situation;
@@ -32,6 +31,12 @@ public class TextManager : MonoBehaviour
     public Button Option3;
     
     public TMP_InputField Login;
+
+    public TextMeshProUGUI TrainingText;
+
+
+    public TextMeshProUGUI TimerText;
+    public TextMeshProUGUI TrainTimerText;
 
     public Image Correct;
     public Image Semicorrect;
@@ -45,6 +50,7 @@ public class TextManager : MonoBehaviour
     public Canvas PracCan;
     public Canvas SubmitCan;
 
+    public Button Game;
     public Button Advance;
 
     public AudioSource Clip1;
@@ -54,6 +60,9 @@ public class TextManager : MonoBehaviour
 
     private AudioSource ToPlay;
 
+    private float timeLeft = 60.0f;
+    private bool training = true;
+    private bool timerIsRunning=false;
 
     public int Path;
     public int Test;
@@ -88,10 +97,53 @@ public class TextManager : MonoBehaviour
 
     
 
+    void Update(){
+    if (timerIsRunning){
+            if (timeLeft > 0){
+                timeLeft -= Time.deltaTime;
+                DisplayTime(timeLeft);
+            }
+            else{
+                Debug.Log("Time has run out!");
+                timeLeft = 0;
+                timerIsRunning = false;
+                timerEnded();
+            }
+        }
+    }
+
+    void DisplayTime(float timeDisplay)
+    {
+        float seconds = Mathf.FloorToInt(timeDisplay % 60);
+        float milliSeconds = (timeDisplay % 1) * 1000;
+        TrainTimerText.text = string.Format("{0:00}", seconds);
+        TimerText.text = string.Format("{0:00}:{1:000}", seconds, milliSeconds);
+    }
+
+    void timerEnded()
+    {
+        if(training){
+            TrainingText.text = "Time to move on!";
+        }
+        else{
+            AnswerOutput(3);}
+
+    }
+
+
     public void Pathchanger(int newPath)
     {
+        timeLeft= 5.0f;
+        timerIsRunning=true;
         Path = newPath;
-//        Timer.SetTimer();
+    }
+
+
+    public void AllowAnswer()
+    {
+        Option1.interactable = true;
+        Option2.interactable = true;
+        Option3.interactable = true;
     }
 
     public void Resetter()
@@ -106,12 +158,14 @@ public class TextManager : MonoBehaviour
             responseArray[i].accuracy = ResetAcc;
             ResetAcc++;
         }        
- //       TimeLeft = 10.0f;
+        timeLeft = 10.0f;
         if(SameTest==true) 
         {Stage++;}
         else{Test++;Stage=0;}
         TestChanger();
     }
+
+
 
     public void AnswerOutput(int Answer)
     {
@@ -150,7 +204,24 @@ public class TextManager : MonoBehaviour
             }
             LogScript.WriteNewLogEntry("Answer","Semicorrect","PlayerFeedback");
         }
-        else
+        else if(Answer == IncorrectAnswer)
+        {
+            if (Path <= 3)
+            {
+                //Control
+                Semicorrect.gameObject.SetActive(true);
+            }
+            else if (Path >= 4 || Path <= 6)
+            {
+               // Narrative Changes
+            }
+            else
+            {
+              //Point based
+            }
+            LogScript.WriteNewLogEntry("Answer","Incorrect","PlayerFeedback");
+        }
+        else if (Answer == 3)
         {
             if (Path <= 3)
             {
@@ -167,7 +238,7 @@ public class TextManager : MonoBehaviour
               //Point based
               //Achievement response
             }
-            LogScript.WriteNewLogEntry("Answer","Incorrect","PlayerFeedback"); 
+            LogScript.WriteNewLogEntry("Answer","TimerRanOut","PlayerFeedback"); 
         }
         Advance.interactable = true;
         Option1.interactable = false;
@@ -179,12 +250,21 @@ public class TextManager : MonoBehaviour
     {
         LogScript.WriteNewLogEntry("Sound", "Started", "PlayerFeedback"); 
         ToPlay.Play();
-        if (Path == 2)
-        {
-//            RunTimer(Cliplength);
-        }
+        StartCoroutine(EndAudio());
     }
 
+    IEnumerator EndAudio()
+    {
+        
+        yield return new WaitForSeconds(Cliplength);
+        LogScript.WriteNewLogEntry("Sound", "Ended", "PlayerFeedback"); 
+        AllowAnswer();
+        if (Path == 2)
+        {
+        timeLeft=10.0f;
+        timerIsRunning=true;
+        }
+    } 
 
     public void TestChanger()
     {
@@ -217,6 +297,7 @@ public class TextManager : MonoBehaviour
                     default:
                     break;
                 }
+                AllowAnswer();
                 break;
                 
                 case(1):
@@ -254,7 +335,6 @@ public class TextManager : MonoBehaviour
                 case(2):
                 AudioCan.gameObject.SetActive(true);
                 TimerCan.gameObject.SetActive(true);
-
                 switch (Stage)
                     {
                     case(0):
@@ -307,14 +387,13 @@ public class TextManager : MonoBehaviour
         responseArray[0] = new responseClass("Incorrect", 0);
         responseArray[1] = new responseClass("Semicorrect", 1);
         responseArray[2] = new responseClass("Correct", 2); 
-
-
+        Debug.Log(responseArray[0] + ", " + responseArray[1] + ", " + responseArray[2]);
     }
     
     public void AnswerRandomised()
     {
     
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 3; i++)
         {
         int a = Random.Range (0,3);
         int b = Random.Range (0,3);
@@ -322,9 +401,9 @@ public class TextManager : MonoBehaviour
         responseArray[a] = responseArray[b];
         responseArray[b] = temp;
         }
-        Option1.GetComponentInChildren<Text>().text = responseArray[0].response;
-        Option2.GetComponentInChildren<Text>().text = responseArray[1].response;
-        Option3.GetComponentInChildren<Text>().text = responseArray[2].response;
+        Option1.GetComponentInChildren<TextMeshProUGUI>().text = responseArray[0].response;
+        Option2.GetComponentInChildren<TextMeshProUGUI>().text = responseArray[1].response;
+        Option3.GetComponentInChildren<TextMeshProUGUI>().text = responseArray[2].response;
         AnswerChecker();
     }
 

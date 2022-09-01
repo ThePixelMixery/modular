@@ -702,8 +702,8 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 100072499}
-        m_TargetAssemblyTypeName: CallerScript, Assembly-CSharp
-        m_MethodName: Call
+        m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
+        m_MethodName: logIt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5217,9 +5217,10 @@ MonoBehaviour:
   Option1: {fileID: 612268272}
   Option2: {fileID: 1494587597}
   Option3: {fileID: 1483637045}
+  Login: {fileID: 804374034}
+  TrainingText: {fileID: 1675077929}
   TimerText: {fileID: 750670883}
   TrainTimerText: {fileID: 870854794}
-  Login: {fileID: 804374034}
   Correct: {fileID: 502335808}
   Semicorrect: {fileID: 885946290}
   Incorrect: {fileID: 1937854890}
@@ -5230,6 +5231,7 @@ MonoBehaviour:
   TimerCan: {fileID: 573475572}
   PracCan: {fileID: 728672213}
   SubmitCan: {fileID: 915363710}
+  Game: {fileID: 565031164}
   Advance: {fileID: 100072496}
   Clip1: {fileID: 1689881774}
   Clip2: {fileID: 257295274}
@@ -5857,7 +5859,7 @@ GameObject:
   - component: {fileID: 870854795}
   - component: {fileID: 870854794}
   m_Layer: 5
-  m_Name: Text_Training
+  m_Name: Text_TrainingTimer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6762,7 +6764,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1054705959
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7040,7 +7042,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0253431710cd2fc41948c40cde107fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outputText: {fileID: 0}
+  outputText: {fileID: 1054705960}
 --- !u!1 &1162491545
 GameObject:
   m_ObjectHideFlags: 0
@@ -7964,6 +7966,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1452884045}
+  - component: {fileID: 1452884046}
   m_Layer: 0
   m_Name: TimerObject
   m_TagString: Untagged
@@ -7986,6 +7989,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1452884046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452884044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cf2fe36ffa8ae842a52562976298b51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimerText: {fileID: 750670883}
+  TrainTimerText: {fileID: 870854794}
+  TextManager: {fileID: 787406309}
+  timeLeft: 0
+  training: 1
 --- !u!1 &1480936067
 GameObject:
   m_ObjectHideFlags: 0

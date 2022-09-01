@@ -90,7 +90,7 @@ public class LogScript : MonoBehaviour
         string logTimeJson = "\""+month+"\":{\""+day+"\":{";
         logEntry.time = dt.ToString("HH:mm:ss.fff");
         string json = JsonUtility.ToJson(logEntry);
-        Debug.Log(json);
+//        Debug.Log(json);
 
         Debug.Log(gameEvent + ", " + tag1 + ", " + tag2 + " updated");
 
