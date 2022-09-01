@@ -94,7 +94,7 @@ public class LogScript : MonoBehaviour
 
         Debug.Log(gameEvent + ", " + tag1 + ", " + tag2 + " updated");
 
-/*
+
 
         FirebaseDatabase
             .PushJSON("participants/"+participantId+"/"+logTime,
@@ -102,7 +102,7 @@ public class LogScript : MonoBehaviour
             "LogObject",
             "DisplayInfo",
             "DisplayErrorObject");
-*/
+
 
         Destroy (LoggerObject);
         Debug.Log(LoggerObject + " destroyed");
