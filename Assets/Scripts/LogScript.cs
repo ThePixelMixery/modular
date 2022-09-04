@@ -65,9 +65,6 @@ public class LogScript : MonoBehaviour
             IDInput =
                 GameObject.Find("InputField_ID").GetComponent<TMP_InputField>();
             Debug.Log(IDInput + " found");
-            outputText =
-                GameObject.Find("Text_OutputText").GetComponent<TextMeshProUGUI>();
-            Debug.Log(outputText + " found");
         }
     }
 

@@ -92,7 +92,9 @@ public class TextScript : MonoBehaviour
         //25-30
         "HUNNQU", "RLUCUX", "QMWOEU", "CLJSYT", "IZRGCR", "XDGISR", 
         //31-36
-        "UXDIFR", "JBSGMR", "IUMSIW", "BRQQBL", "PKVDIU", "JHYIPL"
+        "UXDIFR", "JBSGMR", "IUMSIW", "BRQQBL", "PKVDIU", "JHYIPL",
+        //testing
+        "test"
         };
 
     
@@ -133,7 +135,7 @@ public class TextScript : MonoBehaviour
 
     public void Pathchanger(int newPath)
     {
-        timeLeft= 5.0f;
+        timeLeft= 60.0f;
         timerIsRunning=true;
         Path = newPath;
     }
@@ -169,6 +171,10 @@ public class TextScript : MonoBehaviour
 
     public void AnswerOutput(int Answer)
     {
+        Advance.interactable = true;
+        Option1.interactable = false;
+        Option2.interactable = false;
+        Option3.interactable = false;
         if (Answer == CorrectAnswer)
         {
             if (Path <= 3)
@@ -209,7 +215,7 @@ public class TextScript : MonoBehaviour
             if (Path <= 3)
             {
                 //Control
-                Semicorrect.gameObject.SetActive(true);
+                Incorrect.gameObject.SetActive(true);
             }
             else if (Path >= 4 || Path <= 6)
             {
@@ -240,10 +246,7 @@ public class TextScript : MonoBehaviour
             }
             LogScript.WriteNewLogEntry("Answer","TimerRanOut","PlayerFeedback"); 
         }
-        Advance.interactable = true;
-        Option1.interactable = false;
-        Option2.interactable = false;
-        Option3.interactable = false;
+
     }
 
     public void PlayAudio()
@@ -251,6 +254,11 @@ public class TextScript : MonoBehaviour
         LogScript.WriteNewLogEntry("Sound", "Started", "PlayerFeedback"); 
         ToPlay.Play();
         StartCoroutine(EndAudio());
+        AllowAnswer();
+        if (Path == 2)
+        {
+        timerIsRunning=true;
+        }
     }
 
     IEnumerator EndAudio()
@@ -258,12 +266,6 @@ public class TextScript : MonoBehaviour
         
         yield return new WaitForSeconds(Cliplength);
         LogScript.WriteNewLogEntry("Sound", "Ended", "PlayerFeedback"); 
-        AllowAnswer();
-        if (Path == 2)
-        {
-        timeLeft=10.0f;
-        timerIsRunning=true;
-        }
     } 
 
     public void TestChanger()
@@ -335,6 +337,7 @@ public class TextScript : MonoBehaviour
                 case(2):
                 AudioCan.gameObject.SetActive(true);
                 TimerCan.gameObject.SetActive(true);
+                timeLeft=5.0f;
                 switch (Stage)
                     {
                     case(0):
@@ -484,10 +487,10 @@ public class TextScript : MonoBehaviour
     public void successfulLogin()
     {
         LogScript.ParticipantID();
-        LogScript.WriteNewLogEntry("Login", "Sessions", "Start");
         LoginCan.gameObject.SetActive(false);
         MenuCan.gameObject.SetActive(true);
         Button Control1button = GameObject.Find("Button_1C").GetComponent<Button>();
         Control1button.interactable = true;
+        LogScript.WriteNewLogEntry("Login", "Sessions", "Start");
     }
 }
