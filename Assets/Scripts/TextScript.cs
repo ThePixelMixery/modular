@@ -37,6 +37,8 @@ public class TextScript : MonoBehaviour
 
     public TextMeshProUGUI TimerText;
     public TextMeshProUGUI TrainTimerText;
+    public TextMeshProUGUI Feedback;
+
 
     public Image Correct;
     public Image Semicorrect;
@@ -112,6 +114,9 @@ public class TextScript : MonoBehaviour
                 timerEnded();
             }
         }
+        else{
+            TimerText.text="Ready";
+        }
     }
 
     void DisplayTime(float timeDisplay)
@@ -124,11 +129,17 @@ public class TextScript : MonoBehaviour
 
     void timerEnded()
     {
-        if(training){
+        if(training)
+        {
             TrainingText.text = "Time to move on!";
         }
-        else{
-            AnswerOutput(3);}
+        else
+        {
+            if (Path==2){
+                AnswerOutput(3);
+            }
+            TimerText.text="Ready";
+        }
 
     }
 
@@ -138,6 +149,15 @@ public class TextScript : MonoBehaviour
         timeLeft= 60.0f;
         timerIsRunning=true;
         Path = newPath;
+        switch (newPath)
+        {
+            case 1:
+            
+            TrainingText.text = "In this exercise you will be learning a script for collecting information for a help ticket. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n My colleague will call you back shortly, what is a good time for a call? \n\n 4) Thank you for choosing Help Desk. We'll call at (time).";
+            break;
+            default:
+            break;
+        }
     }
 
 
@@ -146,10 +166,14 @@ public class TextScript : MonoBehaviour
         Option1.interactable = true;
         Option2.interactable = true;
         Option3.interactable = true;
+
     }
 
     public void Resetter()
     {
+        Feedback.text=" ";
+        ToPlay.Stop();
+        timeLeft=0.0f;
         Correct.gameObject.SetActive(false);
         Semicorrect.gameObject.SetActive(false);
         Incorrect.gameObject.SetActive(false);
@@ -170,7 +194,10 @@ public class TextScript : MonoBehaviour
 
 
     public void AnswerOutput(int Answer)
-    {
+    {   
+        Feedback.text = "Option " + (CorrectAnswer+1) + " was correct";
+        timeLeft=0.0f;
+        timerIsRunning = false;
         Advance.interactable = true;
         Option1.interactable = false;
         Option2.interactable = false;
@@ -251,25 +278,24 @@ public class TextScript : MonoBehaviour
 
     public void PlayAudio()
     {
-        LogScript.WriteNewLogEntry("Sound", "Started", "PlayerFeedback"); 
         ToPlay.Play();
-        StartCoroutine(EndAudio());
         AllowAnswer();
-        if (Path == 2)
-        {
-        timerIsRunning=true;
-        }
+        StartCoroutine(EndAudio());
+        LogScript.WriteNewLogEntry("Sound", "Started", "PlayerFeedback"); 
     }
 
     IEnumerator EndAudio()
     {
         
         yield return new WaitForSeconds(Cliplength);
+        timeLeft=3.0f;
+        timerIsRunning=true;
         LogScript.WriteNewLogEntry("Sound", "Ended", "PlayerFeedback"); 
     } 
 
     public void TestChanger()
     {
+        timerIsRunning=false;
         switch (Path)
         {
             case(1):
@@ -279,7 +305,7 @@ public class TextScript : MonoBehaviour
                 TextCan.gameObject.SetActive(true);
                 switch (Stage)
                     {
-                    case 0:
+                    case (0):
                     Situation.text = "*Phone Rings*";
                     break;
 
@@ -309,8 +335,9 @@ public class TextScript : MonoBehaviour
                     {
                     case(0):
                     SameTest=true;
-                    Cliplength = Clip1.clip.length;
                     ToPlay = Clip1;
+                    Debug.Log(Clip1.name);
+                    Cliplength = Clip1.clip.length;
                     break;
 
                     case(1):
