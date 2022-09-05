@@ -171,24 +171,26 @@ public class TextScript : MonoBehaviour
 
     public void Resetter()
     {
-        Feedback.text=" ";
+        if(Test>1){
         ToPlay.Stop();
         timeLeft=0.0f;
+        }
+        Feedback.text=" ";
         Correct.gameObject.SetActive(false);
         Semicorrect.gameObject.SetActive(false);
         Incorrect.gameObject.SetActive(false);
         Advance.interactable = false;
+        timeLeft = 10.0f;
+        if(SameTest==true) 
+        {Stage++;}
+        else{Test++;Stage=0;}
         int ResetAcc = 0;
         for (int i = 0; i < 3; i++)
         {
             responseArray[i].accuracy = ResetAcc;
             ResetAcc++;
-        }        
-        timeLeft = 10.0f;
-        if(SameTest==true) 
-        {Stage++;}
-        else{Test++;Stage=0;}
-        TestChanger();
+        }
+        TestChanger();        
     }
 
 
@@ -390,7 +392,7 @@ public class TextScript : MonoBehaviour
                 }                          
                 break;
 
-                case(4):
+                case(3):
                 
                 TextCan.gameObject.SetActive(false);
                 AudioCan.gameObject.SetActive(false);
