@@ -24,13 +24,14 @@ public class responseClass
 
 public class TextScript : MonoBehaviour
 {
-    
+
     public TextMeshProUGUI Situation;
     public Button Option1;
     public Button Option2;
     public Button Option3;
-    
+
     public TMP_InputField Login;
+    public TextMeshProUGUI ErrorText;
 
     public TextMeshProUGUI TrainingText;
 
@@ -45,6 +46,7 @@ public class TextScript : MonoBehaviour
     public Image Incorrect;
 
     public Canvas LoginCan;
+    public Canvas IntroCan;
     public Canvas MenuCan;
     public Canvas TextCan;
     public Canvas AudioCan;
@@ -76,7 +78,7 @@ public class TextScript : MonoBehaviour
     private int IncorrectAnswer;
     private float Cliplength;
 
- 
+
     //Week 2 is diagnostic
     //Week 3 is Validation
 
@@ -86,20 +88,20 @@ public class TextScript : MonoBehaviour
         //1-6
         "ERNADR", "AXXAMD", "NMZNNO", "XZCUEV", "IWOIUU", "ASSALI",
         //7-12
-        "YKMCIM", "EYUCIK", "NLYACP", "OPBOTN", "VTYKBX", "ACCAJY", 
+        "YKMCIM", "EYUCIK", "NLYACP", "OPBOTN", "VTYKBX", "ACCAJY",
         //13-18
-        "USYMZW", "IOGWFC", "HEXFLK", "WIMEOK", "NFSAXV", "LFUMCR", 
+        "USYMZW", "IOGWFC", "HEXFLK", "WIMEOK", "NFSAXV", "LFUMCR",
         //19-24
-        "EUQMLO", "QBLUKF", "UGMGRI", "UGMGSI", "VAFBFQ", "NZMAGB", 
+        "EUQMLO", "QBLUKF", "UGMGRI", "UGMGSI", "VAFBFQ", "NZMAGB",
         //25-30
-        "HUNNQU", "RLUCUX", "QMWOEU", "CLJSYT", "IZRGCR", "XDGISR", 
+        "HUNNQU", "RLUCUX", "QMWOEU", "CLJSYT", "IZRGCR", "XDGISR",
         //31-36
         "UXDIFR", "JBSGMR", "IUMSIW", "BRQQBL", "PKVDIU", "JHYIPL",
         //testing
         "test"
         };
 
-    
+
 
     void Update(){
     if (timerIsRunning){
@@ -123,7 +125,7 @@ public class TextScript : MonoBehaviour
     {
         float seconds = Mathf.FloorToInt(timeDisplay % 60);
         float milliSeconds = (timeDisplay % 1) * 1000;
-        TrainTimerText.text = string.Format("{0:00}", seconds);
+        TrainTimerText.text = string.Format("{0:00}", seconds)+ " seconds left to memorise or notate script";
         TimerText.text = string.Format("{0:00}:{1:000}", seconds, milliSeconds);
     }
 
@@ -152,7 +154,7 @@ public class TextScript : MonoBehaviour
         switch (newPath)
         {
             case 1:
-            
+
             TrainingText.text = "In this exercise you will be learning a script for collecting information for a help ticket. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n My colleague will call you back shortly, what is a good time for a call? \n\n 4) Thank you for choosing Help Desk. We'll call at (time).";
             break;
             default:
@@ -181,7 +183,7 @@ public class TextScript : MonoBehaviour
         Incorrect.gameObject.SetActive(false);
         Advance.interactable = false;
         timeLeft = 10.0f;
-        if(SameTest==true) 
+        if(SameTest==true)
         {Stage++;}
         else{Test++;Stage=0;}
         int ResetAcc = 0;
@@ -190,13 +192,13 @@ public class TextScript : MonoBehaviour
             responseArray[i].accuracy = ResetAcc;
             ResetAcc++;
         }
-        TestChanger();        
+        TestChanger();
     }
 
 
 
     public void AnswerOutput(int Answer)
-    {   
+    {
         Feedback.text = "Option " + (CorrectAnswer+1) + " was correct";
         timeLeft=0.0f;
         timerIsRunning = false;
@@ -273,7 +275,7 @@ public class TextScript : MonoBehaviour
               //Point based
               //Achievement response
             }
-            LogScript.WriteNewLogEntry("Answer","TimerRanOut","PlayerFeedback"); 
+            LogScript.WriteNewLogEntry("Answer","TimerRanOut","PlayerFeedback");
         }
 
     }
@@ -283,17 +285,17 @@ public class TextScript : MonoBehaviour
         ToPlay.Play();
         AllowAnswer();
         StartCoroutine(EndAudio());
-        LogScript.WriteNewLogEntry("Sound", "Started", "PlayerFeedback"); 
+        LogScript.WriteNewLogEntry("Sound", "Started", "PlayerFeedback");
     }
 
     IEnumerator EndAudio()
     {
-        
+
         yield return new WaitForSeconds(Cliplength);
         timeLeft=3.0f;
         timerIsRunning=true;
-        LogScript.WriteNewLogEntry("Sound", "Ended", "PlayerFeedback"); 
-    } 
+        LogScript.WriteNewLogEntry("Sound", "Ended", "PlayerFeedback");
+    }
 
     public void TestChanger()
     {
@@ -308,7 +310,7 @@ public class TextScript : MonoBehaviour
                 switch (Stage)
                     {
                     case (0):
-                    Situation.text = "*Phone Rings*";
+                    Situation.text = "(The phone is ringing. What do you pick up and say?)";
                     break;
 
                     case(1):
@@ -329,7 +331,7 @@ public class TextScript : MonoBehaviour
                 }
                 AllowAnswer();
                 break;
-                
+
                 case(1):
                 TextCan.gameObject.SetActive(false);
                 AudioCan.gameObject.SetActive(true);
@@ -360,7 +362,7 @@ public class TextScript : MonoBehaviour
 
                     default:
                     break;
-                }                                
+                }
                 break;
 
                 case(2):
@@ -389,23 +391,23 @@ public class TextScript : MonoBehaviour
 
                     default:
                     break;
-                }                          
+                }
                 break;
 
                 case(3):
-                
+
                 TextCan.gameObject.SetActive(false);
                 AudioCan.gameObject.SetActive(false);
                 TimerCan.gameObject.SetActive(false);
                 PracCan.gameObject.SetActive(false);
                 SubmitCan.gameObject.SetActive(true);
                 break;
-                
+
                 default:
                 break;
             }
             break;
-            default: 
+            default:
             Situation.text = "Oops, something is wrong. Contact the researcher right away!";
             break;
 
@@ -413,18 +415,18 @@ public class TextScript : MonoBehaviour
         ButtonUpdater();
     }
 
-    void Start() 
+    void Start()
     {
         responseArray = new responseClass[3];
         responseArray[0] = new responseClass("Incorrect", 0);
         responseArray[1] = new responseClass("Semicorrect", 1);
-        responseArray[2] = new responseClass("Correct", 2); 
+        responseArray[2] = new responseClass("Correct", 2);
         Debug.Log(responseArray[0] + ", " + responseArray[1] + ", " + responseArray[2]);
     }
-    
+
     public void AnswerRandomised()
     {
-    
+
         for (int i = 0; i < 3; i++)
         {
         int a = Random.Range (0,3);
@@ -461,7 +463,7 @@ public class TextScript : MonoBehaviour
                 default:
                 Debug.Log("I don't feel so good");
                 break;
-            }   
+            }
         }
     }
 
@@ -474,7 +476,7 @@ public class TextScript : MonoBehaviour
             responseArray[1].response = "Hello, what can I do for you today?";
             responseArray[2].response = "Hello, welcome to help desk. My name is X. How can I help you today?";
             break;
-            
+
             case(1,1):
             responseArray[0].response = "Name and number, please";
             responseArray[1].response = "Can I grab your name and number?";
@@ -497,7 +499,7 @@ public class TextScript : MonoBehaviour
             break;
         }
         AnswerRandomised();
-            
+
     }
 
     public void IDChecker()
@@ -508,16 +510,20 @@ public class TextScript : MonoBehaviour
             if (ParticipantIDs[i] == LoginAttempt)
             {
                 successfulLogin();
+                ErrorText.text=" ";
+            }
+            else {
+                ErrorText.text = "That doesn't look right, please try again. Remember to use CAPS";
             }
         }
-        
+
     }
 
     public void successfulLogin()
     {
         LogScript.ParticipantID();
         LoginCan.gameObject.SetActive(false);
-        MenuCan.gameObject.SetActive(true);
+        IntroCan.gameObject.SetActive(true);
         Button Control1button = GameObject.Find("Button_1C").GetComponent<Button>();
         Control1button.interactable = true;
         LogScript.WriteNewLogEntry("Login", "Sessions", "Start");
