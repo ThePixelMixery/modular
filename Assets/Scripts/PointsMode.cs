@@ -8,59 +8,58 @@ using TMPro;
 public class PointsMode : MonoBehaviour
 {
     public GameObject[] pointsArray;
+    public GameObject[] sortedArray;
+    public AudioSource Sound_Up;
+    public AudioSource Sound_Down;
 
     void Start()
     {
-
+        sortedArray = pointsArray;
     }
 
     // Update is called once per frame
     void Update()
     {
-        var sortedArray = pointsArray.OrderBy(element => element.GetComponent<LeaderboardEntry>().score).ToArray();
-        int i=0;
+        //        if Comparison
+    }
+
+
+    public void Comparison()
+    {
+        for (var i = 0; i < pointsArray.Length; i++)
+        {
+            if (pointsArray[i].GetComponent<LeaderboardEntry>().score != sortedArray[i].GetComponent<LeaderboardEntry>().score) { SortListing(); }
+        }
+    }
+
+    public void SortListing()
+    {
+        sortedArray = pointsArray.OrderBy(entry => -entry.GetComponent<LeaderboardEntry>().score).ToArray();
+        int i = 0;
         foreach (GameObject obj in sortedArray)
         {
-            Debug.Log("I am panel "+i);
-            pointsArray[i].GetComponent<LeaderboardEntry>().ranking = i;
-            MovePositions(i);
+            var rt = obj.GetComponent<RectTransform>();
+            var pos = rt.position;
+            if (sortedArray[i].GetComponent<LeaderboardEntry>().player == true)
+            {
+                Debug.Log("I am panel " + i);
+                if (sortedArray[i].GetComponent<LeaderboardEntry>().ranking > i)
+                {
+                    Sound_Up.Play();
+                    LogScript.WriteNewLogEntry("Points", "Rank up", i.ToString());
+                }
+                if (sortedArray[i].GetComponent<LeaderboardEntry>().ranking < i)
+                {
+                    Sound_Down.Play();
+                    LogScript.WriteNewLogEntry("Points", "Rank down", i.ToString());
+                }
+            }
+            sortedArray[i].GetComponent<LeaderboardEntry>().ranking = i;
+            pos.y = 865 - (105 * i);
+            pos.z = 1;
+            rt.position = pos;
             i++;
         }
-    }
-
-    void MovePositions(int rank){
-        foreach(GameObject obj in pointsArray){
-        var rt = obj.GetComponent<RectTransform>();
-        var pos = rt.position;
-            switch (rank)
-            {
-                case(0):
-                pos.x=315;
-                break;
-                case(1):
-                pos.x=210;
-                break;
-                case(2):
-                pos.x=105;
-                break;
-                case(3):
-                pos.x=0;
-                break;
-                case(4):
-                pos.x=-105;
-                break;
-                case(5):
-                pos.x=-210;
-                break;
-                case(6):
-                pos.x=-315;
-                break;
-                default:
-                break;
-            }
-            rt.position = pos;
-            Debug.Log("Panel "+rank+ "has moved");
-        }
+        pointsArray = sortedArray;
     }
 }
-

@@ -57,6 +57,9 @@ public class TextScript : MonoBehaviour
     public Button Game;
     public Button Advance;
 
+    public GameObject UserPoints;
+    public TextMeshProUGUI PointsFeedback;
+
     public AudioSource Clip1;
     public AudioSource Clip2;
     public AudioSource Clip3;
@@ -151,12 +154,14 @@ public class TextScript : MonoBehaviour
         timeLeft= 60.0f;
         timerIsRunning=true;
         Path = newPath;
-        switch (newPath)
+        switch (Path)
         {
             case 1:
-
-            TrainingText.text = "In this exercise you will be learning a script for collecting information for a help ticket. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n My colleague will call you back shortly, what is a good time for a call? \n\n 4) Thank you for choosing Help Desk. We'll call at (time).";
-            break;
+                TrainingText.text = "In this exercise you will be learning a script for collecting information for a help ticket. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n My colleague will call you back shortly, what is a good time for a call? \n\n 4) Thank you for choosing Help Desk. We'll call at (time).";
+                break;
+            case 7:
+                TrainingText.text = "In this exercise you will be learning a script for collecting information for a help ticket while competing with other players. You will hear a sound when you have moved up and down the leaderboard. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n My colleague will call you back shortly, what is a good time for a call? \n\n 4) Thank you for choosing Help Desk. We'll call at (time).";
+                break;
             default:
             break;
         }
@@ -178,6 +183,7 @@ public class TextScript : MonoBehaviour
         timeLeft=0.0f;
         }
         Feedback.text=" ";
+        PointsFeedback.text = " ";
         Correct.gameObject.SetActive(false);
         Semicorrect.gameObject.SetActive(false);
         Incorrect.gameObject.SetActive(false);
@@ -220,7 +226,12 @@ public class TextScript : MonoBehaviour
             }
             else
             {
-              //Point based
+                //Point based
+                Debug.Log("Points Worked");
+                UserPoints.GetComponentInChildren<LeaderboardEntry>().UpdateScore(15);
+                PointsFeedback.text = "+15";
+                PointsFeedback.color = new Color(132, 155, 134, 255);
+                LogScript.WriteNewLogEntry("Points", "Score", UserPoints.GetComponentInChildren<LeaderboardEntry>().score.ToString());
             }
             LogScript.WriteNewLogEntry("Answer","Correct","PlayerFeedback");
         }
@@ -237,7 +248,11 @@ public class TextScript : MonoBehaviour
             }
             else
             {
-              //Point based
+                //Point based
+                UserPoints.GetComponentInChildren<LeaderboardEntry>().UpdateScore(5);
+                PointsFeedback.text = "+5";
+                PointsFeedback.color = new Color(242, 215, 93, 255);
+                LogScript.WriteNewLogEntry("Points", "Score", UserPoints.GetComponentInChildren<LeaderboardEntry>().score.ToString());
             }
             LogScript.WriteNewLogEntry("Answer","Semicorrect","PlayerFeedback");
         }
@@ -254,7 +269,11 @@ public class TextScript : MonoBehaviour
             }
             else
             {
-              //Point based
+                //Point based
+                UserPoints.GetComponentInChildren<LeaderboardEntry>().UpdateScore(-10);
+                PointsFeedback.text = "-10";
+                PointsFeedback.color = new Color(225, 92, 99, 255);
+                LogScript.WriteNewLogEntry("Points", "Score", UserPoints.GetComponentInChildren<LeaderboardEntry>().score.ToString());
             }
             LogScript.WriteNewLogEntry("Answer","Incorrect","PlayerFeedback");
         }
@@ -272,8 +291,12 @@ public class TextScript : MonoBehaviour
             }
             else
             {
-              //Point based
-              //Achievement response
+                //Point based
+                //Achievement response
+                UserPoints.GetComponentInChildren<LeaderboardEntry>().UpdateScore(-10);
+                PointsFeedback.text = "-10";
+                PointsFeedback.color = new Color(225, 92, 99, 255);
+                LogScript.WriteNewLogEntry("Points", "Score", UserPoints.GetComponentInChildren<LeaderboardEntry>().score.ToString());
             }
             LogScript.WriteNewLogEntry("Answer","TimerRanOut","PlayerFeedback");
         }
@@ -302,7 +325,7 @@ public class TextScript : MonoBehaviour
         timerIsRunning=false;
         switch (Path)
         {
-            case(1):
+            case (1 | 7):
             switch (Test)
             {
                 case(0):
