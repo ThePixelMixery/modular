@@ -57,6 +57,7 @@ public class TextScript : MonoBehaviour
     public Button Game;
     public Button Advance;
 
+    public GameObject pointsObject;
     public GameObject UserPoints;
     public TextMeshProUGUI PointsFeedback;
 
@@ -161,6 +162,7 @@ public class TextScript : MonoBehaviour
                 break;
             case 7:
                 TrainingText.text = "In this exercise you will be learning a script for collecting information for a help ticket while competing with other players. You will hear a sound when you have moved up and down the leaderboard. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n My colleague will call you back shortly, what is a good time for a call? \n\n 4) Thank you for choosing Help Desk. We'll call at (time).";
+                pointsObject.GetComponent<PointsMode>().enabled = true;
                 break;
             default:
             break;
@@ -220,7 +222,7 @@ public class TextScript : MonoBehaviour
                 Correct.gameObject.SetActive(true);
 
             }
-            else if (Path >= 4 || Path <= 6)
+            else if (Path >= 4 && Path <= 6)
             {
                // Narrative Changes
             }
@@ -230,7 +232,7 @@ public class TextScript : MonoBehaviour
                 Debug.Log("Points Worked");
                 UserPoints.GetComponentInChildren<LeaderboardEntry>().UpdateScore(15);
                 PointsFeedback.text = "+15";
-                PointsFeedback.color = new Color(132, 155, 134, 255);
+                PointsFeedback.color = new Color32(132, 155, 134, 255);
                 LogScript.WriteNewLogEntry("Points", "Score", UserPoints.GetComponentInChildren<LeaderboardEntry>().score.ToString());
             }
             LogScript.WriteNewLogEntry("Answer","Correct","PlayerFeedback");
@@ -242,7 +244,7 @@ public class TextScript : MonoBehaviour
                 //Control
                 Semicorrect.gameObject.SetActive(true);
             }
-            else if (Path >= 4 || Path <= 6)
+            else if (Path >= 4 && Path <= 6)
             {
                // Narrative Changes
             }
@@ -251,7 +253,7 @@ public class TextScript : MonoBehaviour
                 //Point based
                 UserPoints.GetComponentInChildren<LeaderboardEntry>().UpdateScore(5);
                 PointsFeedback.text = "+5";
-                PointsFeedback.color = new Color(242, 215, 93, 255);
+                PointsFeedback.color = new Color32(242, 215, 93, 255);
                 LogScript.WriteNewLogEntry("Points", "Score", UserPoints.GetComponentInChildren<LeaderboardEntry>().score.ToString());
             }
             LogScript.WriteNewLogEntry("Answer","Semicorrect","PlayerFeedback");
@@ -263,7 +265,7 @@ public class TextScript : MonoBehaviour
                 //Control
                 Incorrect.gameObject.SetActive(true);
             }
-            else if (Path >= 4 || Path <= 6)
+            else if (Path >= 4 && Path <= 6)
             {
                // Narrative Changes
             }
@@ -272,7 +274,7 @@ public class TextScript : MonoBehaviour
                 //Point based
                 UserPoints.GetComponentInChildren<LeaderboardEntry>().UpdateScore(-10);
                 PointsFeedback.text = "-10";
-                PointsFeedback.color = new Color(225, 92, 99, 255);
+                PointsFeedback.color = new Color32(225, 92, 99, 255);
                 LogScript.WriteNewLogEntry("Points", "Score", UserPoints.GetComponentInChildren<LeaderboardEntry>().score.ToString());
             }
             LogScript.WriteNewLogEntry("Answer","Incorrect","PlayerFeedback");
@@ -284,7 +286,7 @@ public class TextScript : MonoBehaviour
                 //Control
                 Incorrect.gameObject.SetActive(true);
             }
-            else if (Path >= 4 || Path <= 6)
+            else if (Path >= 4 && Path <= 6)
             {
                // Narrative Changes
                // Refresh narrative or refresh situation
@@ -295,7 +297,7 @@ public class TextScript : MonoBehaviour
                 //Achievement response
                 UserPoints.GetComponentInChildren<LeaderboardEntry>().UpdateScore(-10);
                 PointsFeedback.text = "-10";
-                PointsFeedback.color = new Color(225, 92, 99, 255);
+                PointsFeedback.color = new Color32(225, 92, 99, 255);
                 LogScript.WriteNewLogEntry("Points", "Score", UserPoints.GetComponentInChildren<LeaderboardEntry>().score.ToString());
             }
             LogScript.WriteNewLogEntry("Answer","TimerRanOut","PlayerFeedback");
@@ -326,6 +328,10 @@ public class TextScript : MonoBehaviour
         switch (Path)
         {
             case (1 | 7):
+                if (Path == 7)
+                {
+                    pointsObject.GetComponent<PointsMode>().AIbot();
+                }
             switch (Test)
             {
                 case(0):
@@ -494,25 +500,25 @@ public class TextScript : MonoBehaviour
     {
         switch(Path, Stage)
         {
-            case(1,0):
+            case (1 | 7, 0):
             responseArray[0].response ="Hi. What do you want?";
             responseArray[1].response = "Hello, what can I do for you today?";
             responseArray[2].response = "Hello, welcome to help desk. My name is X. How can I help you today?";
             break;
 
-            case(1,1):
+            case (1 | 7, 1):
             responseArray[0].response = "Name and number, please";
             responseArray[1].response = "Can I grab your name and number?";
             responseArray[2].response = "I understand your frustration Can I have your name and number?";
             break;
 
-            case(1,2):
+            case (1 | 7, 2):
             responseArray[0].response = "Lacie Green, 0462711611?";
             responseArray[1].response = "Lacie Bean, 0462811611?";
             responseArray[2].response = "Lacie Green, 0462811611?";
             break;
 
-            case(1,3):
+            case (1 | 7, 3):
             responseArray[0].response = "We'll call you back when we can, bye";
             responseArray[1].response = "Someone from the correct department will call you back soon";
             responseArray[2].response = "I'm transferring you to the correct department, please hold";

@@ -1573,7 +1573,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 150, y: 250}
+  m_AnchoredPosition: {x: 0, y: 250}
   m_SizeDelta: {x: 100, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &227932296
@@ -1845,7 +1845,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 250}
+  m_AnchoredPosition: {x: 150, y: 250}
   m_SizeDelta: {x: 100, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &254725021
@@ -5270,6 +5270,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1093307398}
+        m_TargetAssemblyTypeName: PointsMode, Assembly-CSharp
+        m_MethodName: AIbot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &565031165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5380,6 +5392,7 @@ MonoBehaviour:
   ranking: 4
   score: 0
   player: 0
+  scoreText: {fileID: 1212664930}
 --- !u!114 &565921805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6611,6 +6624,7 @@ MonoBehaviour:
   ranking: 0
   score: 0
   player: 1
+  scoreText: {fileID: 453601188}
 --- !u!114 &628704569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7694,6 +7708,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1093307398}
+        m_TargetAssemblyTypeName: PointsMode, Assembly-CSharp
+        m_MethodName: Running
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &740782605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8147,8 +8173,9 @@ MonoBehaviour:
   SubmitCan: {fileID: 915363710}
   Game: {fileID: 565031164}
   Advance: {fileID: 100072496}
+  pointsObject: {fileID: 1093307397}
   UserPoints: {fileID: 628704566}
-  PointsFeedback: {fileID: 0}
+  PointsFeedback: {fileID: 1425057393}
   Clip1: {fileID: 1689881774}
   Clip2: {fileID: 257295274}
   Clip3: {fileID: 1649391508}
@@ -11209,7 +11236,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1093307397}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c820304c1839e0db92764b7efcd1f78, type: 3}
   m_Name: 
@@ -11222,9 +11249,10 @@ MonoBehaviour:
   - {fileID: 565921802}
   - {fileID: 1999298830}
   - {fileID: 1277969002}
-  sortedArray: []
-  Sound_Up: {fileID: 1985840001}
-  Sound_Down: {fileID: 997175152}
+  sound_Up: {fileID: 1985840001}
+  sound_Down: {fileID: 997175152}
+  running: 0
+  playerRank: 0
 --- !u!4 &1093307399
 Transform:
   m_ObjectHideFlags: 0
@@ -11238,7 +11266,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1124783387
 GameObject:
@@ -12417,6 +12445,7 @@ MonoBehaviour:
   ranking: 6
   score: 0
   player: 0
+  scoreText: {fileID: 138362619}
 --- !u!114 &1277969004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12716,7 +12745,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1093307398}
         m_TargetAssemblyTypeName: PointsMode, Assembly-CSharp
-        m_MethodName: Comparison
+        m_MethodName: SortListing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12950,7 +12979,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1341475831
 GameObject:
@@ -13085,6 +13114,7 @@ MonoBehaviour:
   ranking: 3
   score: 0
   player: 0
+  scoreText: {fileID: 38375223}
 --- !u!114 &1350722101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13584,6 +13614,7 @@ MonoBehaviour:
   ranking: 2
   score: 0
   player: 0
+  scoreText: {fileID: 1165582297}
 --- !u!114 &1404794416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13689,8 +13720,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190335
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -13707,8 +13738,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 54
+  m_fontSizeBase: 54
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -15597,8 +15628,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ranking: 1
-  score: 10
+  score: 0
   player: 0
+  scoreText: {fileID: 138362619}
 --- !u!114 &1593425406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16045,6 +16077,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1652069982}
         m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
         m_MethodName: logIt
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1093307398}
+        m_TargetAssemblyTypeName: PointsMode, Assembly-CSharp
+        m_MethodName: Running
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16512,6 +16556,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
         m_MethodName: logIt
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1093307398}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -17303,7 +17359,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 10
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -19334,6 +19390,7 @@ MonoBehaviour:
   ranking: 5
   score: 0
   player: 0
+  scoreText: {fileID: 1457336812}
 --- !u!114 &1999298833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19989,6 +20046,18 @@ MonoBehaviour:
       - m_Target: {fileID: 2056476252}
         m_TargetAssemblyTypeName: LoggerScript, Assembly-CSharp
         m_MethodName: logIt
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1093307398}
+        m_TargetAssemblyTypeName: PointsMode, Assembly-CSharp
+        m_MethodName: Running
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

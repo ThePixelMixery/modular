@@ -16,7 +16,7 @@ public class LeaderboardEntry : MonoBehaviour
     }
     public void UpdateScore( int NewScore)
     {
-        score = +NewScore;
-        scoreText.text = score.ToString();
+        this.score += NewScore;
+        this.scoreText.text = score.ToString();
     }
 }
