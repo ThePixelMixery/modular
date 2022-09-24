@@ -67,6 +67,7 @@ public class PointsMode : MonoBehaviour
         //        Debug.Log("I am rank " + rank + " and have updated to " + playerRank);
     }
 
+
     public void AIbot()
     {
         Debug.Log("AI points have started");
