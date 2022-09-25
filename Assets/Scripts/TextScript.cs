@@ -87,7 +87,7 @@ public class TextScript : MonoBehaviour
 
     public AudioSource Clip4;
 
-    private AudioSource ToPlay;
+    public AudioSource ToPlay;
 
     private float timeLeft = 60.0f;
 
@@ -101,7 +101,7 @@ public class TextScript : MonoBehaviour
 
     public int Stage;
 
-    private bool SameTest = true;
+    public bool SameTest = true;
 
     private int CorrectAnswer;
 
@@ -257,6 +257,7 @@ public class TextScript : MonoBehaviour
 
     public void PlayAudio()
     {
+        Cliplength = ToPlay.clip.length;
         ToPlay.Play();
         AllowAnswer();
         StartCoroutine(EndAudio());
@@ -370,7 +371,7 @@ public class TextScript : MonoBehaviour
         Stager();
     }
 
-    void Stager()
+    public void Stager()
     {
         if (Path == 1 | Path == 7)
         {
@@ -382,24 +383,20 @@ public class TextScript : MonoBehaviour
                         "(The phone is ringing. What do you pick up and say?)";
                     ToPlay = Clip1;
                     Debug.Log(Clip1.name);
-                    Cliplength = Clip1.clip.length;
                     break;
                 case (1):
                     Situation.text =
                         "I'm having trouble with my internet speed";
                     ToPlay = Clip2;
-                    Cliplength = Clip2.clip.length;
                     break;
                 case (2):
                     Situation.text =
                         "My name is Lacie Green and my number is 04 6281 1611";
                     ToPlay = Clip3;
-                    Cliplength = Clip3.clip.length;
                     break;
                 case (3):
                     Situation.text = "When can I expect a solution?";
                     ToPlay = Clip4;
-                    Cliplength = Clip4.clip.length;
                     SameTest = false;
                     break;
                 default:

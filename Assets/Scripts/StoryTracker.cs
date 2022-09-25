@@ -5,35 +5,26 @@ using UnityEngine;
 
 public class StoryTracker : MonoBehaviour
 {
-    private class reply
-    {
-        string speaker;
-
-        string output;
-
-        public reply(string Speaker, string Output)
-        {
-            this.speaker = Speaker;
-            this.output = Output;
-        }
-    }
-
     public GameObject textObject;
 
     private string caller = "Lacie: ";
     public string trackingText;
 
-    public TextMeshProUGUI text;
     public TextMeshProUGUI trackerOutput;
 
-    private List<reply> tracker = new List<reply>();
 
     private int score;
     private int count;
 
     public int stager;
+    public bool sameTest;
     public int answer;
     public string reaction;
+    public AudioSource Audioclip;
+    public AudioSource Clip1;
+
+    public TextMeshProUGUI text;
+
     public void OutputPrompt(string caller, string answer)
     {
 //        tracker.Add(new reply(caller, answer));
@@ -58,8 +49,7 @@ public class StoryTracker : MonoBehaviour
                 Stager(stager+1, accuracy);
                 break;
             case -1:
-                Stager(stager, accuracy);
-//                tracker.Add(new reply(caller, IncorrectAnswer()));
+                IncorrectAnswer(accuracy);
                 break;
             default:
                 break;
@@ -69,27 +59,26 @@ public class StoryTracker : MonoBehaviour
 //        Debug.Log(tracker.Count);
     }
 
-    private string IncorrectAnswer()
+    private void IncorrectAnswer(int attempt)
     {
-        string windfall = "Wrong answer";
         int rand = Random.Range(0, 3);
         switch (rand)
         {
             case 0:
-                windfall =
-                    "Luckily, I'm just a test caller! Let's try that again!";
+                reaction = "Luckily, I'm just a test caller! Let's try that again!";
+                //set audio to backup
+                OutputPrompt(caller, reaction);
                 break;
             case 1:
-                windfall = "Sorry, I didn't hear you, what did you just say?";
+                reaction = "Sorry, I didn't hear you, what did you just say?";
                 break;
             case 2:
-                windfall = "I have a bad connection, can you say that again?";
+                reaction = "I have a bad connection, can you say that again?";
                 break;
             default:
                 break;
         }
-        return windfall;
-        
+        Stager(stager,attempt);        
     }
 
     // private void TrackerUpdate(){ 
@@ -109,73 +98,70 @@ public class StoryTracker : MonoBehaviour
         switch (stager,answer)
         {
             case (0,0):
-//                SameTest = true;
                 reaction = "(Here is were you'll find the history of what you've said)";
                 OutputPrompt(caller, reaction);
-//                ToPlay = Clip1;
-//                Debug.Log(Clip1.name);
-//                Cliplength = Clip1.clip.length;
                 break;
             case (0,1):
-//                SameTest = true;
+                sameTest = true;
                 reaction = "(The phone is ringing. What do you pick up and say?)";
                 OutputPrompt(caller, reaction);
-//                ToPlay = Clip1;
-//                Debug.Log(Clip1.name);
-//                Cliplength = Clip1.clip.length;
+                Debug.Log(Clip1.name);
+                Audioclip = Clip1;
                 break;
             case (1,-1):
-                reaction = "I'm having trouble with my internet speed";
-//                ToPlay = Clip2;
-//                Cliplength = Clip2.clip.length;
                 break;
             case (1,0):
-//                reaction = "I'm having trouble with my internet speed";
-//                ToPlay = Clip2;
-//                Cliplength = Clip2.clip.length;
+                reaction = "I'm having trouble with my internet speed";
+//                Audioclip = Clip2;
                 break;
             case (1,1):
-//                reaction = "I'm having trouble with my internet speed";
-//                ToPlay = Clip2;
-//                Cliplength = Clip2.clip.length;
+                reaction = "Oh, thank you! I'm having trouble with my internet";
+//                Audioclip = Clip2;
                 break;
             case (2,-1):
 //                reaction =
 //                    "My name is Lacie Green and my number is 04 6281 1611";
-//                ToPlay = Clip3;
-//                Cliplength = Clip3.clip.length;
+//                Audioclip = Clip3;
                 break;
             case (2,0):
-//                reaction =
-//                    "My name is Lacie Green and my number is 04 6281 1611";
-//                ToPlay = Clip3;
-//                Cliplength = Clip3.clip.length;
+                reaction =
+                    "Sure, my name and number is Lacie Green, 04 6281 1611";
+//                Audioclip = Clip3;
                 break;
             case (2,1):
-//                reaction =
-//                    "My name is Lacie Green and my number is 04 6281 1611";
-//                ToPlay = Clip3;
-//                Cliplength = Clip3.clip.length;
+                reaction =
+                    "I appreciate that and of course, my name is Lacie Green, and my number is 04 6281 1611";
+//                Audioclip = Clip3;
                 break;
             case (3,-1):
 //                reaction = "When can I expect a solution?";
-//                ToPlay = Clip4;
-//                Cliplength = Clip4.clip.length;
-//                SameTest = false;
+//                Audioclip = Clip4;
+    break;
             case (3,0):
-//                reaction = "When can I expect a solution?";
-//                ToPlay = Clip4;
-//                Cliplength = Clip4.clip.length;
-//                SameTest = false;
+                reaction = "No, Green. Never mind";
+//                Audioclip = Clip4;
+break;
             case (3,1):
-//                reaction = "When can I expect a solution?";
-//                ToPlay = Clip4;
-//                Cliplength = Clip4.clip.length;
-//                SameTest = false;
+                reaction = "That's right! When can I expect a solution?";
+//                Audioclip = Clip4;
+          break;
+            case (4,-1):
+//                reaction = "That's right! When can I expect a solution?";
+                break;
+            case (4,0):
+                reaction = "Okay, I'll keep an ear out";
+                break;
+            case (4,1):
+                reaction = "Thank you for your help!";
+                sameTest = false;
                 break;
             default:
                 break;
         }
         text.text=reaction;
+
+        textObject.GetComponentInChildren<TextScript>().ToPlay = Audioclip;
+        textObject.GetComponentInChildren<TextScript>().SameTest = sameTest;
+        textObject.GetComponentInChildren<TextScript>().Stager();  
     }
 }
