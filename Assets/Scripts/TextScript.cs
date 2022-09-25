@@ -67,15 +67,17 @@ public class TextScript : MonoBehaviour
 
     public Canvas SubmitCan;
 
-    public Button Game;
-
     public Button Advance;
 
-    public GameObject pointsObject;
+    public GameObject PointsObject;
 
     public GameObject UserPoints;
 
     public TextMeshProUGUI PointsFeedback;
+
+    public GameObject StoryTracker;
+
+    public GameObject StoryMode;
 
     public AudioSource Clip1;
 
@@ -267,6 +269,7 @@ public class TextScript : MonoBehaviour
         timeLeft = 3.0f;
         timerIsRunning = true;
         LogScript.WriteNewLogEntry("Sound", "Ended", "PlayerFeedback");
+        AllowAnswer();
     }
 
     public void Resetter()
@@ -283,22 +286,30 @@ public class TextScript : MonoBehaviour
         Incorrect.gameObject.SetActive(false);
         Advance.interactable = false;
         timeLeft = 10.0f;
-        if (SameTest == true)
-        {
-            Stage++;
-        }
-        else
-        {
-            Test++;
-            Stage = 0;
-        }
         int ResetAcc = 0;
         for (int i = 0; i < 3; i++)
         {
             responseArray[i].accuracy = ResetAcc;
             ResetAcc++;
         }
+        NextStage();
         TestChanger();
+    }
+
+    public void NextStage()
+    {
+        if (Path <= 3 || Path >= 7)
+        {
+            if (SameTest == true)
+            {
+                Stage++;
+            }
+            else
+            {
+                Test++;
+                Stage = 0;
+            }
+        }
     }
 
     public void Pathchanger(int newPath)
@@ -310,12 +321,17 @@ public class TextScript : MonoBehaviour
         {
             case 1:
                 TrainingText.text =
-                    "In this exercise you will be learning a script for collecting information for a help ticket. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n My colleague will call you back shortly, what is a good time for a call? \n\n 4) Thank you for choosing Help Desk. We'll call at (time).";
+                    "In this exercise you will be learning a script for collecting information for a help ticket. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n I'm directing you to the relevant department now \n\n";
+                break;
+            case 4:
+                TrainingText.text =
+                    "Hi! Can you help me learn a script for collecting information for a help ticket? I'll right down your answers on the right so you can remember how things turned out. Let's read it together: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n I'm directing you to the relevant department now \n\n";
+                StoryTracker.GetComponent<StoryTracker>().Stager(0, 0);
                 break;
             case 7:
                 TrainingText.text =
-                    "In this exercise you will be learning a script for collecting information for a help ticket while competing with other players. You will hear a sound when you have moved up and down the leaderboard. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n My colleague will call you back shortly, what is a good time for a call? \n\n 4) Thank you for choosing Help Desk. We'll call at (time).";
-                pointsObject.GetComponent<PointsMode>().enabled = true;
+                    "In this exercise you will be learning a script for collecting information for a help ticket while competing with other players. You will hear a sound when you have moved up and down the leaderboard. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n I'm directing you to the relevant department now \n\n I think I'm ready. How about you?";
+                PointsObject.GetComponent<PointsMode>().enabled = true;
                 break;
             default:
                 break;
@@ -390,12 +406,11 @@ public class TextScript : MonoBehaviour
                     break;
             }
         }
-        if (Path == 4)
-        {
-            StoryMode.Stager();
-        }
         ButtonUpdater();
-        AllowAnswer();
+        if (Test == 0)
+        {
+            AllowAnswer();
+        }
     }
 
     public void AnswerRandomised()
@@ -484,6 +499,9 @@ public class TextScript : MonoBehaviour
             else if (Path >= 4 && Path <= 6)
             {
                 // Narrative Changes
+                StoryTracker
+                    .GetComponentInChildren<StoryTracker>()
+                    .OutputAnswer(responseArray[CorrectAnswer].response, 1);
             }
             else
             {
@@ -513,7 +531,9 @@ public class TextScript : MonoBehaviour
             }
             else if (Path >= 4 && Path <= 6)
             {
-                // Narrative Changes
+                StoryTracker
+                    .GetComponentInChildren<StoryTracker>()
+                    .OutputAnswer(responseArray[SemicorrectAnswer].response, 0);
             }
             else
             {
@@ -544,6 +564,9 @@ public class TextScript : MonoBehaviour
             else if (Path >= 4 && Path <= 6)
             {
                 // Narrative Changes
+                StoryTracker
+                    .GetComponentInChildren<StoryTracker>()
+                    .OutputAnswer(responseArray[IncorrectAnswer].response, -1);
             }
             else
             {

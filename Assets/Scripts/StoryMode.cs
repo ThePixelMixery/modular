@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class StoryMode : MonoBehaviour
 {
-    public GameObject StoryTracker;
-
+    public GameObject storyTracker;
 
 }
