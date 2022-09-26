@@ -53,5 +53,6 @@
 		"temp/": true,
 		"Temp/": true
 	},
-	"liveServer.settings.port": 5501
+	"liveServer.settings.port": 5501,
+	"git.autorefresh": false
 }

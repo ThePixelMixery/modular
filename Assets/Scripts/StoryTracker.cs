@@ -12,6 +12,7 @@ public class StoryTracker : MonoBehaviour
 
     public TextMeshProUGUI trackerOutput;
 
+    public bool running = false;
 
     private int score;
     private int count;
@@ -19,6 +20,9 @@ public class StoryTracker : MonoBehaviour
     public int stager;
     public bool sameTest;
     public int answer;
+    bool retry = false;
+    public string lastAnswer = "(The phone is ringing. What do you pick up and say?)";
+    public string lastLine;
     public string reaction;
     public AudioSource Audioclip;
     public AudioSource Clip1;
@@ -27,88 +31,93 @@ public class StoryTracker : MonoBehaviour
 
     public void OutputPrompt(string caller, string answer)
     {
-//        tracker.Add(new reply(caller, answer));
-        trackingText += caller+answer+"\n";
+        string output = caller+answer;
+        if (output != lastLine && answer != "")
+        {
+        Debug.Log("Last line is not considered the same");
+        trackingText += output+"\n";
         trackerOutput.text = trackingText;
-        Debug.Log(caller+answer);
-//        Debug.Log(tracker.Count);
+        lastLine = output;
+        }
     }
 
-    public void OutputAnswer(string answer, int accuracy)
+    public void OutputAnswer(string words, int accuracy)
     {
-//        tracker.Add(new reply("You: ", answer));
-        trackingText += "You: "+answer+"\n";
+        Debug.Log("Output words have " + accuracy);
+        trackingText += "You: "+words+"\n";
         trackerOutput.text = trackingText;
+        if (accuracy > -1){
+                answer = accuracy;
+                lastAnswer = reaction;
+                retry = false;
+                Debug.Log("Was " + stager);
+                stager++;
+                Debug.Log("Restaged at "+ stager+", accuracy:" +accuracy);
+                
+        }
+        else
+        {Debug.Log("Incorrect answer?");
+        reaction = "Luckily, I'm just a test caller! Let's try that again!";
+        OutputPrompt(caller, reaction);
+        retry = true;
+        text.text = reaction; 
+        Debug.Log("Text.text changed");
+                        Debug.Log("Restaged at "+ stager+", accuracy:" +accuracy);
+}
+
+        count++;
+        Debug.Log(score);
         score += accuracy;
-        switch (accuracy)
-        {
-            case 1:
-                Stager(stager+1,accuracy);
-                break;
-            case 0:
-                Stager(stager+1, accuracy);
-                break;
-            case -1:
-                IncorrectAnswer(accuracy);
-                break;
-            default:
-                break;
-        }
-    count++;
-    Debug.Log(score);
-//        Debug.Log(tracker.Count);
+        textObject.GetComponentInChildren<TextScript>().Stage = stager;
     }
 
-    private void IncorrectAnswer(int attempt)
-    {
-        int rand = Random.Range(0, 3);
-        switch (rand)
-        {
-            case 0:
-                reaction = "Luckily, I'm just a test caller! Let's try that again!";
+ //   private void IncorrectAnswer()
+//    {
+//    Debug.Log("Incoorect");
+ //       int rand = Random.Range(0, 3);
+   //     switch (rand)
+ //       {
+ //           case 0:
+ //               reaction = "Luckily, I'm just a test caller! Let's try that again!";
                 //set audio to backup
-                OutputPrompt(caller, reaction);
-                break;
-            case 1:
-                reaction = "Sorry, I didn't hear you, what did you just say?";
-                break;
-            case 2:
-                reaction = "I have a bad connection, can you say that again?";
-                break;
-            default:
-                break;
-        }
-        Stager(stager,attempt);        
-    }
-
-    // private void TrackerUpdate(){ 
-    // string output;
-    // foreach(reply line in tracker){
-    // String.Concat(line.speaker, line.output);
-    // }
-    // //trackerOutput.text = 
-    // }
+            //     break;
+            // case 1:
+            //     reaction = "Sorry, I didn't hear you, what did you just say?";
+            //     break;
+            // case 2:
+            //     reaction = "I have a bad connection, can you say that again?";
+            //     break;
+            // default:
+            //     break;
+ //       }
+//        OutputPrompt(caller, reaction);
+//        retry = true;
+//        text.text = reaction; 
+//    }
 
     public void StoryStarter(){
-    Stager (0,1);
+    if (running == true){StoryStager (0,1);}
     }
 
-    public void Stager(int stage,int answer)
-    {
+    public void StoryButton(){
+    StoryStager(stager, answer);
+    }
+
+    public void StoryStager(int stage,int answer)
+    {  
+    Debug.Log("Reaction is cunrrently: "+ reaction);
+    if (retry == true){reaction = lastAnswer;}
+    else{
         switch (stager,answer)
         {
             case (0,0):
                 reaction = "(Here is were you'll find the history of what you've said)";
-                OutputPrompt(caller, reaction);
                 break;
             case (0,1):
                 sameTest = true;
                 reaction = "(The phone is ringing. What do you pick up and say?)";
-                OutputPrompt(caller, reaction);
-                Debug.Log(Clip1.name);
                 Audioclip = Clip1;
-                break;
-            case (1,-1):
+                Debug.Log(Clip1.name);
                 break;
             case (1,0):
                 reaction = "I'm having trouble with my internet speed";
@@ -117,11 +126,6 @@ public class StoryTracker : MonoBehaviour
             case (1,1):
                 reaction = "Oh, thank you! I'm having trouble with my internet";
 //                Audioclip = Clip2;
-                break;
-            case (2,-1):
-//                reaction =
-//                    "My name is Lacie Green and my number is 04 6281 1611";
-//                Audioclip = Clip3;
                 break;
             case (2,0):
                 reaction =
@@ -133,21 +137,14 @@ public class StoryTracker : MonoBehaviour
                     "I appreciate that and of course, my name is Lacie Green, and my number is 04 6281 1611";
 //                Audioclip = Clip3;
                 break;
-            case (3,-1):
-//                reaction = "When can I expect a solution?";
-//                Audioclip = Clip4;
-    break;
             case (3,0):
                 reaction = "No, Green. Never mind";
 //                Audioclip = Clip4;
-break;
+                break;
             case (3,1):
                 reaction = "That's right! When can I expect a solution?";
 //                Audioclip = Clip4;
-          break;
-            case (4,-1):
-//                reaction = "That's right! When can I expect a solution?";
-                break;
+            break;
             case (4,0):
                 reaction = "Okay, I'll keep an ear out";
                 break;
@@ -158,10 +155,11 @@ break;
             default:
                 break;
         }
-        text.text=reaction;
+        }
+        OutputPrompt(caller, reaction);
+        text.text = reaction;
 
         textObject.GetComponentInChildren<TextScript>().ToPlay = Audioclip;
         textObject.GetComponentInChildren<TextScript>().SameTest = sameTest;
-        textObject.GetComponentInChildren<TextScript>().Stager();  
     }
 }

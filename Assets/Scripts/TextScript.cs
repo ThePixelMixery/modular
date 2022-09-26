@@ -293,12 +293,6 @@ public class TextScript : MonoBehaviour
             responseArray[i].accuracy = ResetAcc;
             ResetAcc++;
         }
-        NextStage();
-        TestChanger();
-    }
-
-    public void NextStage()
-    {
         if (Path <= 3 || Path >= 7)
         {
             if (SameTest == true)
@@ -311,6 +305,10 @@ public class TextScript : MonoBehaviour
                 Stage = 0;
             }
         }
+        else{
+        TestChanger();
+        }
+        
     }
 
     public void Pathchanger(int newPath)
@@ -327,7 +325,8 @@ public class TextScript : MonoBehaviour
             case 4:
                 TrainingText.text =
                     "Hi! Can you help me learn a script for collecting information for a help ticket? I'll right down your answers on the right so you can remember how things turned out. Let's read it together: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n I'm directing you to the relevant department now \n\n";
-                StoryTracker.GetComponent<StoryTracker>().Stager(0, 0);
+                StoryTracker.GetComponent<StoryTracker>().StoryStager(0, 0);
+                StoryTracker.GetComponent<StoryTracker>().running = true;
                 break;
             case 7:
                 TrainingText.text =
@@ -341,6 +340,7 @@ public class TextScript : MonoBehaviour
 
     public void TestChanger()
     {
+        //Debug.Log("Text Test Changed");
         timerIsRunning = false;
         switch (Test)
         {
@@ -368,12 +368,13 @@ public class TextScript : MonoBehaviour
                     "Oops, something is wrong. Contact the researcher right away!";
                 break;
         }
-        Stager();
+        ButtonUpdater();
     }
 
     public void Stager()
     {
-        if (Path == 1 | Path == 7)
+        //Debug.Log("Text Staged, Path is " + Path);
+        if (Path == 1 || Path == 7)
         {
             switch (Stage)
             {
@@ -403,7 +404,7 @@ public class TextScript : MonoBehaviour
                     break;
             }
         }
-        ButtonUpdater();
+        else{Debug.Log("Story staging");StoryTracker.GetComponentInChildren<StoryTracker>().StoryButton();}
         if (Test == 0)
         {
             AllowAnswer();
@@ -412,7 +413,7 @@ public class TextScript : MonoBehaviour
 
     public void AnswerRandomised()
     {
-        Debug.Log("Answers Randomised");
+        //Debug.Log("Text Answers Randomised");
         for (int i = 0; i < 3; i++)
         {
             int a = Random.Range(0, 3);
@@ -421,17 +422,42 @@ public class TextScript : MonoBehaviour
             responseArray[a] = responseArray[b];
             responseArray[b] = temp;
         }
-        Option1.GetComponentInChildren<TextMeshProUGUI>().text =
-            responseArray[0].response;
-        Option2.GetComponentInChildren<TextMeshProUGUI>().text =
-            responseArray[1].response;
-        Option3.GetComponentInChildren<TextMeshProUGUI>().text =
-            responseArray[2].response;
+            Option1.GetComponentInChildren<TextMeshProUGUI>().text =
+                responseArray[0].response;
+            Option2.GetComponentInChildren<TextMeshProUGUI>().text =
+                responseArray[1].response;
+            Option3.GetComponentInChildren<TextMeshProUGUI>().text =
+                responseArray[2].response;
         AnswerChecker();
+    }
+
+    public void AnswerChecker()
+    {
+        int i = 0;
+        for (i = 0; i < 3; i++)
+        {
+            switch (responseArray[i].accuracy)
+            {
+                case (0):
+                    IncorrectAnswer = i;
+                    break;
+                case (1):
+                    SemicorrectAnswer = i;
+                    break;
+                case (2):
+                    CorrectAnswer = i;
+                    break;
+                default:
+                    Debug.Log("I don't feel so good");
+                    break;
+            }
+        }
+        Stager();
     }
 
     public void ButtonUpdater()
     {
+        //Debug.Log("Text Buttons updated");
         if (Path == 1 | Path == 4 | Path == 7)
         {
             switch (Stage)
@@ -466,6 +492,7 @@ public class TextScript : MonoBehaviour
                 default:
                     break;
             }
+
         }
         AnswerRandomised();
     }
@@ -479,6 +506,7 @@ public class TextScript : MonoBehaviour
 
     public void AnswerOutput(int Answer)
     {
+        //Debug.Log("Text Answered");
         Feedback.text = "Option " + (CorrectAnswer + 1) + " was correct";
         timeLeft = 0.0f;
         timerIsRunning = false;
@@ -499,6 +527,9 @@ public class TextScript : MonoBehaviour
                 StoryTracker
                     .GetComponentInChildren<StoryTracker>()
                     .OutputAnswer(responseArray[CorrectAnswer].response, 1);
+                Debug
+                    .Log("Sent accurancy 1, " +
+                    responseArray[CorrectAnswer].response);
             }
             else
             {
@@ -531,6 +562,9 @@ public class TextScript : MonoBehaviour
                 StoryTracker
                     .GetComponentInChildren<StoryTracker>()
                     .OutputAnswer(responseArray[SemicorrectAnswer].response, 0);
+                Debug
+                    .Log("Sent accurancy 0, " +
+                    responseArray[SemicorrectAnswer].response);
             }
             else
             {
@@ -564,6 +598,9 @@ public class TextScript : MonoBehaviour
                 StoryTracker
                     .GetComponentInChildren<StoryTracker>()
                     .OutputAnswer(responseArray[IncorrectAnswer].response, -1);
+                Debug
+                    .Log("Sent accurancy -1, " +
+                    responseArray[IncorrectAnswer].response);
             }
             else
             {
@@ -614,29 +651,6 @@ public class TextScript : MonoBehaviour
             }
             LogScript
                 .WriteNewLogEntry("Answer", "TimerRanOut", "PlayerFeedback");
-        }
-    }
-
-    public void AnswerChecker()
-    {
-        int i = 0;
-        for (i = 0; i < 3; i++)
-        {
-            switch (responseArray[i].accuracy)
-            {
-                case (0):
-                    IncorrectAnswer = i;
-                    break;
-                case (1):
-                    SemicorrectAnswer = i;
-                    break;
-                case (2):
-                    CorrectAnswer = i;
-                    break;
-                default:
-                    Debug.Log("I don't feel so good");
-                    break;
-            }
         }
     }
 }

@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class PointsMode : MonoBehaviour
 {
-
     public GameObject[] pointsArray;
 
     private GameObject[] sortingArray;
@@ -25,10 +24,12 @@ public class PointsMode : MonoBehaviour
         Debug.Log("Points running");
     }
 
-    public void RunIt(){
-        sortingArray =
-                pointsArray;
-    running=true;}
+    public void RunIt()
+    {
+        sortingArray = pointsArray;
+        running = true;
+    }
+
     //
     private void Compare()
     {
