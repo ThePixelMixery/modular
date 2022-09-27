@@ -75,17 +75,26 @@ public class TextScript : MonoBehaviour
 
     public TextMeshProUGUI PointsFeedback;
 
-    public GameObject StoryTracker;
+    public GameObject StoryTrackerObj;
 
-    public GameObject StoryMode;
+    private bool Story = false;
+    private string caller;
+
+    public AudioSource ClipFail1;
+    public AudioSource ClipFail2;
+    public AudioSource ClipFail3;
 
     public AudioSource Clip1;
+    public AudioSource Clip1a;
 
     public AudioSource Clip2;
+    public AudioSource Clip2a;
 
     public AudioSource Clip3;
+    public AudioSource Clip3a;
 
     public AudioSource Clip4;
+    public AudioSource Clip4a;
 
     public AudioSource ToPlay;
 
@@ -325,8 +334,7 @@ public class TextScript : MonoBehaviour
             case 4:
                 TrainingText.text =
                     "Hi! Can you help me learn a script for collecting information for a help ticket? I'll right down your answers on the right so you can remember how things turned out. Let's read it together: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n I'm directing you to the relevant department now \n\n";
-                StoryTracker.GetComponent<StoryTracker>().StoryStager(0, 0);
-                StoryTracker.GetComponent<StoryTracker>().running = true;
+                StoryTracker.OutputPrompt("", "(Here is were you'll find the history of what you've said)");
                 break;
             case 7:
                 TrainingText.text =
@@ -373,38 +381,55 @@ public class TextScript : MonoBehaviour
 
     public void Stager()
     {
+    string situation = "situation";
+        
         //Debug.Log("Text Staged, Path is " + Path);
-        if (Path == 1 || Path == 7)
+        if (Path == 1 || Path == 7 || Path == 4)
         {
-            switch (Stage)
+            switch (Stage, Story)
             {
-                case (0):
+                case (0, false):
                     SameTest = true;
-                    Situation.text =
-                        "(The phone is ringing. What do you pick up and say?)";
+                    situation = "(The phone is ringing. What do you pick up and say?)";
                     ToPlay = Clip1;
                     Debug.Log(Clip1.name);
                     break;
-                case (1):
-                    Situation.text =
-                        "I'm having trouble with my internet speed";
+                case (1, false):
+                    situation = "I'm having trouble with my internet speed";
                     ToPlay = Clip2;
                     break;
-                case (2):
-                    Situation.text =
-                        "My name is Lacie Green and my number is 04 6281 1611";
+                case (1, true):
+                    situation =
+                        "Oh, thank you! I'm having trouble with my internet";
+                    ToPlay = Clip2a;
+                    break;
+                case (2, false):
+                    situation =
+                        "Sure, my name and number is Lacie Green, 04 6281 1611";
                     ToPlay = Clip3;
                     break;
-                case (3):
-                    Situation.text = "When can I expect a solution?";
+                case (2, true):
+                    situation =
+                        "I appreciate that and of course, my name is Lacie Green, and my number is 04 6281 1611";
+                    ToPlay = Clip3a;
+                    break;
+                case (3, false):
+                    situation = "No, Green. Never mind";
                     ToPlay = Clip4;
+                    SameTest = false;
+                    break;
+                case (3, true):
+                    situation = "That's right! When can I expect a solution?";
+                    ToPlay = Clip4a;
                     SameTest = false;
                     break;
                 default:
                     break;
             }
+            caller = "Lacie: ";
+            StoryTracker.OutputPrompt(caller,situation);
         }
-        else{Debug.Log("Story staging");StoryTracker.GetComponentInChildren<StoryTracker>().StoryButton();}
+        Situation.text = situation;
         if (Test == 0)
         {
             AllowAnswer();
@@ -524,9 +549,8 @@ public class TextScript : MonoBehaviour
             else if (Path >= 4 && Path <= 6)
             {
                 // Narrative Changes
-                StoryTracker
-                    .GetComponentInChildren<StoryTracker>()
-                    .OutputAnswer(responseArray[CorrectAnswer].response, 1);
+                Story = true;
+                StoryTracker.OutputAnswer(responseArray[CorrectAnswer].response, 1);
                 Debug
                     .Log("Sent accurancy 1, " +
                     responseArray[CorrectAnswer].response);
@@ -559,9 +583,8 @@ public class TextScript : MonoBehaviour
             }
             else if (Path >= 4 && Path <= 6)
             {
-                StoryTracker
-                    .GetComponentInChildren<StoryTracker>()
-                    .OutputAnswer(responseArray[SemicorrectAnswer].response, 0);
+                Story = false;
+                StoryTracker.OutputAnswer(responseArray[SemicorrectAnswer].response, 0);
                 Debug
                     .Log("Sent accurancy 0, " +
                     responseArray[SemicorrectAnswer].response);
@@ -595,9 +618,7 @@ public class TextScript : MonoBehaviour
             else if (Path >= 4 && Path <= 6)
             {
                 // Narrative Changes
-                StoryTracker
-                    .GetComponentInChildren<StoryTracker>()
-                    .OutputAnswer(responseArray[IncorrectAnswer].response, -1);
+                StoryTracker.OutputAnswer(responseArray[IncorrectAnswer].response, -1);
                 Debug
                     .Log("Sent accurancy -1, " +
                     responseArray[IncorrectAnswer].response);
@@ -629,8 +650,29 @@ public class TextScript : MonoBehaviour
             }
             else if (Path >= 4 && Path <= 6)
             {
-                // Narrative Changes
-                // Refresh narrative or refresh situation
+                string situation = "retry";
+                int rand = Random.Range(0,2);
+                switch (rand)
+                {
+                    case 0:
+                        situation = "Luckily, I was a test calller! Let's try that again";
+                        ToPlay = ClipFail1;
+                    break;
+                    case 1:
+                        situation = "Sorry, I have bad reception. Can you say that again?";
+                        ToPlay = ClipFail2;
+                    break;
+                    case 2:
+                        situation = "Sorry, I didn't hear you. What was that?";
+                        ToPlay = ClipFail3;
+                    break;
+                    default:
+                    break;
+                }
+                if (Test == 4){PlayAudio();}
+                Situation.text=situation;
+                StoryTracker.OutputPrompt(caller, situation);
+                Stage --;
             }
             else
             {
