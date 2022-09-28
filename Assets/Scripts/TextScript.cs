@@ -76,16 +76,17 @@ public class TextScript : MonoBehaviour
     public TextMeshProUGUI PointsFeedback;
 
     public GameObject StoryTrackerObj;
+    private string situation;
+    private string caller;
 
     private bool Story = false;
-    private string caller;
 
     public AudioSource ClipFail1;
     public AudioSource ClipFail2;
     public AudioSource ClipFail3;
+    public AudioSource ClipTimeOut;
 
     public AudioSource Clip1;
-    public AudioSource Clip1a;
 
     public AudioSource Clip2;
     public AudioSource Clip2a;
@@ -169,7 +170,9 @@ public class TextScript : MonoBehaviour
                 "PKVDIU",
                 "JHYIPL",
                 //testing
-                "test"
+                "test",
+                "Shaun",
+                "Sophie"
             };
 
     void Start()
@@ -268,7 +271,6 @@ public class TextScript : MonoBehaviour
     {
         Cliplength = ToPlay.clip.length;
         ToPlay.Play();
-        AllowAnswer();
         StartCoroutine(EndAudio());
         LogScript.WriteNewLogEntry("Sound", "Started", "PlayerFeedback");
     }
@@ -278,8 +280,10 @@ public class TextScript : MonoBehaviour
         yield return new WaitForSeconds(Cliplength);
         timeLeft = 3.0f;
         timerIsRunning = true;
-        LogScript.WriteNewLogEntry("Sound", "Ended", "PlayerFeedback");
+        StoryTracker.OutputPrompt(caller, situation);
+        ShowAnswers();
         AllowAnswer();
+        LogScript.WriteNewLogEntry("Sound", "Ended", "PlayerFeedback");
     }
 
     public void Resetter()
@@ -289,6 +293,9 @@ public class TextScript : MonoBehaviour
             ToPlay.Stop();
             timeLeft = 0.0f;
         }
+        Option1.GetComponentInChildren<TextMeshProUGUI>().text = " ";
+            Option2.GetComponentInChildren<TextMeshProUGUI>().text ="";
+            Option3.GetComponentInChildren<TextMeshProUGUI>().text ="";
         Feedback.text = " ";
         PointsFeedback.text = " ";
         Correct.gameObject.SetActive(false);
@@ -302,8 +309,6 @@ public class TextScript : MonoBehaviour
             responseArray[i].accuracy = ResetAcc;
             ResetAcc++;
         }
-        if (Path <= 3 || Path >= 7)
-        {
             if (SameTest == true)
             {
                 Stage++;
@@ -311,12 +316,10 @@ public class TextScript : MonoBehaviour
             else
             {
                 Test++;
+                Story = false;
                 Stage = 0;
             }
-        }
-        else{
         TestChanger();
-        }
         
     }
 
@@ -334,6 +337,7 @@ public class TextScript : MonoBehaviour
             case 4:
                 TrainingText.text =
                     "Hi! Can you help me learn a script for collecting information for a help ticket? I'll right down your answers on the right so you can remember how things turned out. Let's read it together: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n I'm directing you to the relevant department now \n\n";
+                StoryTracker.Starter();
                 StoryTracker.OutputPrompt("", "(Here is were you'll find the history of what you've said)");
                 break;
             case 7:
@@ -379,9 +383,96 @@ public class TextScript : MonoBehaviour
         ButtonUpdater();
     }
 
-    public void Stager()
+
+    public void ButtonUpdater()
     {
-    string situation = "situation";
+        //Debug.Log("Text Buttons updated");
+        if (Path == 1 | Path == 4 | Path == 7)
+        {
+            switch (Stage)
+            {
+                case (0):
+                    responseArray[0].response = "Hi. What do you want?";
+                    responseArray[1].response =
+                        "Hello, what can I do for you today?";
+                    responseArray[2].response =
+                        "Hello, welcome to help desk. My name is X. How can I help you today?";
+                    break;
+                case (1):
+                    responseArray[0].response = "Name and number, please";
+                    responseArray[1].response =
+                        "Can I grab your name and number?";
+                    responseArray[2].response =
+                        "I understand your frustration Can I have your name and number?";
+                    break;
+                case (2):
+                    responseArray[0].response = "Lacie Green, 0462711611?";
+                    responseArray[1].response = "Lacie Bean, 0462811611?";
+                    responseArray[2].response = "Lacie Green, 0462811611?";
+                    break;
+                case (3):
+                    responseArray[0].response =
+                        "We'll call you back when we can, bye";
+                    responseArray[1].response =
+                        "Someone from the correct department will call you back soon";
+                    responseArray[2].response =
+                        "I'm transferring you to the correct department, please hold";
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        AnswerRandomised();
+    }
+
+
+    public void AnswerRandomised()
+    {
+        int i;
+        //Debug.Log("Text Answers Randomised");
+        for (i = 0; i < 3; i++)
+        {
+            int a = Random.Range(0, 3);
+            int b = Random.Range(0, 3);
+            responseClass temp = responseArray[a];
+            responseArray[a] = responseArray[b];
+            responseArray[b] = temp;
+        }
+        for (i = 0; i < 3; i++)
+        {
+            switch (responseArray[i].accuracy)
+            {
+                case (0):
+                    IncorrectAnswer = i;
+                    break;
+                case (1):
+                    SemicorrectAnswer = i;
+                    break;
+                case (2):
+                    CorrectAnswer = i;
+                    break;
+                default:
+                    Debug.Log("I don't feel so good");
+                    break;
+            }
+        }
+        Stager();
+    }
+
+    void ShowAnswers()
+    { 
+    Option1.GetComponentInChildren<TextMeshProUGUI>().text =
+                responseArray[0].response;
+            Option2.GetComponentInChildren<TextMeshProUGUI>().text =
+                responseArray[1].response;
+            Option3.GetComponentInChildren<TextMeshProUGUI>().text =
+                responseArray[2].response;
+    }
+
+        public void Stager()
+    {
+    situation = "staging situation";
         
         //Debug.Log("Text Staged, Path is " + Path);
         if (Path == 1 || Path == 7 || Path == 4)
@@ -427,99 +518,16 @@ public class TextScript : MonoBehaviour
                     break;
             }
             caller = "Lacie: ";
-            StoryTracker.OutputPrompt(caller,situation);
+            
         }
+        Debug.Log("Stage "+Stage+", Story "+Story);
         Situation.text = situation;
         if (Test == 0)
         {
+            StoryTracker.OutputPrompt(caller,situation);
+            ShowAnswers();
             AllowAnswer();
         }
-    }
-
-    public void AnswerRandomised()
-    {
-        //Debug.Log("Text Answers Randomised");
-        for (int i = 0; i < 3; i++)
-        {
-            int a = Random.Range(0, 3);
-            int b = Random.Range(0, 3);
-            responseClass temp = responseArray[a];
-            responseArray[a] = responseArray[b];
-            responseArray[b] = temp;
-        }
-            Option1.GetComponentInChildren<TextMeshProUGUI>().text =
-                responseArray[0].response;
-            Option2.GetComponentInChildren<TextMeshProUGUI>().text =
-                responseArray[1].response;
-            Option3.GetComponentInChildren<TextMeshProUGUI>().text =
-                responseArray[2].response;
-        AnswerChecker();
-    }
-
-    public void AnswerChecker()
-    {
-        int i = 0;
-        for (i = 0; i < 3; i++)
-        {
-            switch (responseArray[i].accuracy)
-            {
-                case (0):
-                    IncorrectAnswer = i;
-                    break;
-                case (1):
-                    SemicorrectAnswer = i;
-                    break;
-                case (2):
-                    CorrectAnswer = i;
-                    break;
-                default:
-                    Debug.Log("I don't feel so good");
-                    break;
-            }
-        }
-        Stager();
-    }
-
-    public void ButtonUpdater()
-    {
-        //Debug.Log("Text Buttons updated");
-        if (Path == 1 | Path == 4 | Path == 7)
-        {
-            switch (Stage)
-            {
-                case (0):
-                    responseArray[0].response = "Hi. What do you want?";
-                    responseArray[1].response =
-                        "Hello, what can I do for you today?";
-                    responseArray[2].response =
-                        "Hello, welcome to help desk. My name is X. How can I help you today?";
-                    break;
-                case (1):
-                    responseArray[0].response = "Name and number, please";
-                    responseArray[1].response =
-                        "Can I grab your name and number?";
-                    responseArray[2].response =
-                        "I understand your frustration Can I have your name and number?";
-                    break;
-                case (2):
-                    responseArray[0].response = "Lacie Green, 0462711611?";
-                    responseArray[1].response = "Lacie Bean, 0462811611?";
-                    responseArray[2].response = "Lacie Green, 0462811611?";
-                    break;
-                case (3):
-                    responseArray[0].response =
-                        "We'll call you back when we can, bye";
-                    responseArray[1].response =
-                        "Someone from the correct department will call you back soon";
-                    responseArray[2].response =
-                        "I'm transferring you to the correct department, please hold";
-                    break;
-                default:
-                    break;
-            }
-
-        }
-        AnswerRandomised();
     }
 
     public void AllowAnswer()
@@ -618,10 +626,30 @@ public class TextScript : MonoBehaviour
             else if (Path >= 4 && Path <= 6)
             {
                 // Narrative Changes
-                StoryTracker.OutputAnswer(responseArray[IncorrectAnswer].response, -1);
-                Debug
-                    .Log("Sent accurancy -1, " +
-                    responseArray[IncorrectAnswer].response);
+                StoryTracker.OutputAnswer(responseArray[SemicorrectAnswer].response, -1);
+                situation = "retry";
+                int rand = Random.Range(0,2);
+                switch (rand)
+                {
+                    case 0:
+                        situation = "Luckily, I was a test calller! Let's try that again";
+                        ToPlay = ClipFail1;
+                    break;
+                    case 1:
+                        situation = "Sorry, I have bad reception. Can you say that again?";
+                        ToPlay = ClipFail2;
+                    break;
+                    case 2:
+                        situation = "Sorry, I didn't hear you. What was that?";
+                        ToPlay = ClipFail3;
+                    break;
+                    default:
+                    break;
+                }
+                if (Test == 4){PlayAudio();}
+                Situation.text=situation;
+                StoryTracker.OutputPrompt(caller, situation);
+                Stage --;
             }
             else
             {
@@ -651,24 +679,8 @@ public class TextScript : MonoBehaviour
             else if (Path >= 4 && Path <= 6)
             {
                 string situation = "retry";
-                int rand = Random.Range(0,2);
-                switch (rand)
-                {
-                    case 0:
-                        situation = "Luckily, I was a test calller! Let's try that again";
-                        ToPlay = ClipFail1;
-                    break;
-                    case 1:
-                        situation = "Sorry, I have bad reception. Can you say that again?";
-                        ToPlay = ClipFail2;
-                    break;
-                    case 2:
-                        situation = "Sorry, I didn't hear you. What was that?";
-                        ToPlay = ClipFail3;
-                    break;
-                    default:
-                    break;
-                }
+                        situation = "Hello?";
+                        ToPlay = ClipTimeOut;
                 if (Test == 4){PlayAudio();}
                 Situation.text=situation;
                 StoryTracker.OutputPrompt(caller, situation);

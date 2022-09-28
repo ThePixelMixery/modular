@@ -8,18 +8,17 @@ public class StoryTracker : MonoBehaviour
     private static string caller;
     public static string trackingText;
 
-    private static TMP_Text trackerOutput;
+    private static TextMeshProUGUI trackerOutput;
 
     private static int score;
     private static int count;
 
     public static  string lastLine;
 
-    void Start()
+    public static void Starter()
     {
-        trackerOutput = GameObject.Find("Content_Story").GetComponent<TMP_Text>();
+        trackerOutput = GameObject.FindWithTag("Tracker").GetComponent<TextMeshProUGUI>();
         Debug.Log("Found " + trackerOutput);
-        
     }
 
     public static void OutputPrompt(string caller, string answer)

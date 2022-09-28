@@ -47,6 +47,7 @@ public class LogScript : MonoBehaviour
     private static string participantId;
 
     private static TMP_InputField IDInput;
+    private static TextMeshProUGUI trackerOutput;
 
     private static bool Initialised = false;
 
@@ -71,6 +72,7 @@ public class LogScript : MonoBehaviour
     void Start()
     {
         initialise();
+
     }
 
     public static void WriteNewLogEntry(
