@@ -21,6 +21,12 @@ public class PointsMode : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Points running");
+    }
+
+    public void RunIt()
+    {
+        running = true;
         sortingArray =
             pointsArray
                 .OrderBy(entry => -entry.GetComponent<LeaderboardEntry>().score)
@@ -28,10 +34,6 @@ public class PointsMode : MonoBehaviour
         int index = 0;
         foreach (GameObject obj in sortingArray)
         {
-            //                if (obj.GetComponent<LeaderboardEntry>().player == true)
-            //              {
-            //                FeedbackSound (index);
-            //          }
             var rt = obj.GetComponent<RectTransform>();
             obj.GetComponent<LeaderboardEntry>().ranking = index;
             var pos = rt.position;
@@ -49,12 +51,6 @@ public class PointsMode : MonoBehaviour
 
             index++;
         }
-        Debug.Log("Points running");
-    }
-
-    public void RunIt()
-    {
-        running = true;
     }
 
     //
@@ -120,10 +116,10 @@ public class PointsMode : MonoBehaviour
         index = 0;
         foreach (GameObject obj in sortingArray)
         {
-            //                if (obj.GetComponent<LeaderboardEntry>().player == true)
-            //              {
-            //                FeedbackSound (index);
-            //          }
+            if (obj.GetComponent<LeaderboardEntry>().player == true)
+            {
+                FeedbackSound (index);
+            }
             var rt = obj.GetComponent<RectTransform>();
             obj.GetComponent<LeaderboardEntry>().ranking = index;
             var pos = rt.position;
