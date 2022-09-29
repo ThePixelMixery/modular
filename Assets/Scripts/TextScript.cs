@@ -237,7 +237,6 @@ public class TextScript : MonoBehaviour
         IntroCan.gameObject.SetActive(true);
         Button Control1button =
             GameObject.Find("Button_1C").GetComponent<Button>();
-        Control1button.interactable = true;
         LogScript.WriteNewLogEntry("Login", "Sessions", "Start");
     }
 
@@ -281,9 +280,11 @@ public class TextScript : MonoBehaviour
     {
         yield return new WaitForSeconds(Cliplength);
         timeLeft = 3.0f;
-        timerIsRunning = true;
+        if (ToPlay != ClipTimeOut){timerIsRunning = true;}
         ShowAnswers();
         AllowAnswer();
+        if (Path == 4){
+        StoryTracker.OutputPrompt(caller, situation);}
         LogScript.WriteNewLogEntry("Sound", "Ended", "PlayerFeedback");
     }
 
@@ -563,6 +564,10 @@ public class TextScript : MonoBehaviour
                 // Narrative Changes
                 Story = true;
                 StoryTracker.OutputAnswer(responseArray[CorrectAnswer].response, 1);
+                LogScript
+                    .WriteNewLogEntry("Story",
+                    "Correct",
+                    StoryTracker.score.ToString());
                 Debug
                     .Log("Sent accurancy 1, " +
                     responseArray[CorrectAnswer].response);
@@ -597,6 +602,10 @@ public class TextScript : MonoBehaviour
             else if (Path >= 4 && Path <= 6)
             {
                 Story = false;
+                                LogScript
+                    .WriteNewLogEntry("Story",
+                    "Semicorrect",
+                    StoryTracker.score.ToString());
                 StoryTracker.OutputAnswer(responseArray[SemicorrectAnswer].response, 0);
                 Debug
                     .Log("Sent accurancy 0, " +
@@ -652,10 +661,16 @@ public class TextScript : MonoBehaviour
                     default:
                     break;
                 }
-                if (Path == 4){PlayAudio();}
+                if (Test > 0){PlayAudio();}
                 Situation.text=situation;
+                                LogScript
+                    .WriteNewLogEntry("Story",
+                    "Incorrect",
+                    StoryTracker.score.ToString());
                 StoryTracker.OutputPrompt(caller, situation);
+                SameTest=true;
                 Stage --;
+
             }
             else
             {
@@ -681,17 +696,43 @@ public class TextScript : MonoBehaviour
             if (Path <= 3)
             {
                 //Control
+                timerIsRunning=false;
                 Incorrect.gameObject.SetActive(true);
             }
             else if (Path >= 4 && Path <= 6)
             {
-                string situation = "retry";
+                int rand = Random.Range(0,3);
+                switch (rand)
+                {
+                    case 0:
+                        situation = "Luckily, I was a test calller! Let's try that again";
+                        ToPlay = ClipFail1;
+                    break;
+                    case 1:
+                        situation = "Sorry, I have bad reception. Can you say that again?";
+                        ToPlay = ClipFail2;
+                    break;
+                    case 2:
+                        situation = "Sorry, I didn't hear you. What was that?";
+                        ToPlay = ClipFail3;
+                    break;
+                    case 3:
                         situation = "Hello?";
                         ToPlay = ClipTimeOut;
-                if (Test == 4){PlayAudio();}
-                Situation.text=situation;
+                    break;
+                    default:
+                    break;
+                }
+                SameTest = true;
+                Stage--;
+                timerIsRunning=false;
                 StoryTracker.OutputPrompt(caller, situation);
-                Stage --;
+                LogScript
+                    .WriteNewLogEntry("Story",
+                    "Timeout",
+                    StoryTracker.score.ToString());
+                
+                
             }
             else
             {
@@ -711,6 +752,7 @@ public class TextScript : MonoBehaviour
                         .score
                         .ToString());
             }
+            timerIsRunning=false;
             LogScript
                 .WriteNewLogEntry("Answer", "TimerRanOut", "PlayerFeedback");
         }

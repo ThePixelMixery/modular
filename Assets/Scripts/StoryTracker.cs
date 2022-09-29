@@ -10,7 +10,7 @@ public class StoryTracker : MonoBehaviour
 
     private static TextMeshProUGUI trackerOutput;
 
-    private static int score;
+    public static int score;
     private static int count;
 
     public static  string lastLine;
@@ -30,6 +30,7 @@ public class StoryTracker : MonoBehaviour
         trackingText += output+"\n";
         trackerOutput.text = trackingText;
         lastLine = output;
+        LogScript.WriteNewLogEntry("New Prompt", "Narrative", output);
         }
     }
 
@@ -41,5 +42,7 @@ public class StoryTracker : MonoBehaviour
         count++;
         Debug.Log(score);
         score += accuracy;
+        LogScript.WriteNewLogEntry("Average", words, ((score/count)*100)+"%");
+        
     }
 }
