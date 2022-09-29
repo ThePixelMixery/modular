@@ -101,7 +101,7 @@ public class TextScript : MonoBehaviour
 
     private float timeLeft = 60.0f;
 
-    private bool training = true;
+    public bool training = true;
 
     private bool timerIsRunning = false;
 
@@ -200,10 +200,10 @@ public class TextScript : MonoBehaviour
             }
             else
             {
+                timerEnded();
                 Debug.Log("Time has run out!");
                 timeLeft = 0;
                 timerIsRunning = false;
-                timerEnded();
             }
         }
         else
@@ -259,9 +259,11 @@ public class TextScript : MonoBehaviour
         }
         else
         {
-            if (Path == 2)
+            if (Test == 2)
             {
+                Debug.Log("Before Answer 3");
                 AnswerOutput(3);
+                Debug.Log("After Answer 3");
             }
             TimerText.text = "Ready";
         }
@@ -280,7 +282,6 @@ public class TextScript : MonoBehaviour
         yield return new WaitForSeconds(Cliplength);
         timeLeft = 3.0f;
         timerIsRunning = true;
-        StoryTracker.OutputPrompt(caller, situation);
         ShowAnswers();
         AllowAnswer();
         LogScript.WriteNewLogEntry("Sound", "Ended", "PlayerFeedback");
@@ -343,15 +344,18 @@ public class TextScript : MonoBehaviour
             case 7:
                 TrainingText.text =
                     "In this exercise you will be learning a script for collecting information for a help ticket while competing with other players. You will hear a sound when you have moved up and down the leaderboard. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n I'm directing you to the relevant department now \n\n I think I'm ready. How about you?";
-                PointsObject.GetComponent<PointsMode>().enabled = true;
                 break;
             default:
                 break;
         }
     }
 
+    public void Trainfalser(){
+    training = false;}
+
     public void TestChanger()
     {
+        
         //Debug.Log("Text Test Changed");
         timerIsRunning = false;
         switch (Test)
@@ -524,9 +528,9 @@ public class TextScript : MonoBehaviour
         Situation.text = situation;
         if (Test == 0)
         {
-            StoryTracker.OutputPrompt(caller,situation);
             ShowAnswers();
             AllowAnswer();
+            StoryTracker.OutputPrompt(caller,situation);
         }
     }
 
@@ -571,6 +575,7 @@ public class TextScript : MonoBehaviour
                     .GetComponentInChildren<LeaderboardEntry>()
                     .UpdateScore(15);
                 PointsFeedback.text = "+15";
+                PointsObject.GetComponent<PointsMode>().AIbot();
                 PointsFeedback.color = new Color32(132, 155, 134, 255);
                 LogScript
                     .WriteNewLogEntry("Points",
@@ -604,6 +609,7 @@ public class TextScript : MonoBehaviour
                     .GetComponentInChildren<LeaderboardEntry>()
                     .UpdateScore(5);
                 PointsFeedback.text = "+5";
+                PointsObject.GetComponent<PointsMode>().AIbot();
                 PointsFeedback.color = new Color32(242, 215, 93, 255);
                 LogScript
                     .WriteNewLogEntry("Points",
@@ -646,7 +652,7 @@ public class TextScript : MonoBehaviour
                     default:
                     break;
                 }
-                if (Test == 4){PlayAudio();}
+                if (Path == 4){PlayAudio();}
                 Situation.text=situation;
                 StoryTracker.OutputPrompt(caller, situation);
                 Stage --;
@@ -658,6 +664,7 @@ public class TextScript : MonoBehaviour
                     .GetComponentInChildren<LeaderboardEntry>()
                     .UpdateScore(-10);
                 PointsFeedback.text = "-10";
+                PointsObject.GetComponent<PointsMode>().AIbot();
                 PointsFeedback.color = new Color32(225, 92, 99, 255);
                 LogScript
                     .WriteNewLogEntry("Points",
@@ -694,6 +701,7 @@ public class TextScript : MonoBehaviour
                     .GetComponentInChildren<LeaderboardEntry>()
                     .UpdateScore(-10);
                 PointsFeedback.text = "-10";
+                PointsObject.GetComponent<PointsMode>().AIbot();
                 PointsFeedback.color = new Color32(225, 92, 99, 255);
                 LogScript
                     .WriteNewLogEntry("Points",
@@ -706,5 +714,6 @@ public class TextScript : MonoBehaviour
             LogScript
                 .WriteNewLogEntry("Answer", "TimerRanOut", "PlayerFeedback");
         }
+        
     }
 }
