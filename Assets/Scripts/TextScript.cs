@@ -97,6 +97,15 @@ public class TextScript : MonoBehaviour
     public AudioSource Clip4;
     public AudioSource Clip4a;
 
+    public AudioSource Clip5;
+    public AudioSource Clip5a;
+
+    public AudioSource Clip6;
+    public AudioSource Clip6a;
+
+    public AudioSource Clip7;
+    public AudioSource Clip7a;
+
     public AudioSource ToPlay;
 
     private float timeLeft = 60.0f;
@@ -335,6 +344,10 @@ public class TextScript : MonoBehaviour
             case 1:
                 TrainingText.text =
                     "In this exercise you will be learning a script for collecting information for a help ticket. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n I'm directing you to the relevant department now \n\n";
+            break;
+            case 2:
+                TrainingText.text =
+                    "In this exercise you will be learning a script for addressing the problem on a help ticket. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Thank you for holding, Lacie. I believe your problem is to do with your internet \n\n 2) (Problem clarified) -> \n I'm going to run through a list of troubleshooting steps with you, is that okay? \n\n 3) *Presumed agreement* -> \n Have you tried turning the device off and back on again? \n\n 4)Was it really that simple? Thanks anyway! -> Not a problem, call us back anytime you need help. \n\n Bear in mind we also handle issues to do with device failure, a common solution is to unplug the usb device and plug it back in. Another common issue is making sure the device is powered on at both the outlet and on the device as power outlets don't always have power switches";                    
                 break;
             case 4:
                 TrainingText.text =
@@ -342,9 +355,21 @@ public class TextScript : MonoBehaviour
                 StoryTracker.Starter();
                 StoryTracker.OutputPrompt("", "(Here is were you'll find the history of what you've said)");
                 break;
-            case 7:
+            case 5:
                 TrainingText.text =
-                    "In this exercise you will be learning a script for collecting information for a help ticket while competing with other players. You will hear a sound when you have moved up and down the leaderboard. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n I'm directing you to the relevant department now \n\n I think I'm ready. How about you?";
+                    "I passed the first test! Can you help me again? This time we are learning a script for addressing the problem on a help ticket? I'll right down your answers on the right so you can remember how things turned out. Let's read it together: \n \n 1) *Phone rings* -> \n Thank you for holding, Lacie, I believe your problem is to do with your internet. \n\n 2) (Problem clarified) -> \n I'm going to run through a list of troubleshooting steps with you, is that okay? \n\n 3) *Presumed agreement* -> \n Have you tried turning the device off and back on again? \n\n 4)Was it really that simple? Thanks anyway! -> Not a problem, call us back anytime you need help. \n\n Bear in mind we also handle issues to do with device failure, a common solution is to unplug the usb device and plug it back in. Another common issue is making sure the device is powered on at both the outlet and on the device as power outlets don't always have power switches /n/n I'm ready. Are you?";
+                StoryTracker.Starter();
+                StoryTracker.OutputPrompt("", "(Here is were you'll find the history of what you've said)");
+                break;
+            case 7:
+            TrainingText.text=
+"In this exercise you will be learning a script for collecting information for a help ticket while competing with other players. You will hear a sound when you have moved up and down the leaderboard. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n I'm directing you to the relevant department now \n\n I think I'm ready. How about you?";
+                break;
+
+            break;
+            case 8:
+                TrainingText.text =
+                    "In this exercise you will be learning a script for addressing the problem on a help ticket. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Thank you for holding, Lacie. I believe your problem is to do with your internet \n\n 2) (Problem clarified) -> \n I'm going to run through a list of troubleshooting steps with you, is that okay? \n\n 3) *Presumed agreement* -> \n Have you tried turning the device off and back on again? \n\n 4)Was it really that simple? Thanks anyway! -> Not a problem, call us back anytime you need help. \n\n Bear in mind we also handle issues to do with device failure, a common solution is to unplug the usb device and plug it back in. Another common issue is making sure the device is powered on at both the outlet and on the device as power outlets don't always have power switches";
                 break;
             default:
                 break;
@@ -391,7 +416,6 @@ public class TextScript : MonoBehaviour
 
     public void ButtonUpdater()
     {
-        //Debug.Log("Text Buttons updated");
         if (Path == 1 | Path == 4 | Path == 7)
         {
             switch (Stage)
@@ -422,6 +446,43 @@ public class TextScript : MonoBehaviour
                         "Someone from the correct department will call you back soon";
                     responseArray[2].response =
                         "I'm transferring you to the correct department, please hold";
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        //Debug.Log("Text Buttons updated");
+        if (Path == 2 | Path == 5 | Path == 8)
+        {
+            switch (Stage)
+            {
+                case (0):
+                    responseArray[0].response = "Is this the chick with the internet issue?";
+                    responseArray[1].response =
+                        "Thanks for holding, what's up?";
+                    responseArray[2].response =
+                        "Thank you for holding, Lacie. I believe your issue is with your internet.";
+                    break;
+                case (1):
+                    responseArray[0].response = "Oh, that's so easy, just google it.";
+                    responseArray[1].response =
+                        "Cool, this is how you fix it, are you ready?";
+                    responseArray[2].response =
+                        "I'm going to run through a list of troubleshooting steps with you, is that okay?";
+                    break;
+                case (2):
+                    responseArray[0].response = "Is the USB cable plugged in?";
+                    responseArray[1].response = "Did you check the power is on at both the outlet and on the device?";
+                    responseArray[2].response = "Have you tried turning the device off and back on again?";
+                    break;
+                case (3):
+                    responseArray[0].response =
+                        "I don't know why you didn't just google it.";
+                    responseArray[1].response =
+                        "Happy to help, have a nice day.";
+                    responseArray[2].response =
+                        "Not a problem, call us back anytime you need help.";
                     break;
                 default:
                     break;
@@ -478,8 +539,6 @@ public class TextScript : MonoBehaviour
         public void Stager()
     {
     situation = "staging situation";
-        
-        //Debug.Log("Text Staged, Path is " + Path);
         if (Path == 1 || Path == 7 || Path == 4)
         {
             switch (Stage, Story)
@@ -525,6 +584,52 @@ public class TextScript : MonoBehaviour
             caller = "Lacie: ";
             
         }
+        //Debug.Log("Text Staged, Path is " + Path);
+        if (Path == 2 || Path == 5 || Path == 8)
+        {
+            switch (Stage, Story)
+            {
+                case (0, false):
+                    SameTest = true;
+                    situation = "(You've been routed a call with a Lacie Green who is having issues with her internet. What do you do when you pick it up? )";
+                    ToPlay = Clip1;
+                    Debug.Log(Clip1.name);
+                    break;
+                case (1, false):
+                    situation = "It's my internet, it's running so slow!";
+                    ToPlay = Clip5;
+                    break;
+                case (1, true):
+                    situation =
+                        "That's me! It's running so slow, is this normal?";
+                    ToPlay = Clip5a;
+                    break;
+                case (2, false):
+                    situation =
+                        "I'm ready";
+                    ToPlay = Clip6;
+                    break;
+                case (2, true):
+                    situation =
+                        "Of course, thank you for your help.";
+                    ToPlay = Clip6a;
+                    break;
+                case (3, false):
+                    situation = "I did, but I've got funny outlets, I'll try switching them off and on again.";
+                    ToPlay = Clip7;
+                    SameTest = false;
+                    break;
+                case (3, true):
+                    situation = "Was it really that simple? Thanks anyway!";
+                    ToPlay = Clip7a;
+                    SameTest = false;
+                    break;
+                default:
+                    break;
+            }
+            caller = "Lacie: ";
+            
+        }
         Debug.Log("Stage "+Stage+", Story "+Story);
         Situation.text = situation;
         if (Test == 0)
@@ -545,6 +650,7 @@ public class TextScript : MonoBehaviour
     public void AnswerOutput(int Answer)
     {
         //Debug.Log("Text Answered");
+        Debug.Log(Path);
         Feedback.text = "Option " + (CorrectAnswer + 1) + " was correct";
         timeLeft = 0.0f;
         timerIsRunning = false;
@@ -552,6 +658,7 @@ public class TextScript : MonoBehaviour
         Option1.interactable = false;
         Option2.interactable = false;
         Option3.interactable = false;
+        Debug.Log(Answer+" answered");
         if (Answer == CorrectAnswer)
         {
             if (Path <= 3)
@@ -641,7 +748,8 @@ public class TextScript : MonoBehaviour
             else if (Path >= 4 && Path <= 6)
             {
                 // Narrative Changes
-                StoryTracker.OutputAnswer(responseArray[SemicorrectAnswer].response, -1);
+                StoryTracker.OutputAnswer(responseArray[IncorrectAnswer].response, -1);
+                Debug.Log("Story failed");
                 situation = "retry";
                 int rand = Random.Range(0,2);
                 switch (rand)
@@ -661,15 +769,17 @@ public class TextScript : MonoBehaviour
                     default:
                     break;
                 }
-                if (Test > 0){PlayAudio();}
+                
                 Situation.text=situation;
-                                LogScript
+                    
+                StoryTracker.OutputPrompt(caller, situation);
+                SameTest=true;
+                Stage--;
+                if (Test > 0){PlayAudio();}
+                            LogScript
                     .WriteNewLogEntry("Story",
                     "Incorrect",
                     StoryTracker.score.ToString());
-                StoryTracker.OutputPrompt(caller, situation);
-                SameTest=true;
-                Stage --;
 
             }
             else
