@@ -106,6 +106,15 @@ public class TextScript : MonoBehaviour
     public AudioSource Clip7;
     public AudioSource Clip7a;
 
+    public AudioSource Clip8;
+    public AudioSource Clip8a;
+
+    public AudioSource Clip9;
+    public AudioSource Clip9a;
+
+    public AudioSource Clip10;
+    public AudioSource Clip10a;
+
     public AudioSource ToPlay;
 
     private float timeLeft = 60.0f;
@@ -349,27 +358,41 @@ public class TextScript : MonoBehaviour
                 TrainingText.text =
                     "In this exercise you will be learning a script for addressing the problem on a help ticket. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Thank you for holding, Lacie. I believe your problem is to do with your internet \n\n 2) (Problem clarified) -> \n I'm going to run through a list of troubleshooting steps with you, is that okay? \n\n 3) *Presumed agreement* -> \n Have you tried turning the device off and back on again? \n\n 4)Was it really that simple? Thanks anyway! -> Not a problem, call us back anytime you need help. \n\n Bear in mind we also handle issues to do with device failure, a common solution is to unplug the usb device and plug it back in. Another common issue is making sure the device is powered on at both the outlet and on the device as power outlets don't always have power switches";                    
                 break;
+            case 3:
+                TrainingText.text =
+                    "In this exercise you will be learning a script for authenticating a user who needs access into their account. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Thank you for holding, (name). I believe your problem is to do with your account? Do you mind if I ask you a few questions to make sure I have the right person \n\n 2) *Persumed agreement* -> \n (Check their details one at a time, according to example accounts below) \n\n 3) *Presumed validation* -> \n Thank you for letting me check! How can I help? \n\n 4) My identity just needed to be verified, I think. I'll call back if I have any other issues -> Great, thank you for your call! \n\n Example Accounts: \n Name: Amy Lee - Birthdate: 19/6/1996 - Suburb: Box Hill - Driver's License number: 194027495 \nName: Jerry Khan - Birthdate: 24/9/1985 - Suburb: Lalor - Driver's License number: 659731685 \nName: Tony Banks - Birthdate: 14/9/2001 - Suburb: Ferngully - Driver's License number: 684231895";                    
+                break;
             case 4:
                 TrainingText.text =
-                    "Hi! Can you help me learn a script for collecting information for a help ticket? I'll right down your answers on the right so you can remember how things turned out. Let's read it together: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n I'm directing you to the relevant department now \n\n";
+                    "Hi! Can you help me learn a script for collecting information for a help ticket? I'll write down your answers on the right so you can remember how things turned out. Let's read it together: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n I'm directing you to the relevant department now \n\n";
                 StoryTracker.Starter();
                 StoryTracker.OutputPrompt("", "(Here is were you'll find the history of what you've said)");
                 break;
             case 5:
                 TrainingText.text =
-                    "I passed the first test! Can you help me again? This time we are learning a script for addressing the problem on a help ticket? I'll right down your answers on the right so you can remember how things turned out. Let's read it together: \n \n 1) *Phone rings* -> \n Thank you for holding, Lacie, I believe your problem is to do with your internet. \n\n 2) (Problem clarified) -> \n I'm going to run through a list of troubleshooting steps with you, is that okay? \n\n 3) *Presumed agreement* -> \n Have you tried turning the device off and back on again? \n\n 4)Was it really that simple? Thanks anyway! -> Not a problem, call us back anytime you need help. \n\n Bear in mind we also handle issues to do with device failure, a common solution is to unplug the usb device and plug it back in. Another common issue is making sure the device is powered on at both the outlet and on the device as power outlets don't always have power switches /n/n I'm ready. Are you?";
+                    "I passed the first test! Can you help me again? This time we are learning a script for addressing the problem on a help ticket? I'll write down your answers on the right so you can remember how things turned out. Let's read it together: \n \n 1) *Phone rings* -> \n Thank you for holding, Lacie, I believe your problem is to do with your internet. \n\n 2) (Problem clarified) -> \n I'm going to run through a list of troubleshooting steps with you, is that okay? \n\n 3) *Presumed agreement* -> \n Have you tried turning the device off and back on again? \n\n 4)Was it really that simple? Thanks anyway! -> Not a problem, call us back anytime you need help. \n\n Bear in mind we also handle issues to do with device failure, a common solution is to unplug the usb device and plug it back in. Another common issue is making sure the device is powered on at both the outlet and on the device as power outlets don't always have power switches \n\n I'm ready. Are you?";
                 StoryTracker.Starter();
                 StoryTracker.OutputPrompt("", "(Here is were you'll find the history of what you've said)");
                 break;
-            case 7:
-            TrainingText.text=
-"In this exercise you will be learning a script for collecting information for a help ticket while competing with other players. You will hear a sound when you have moved up and down the leaderboard. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n I'm directing you to the relevant department now \n\n I think I'm ready. How about you?";
+            case 6:
+                TrainingText.text =
+                    "I'm almost hired, I can feel it! Can you help me one last time? This time we are learning a script for authenticating a user who needs access into their account. I'll write down your answers on the right so you can remember how things turned out. Let's read it together: \n 1) *Phone rings* -> \n Thank you for holding, (name). I believe your problem is to do with your account? Do you mind if I ask you a few questions to make sure I have the right person \n\n 2) *Persumed agreement* -> \n (Check their details one at a time, according to example accounts below) \n\n 3) *Presumed validation* -> \n Thank you for letting me check! How can I help? \n\n 4) My identity just needed to be verified, I think. I'll call back if I have any other issues -> Great, thank you for your call! \n\n Example Accounts: \nName: Amy Lee - Birthdate: 19/6/1996 - Suburb: Box Hill - Driver's License number: 194027495 \nName: Jerry Khan - Birthdate: 24/9/1985 - Suburb: Lalor - Driver's License number: 659731685 \nName: Tony Banks - Birthdate: 14/9/2001 - Suburb: Ferngully - Driver's License number: 684231895 \n\n I'm ready. Are you?";
+                StoryTracker.Starter();
+                StoryTracker.OutputPrompt("", "(Here is were you'll find the history of what you've said)");
                 break;
 
-            break;
+            case 7:
+            TrainingText.text=
+                    "In this exercise you will be learning a script for collecting information for a help ticket while competing with other players. You will hear a sound when you have moved up and down the leaderboard. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Hello, welcome to Help Desk. My name is (your name). How can I help you today? \n\n 2) I'm having issues with my (problem) -> \n I understand your frustration. Can I have your name and number? \n\n 3) *Listen for and record details* -> \n I'm directing you to the relevant department now";
+                break;
             case 8:
                 TrainingText.text =
-                    "In this exercise you will be learning a script for addressing the problem on a help ticket. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Thank you for holding, Lacie. I believe your problem is to do with your internet \n\n 2) (Problem clarified) -> \n I'm going to run through a list of troubleshooting steps with you, is that okay? \n\n 3) *Presumed agreement* -> \n Have you tried turning the device off and back on again? \n\n 4)Was it really that simple? Thanks anyway! -> Not a problem, call us back anytime you need help. \n\n Bear in mind we also handle issues to do with device failure, a common solution is to unplug the usb device and plug it back in. Another common issue is making sure the device is powered on at both the outlet and on the device as power outlets don't always have power switches";
+                    "In this exercise you will be learning a script for addressing the problem on a help ticket while competing with other players. You will hear a sound when you have moved up and down the leaderboard. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Thank you for holding, Lacie. I believe your problem is to do with your internet \n\n 2) (Problem clarified) -> \n I'm going to run through a list of troubleshooting steps with you, is that okay? \n\n 3) *Presumed agreement* -> \n Have you tried turning the device off and back on again? \n\n 4)Was it really that simple? Thanks anyway! -> Not a problem, call us back anytime you need help. \n\n Bear in mind we also handle issues to do with device failure, a common solution is to unplug the usb device and plug it back in. Another common issue is making sure the device is powered on at both the outlet and on the device as power outlets don't always have power switches";
+                break;
+
+            case 9:
+                TrainingText.text =
+                    "In this exercise you will be learning a script for authenticating a user who needs access into their account while competing with other players. You will hear a sound when you have moved up and down the leaderboard. Please make a note of the following interation: \n \n 1) *Phone rings* -> \n Thank you for holding, (name). I believe your problem is to do with your account? Do you mind if I ask you a few questions to make sure I have the right person \n\n 2) *Persumed agreement* -> \n (Check their details one at a time, according to example accounts below) \n\n 3) *Presumed validation* -> \n Thank you for letting me check! How can I help? \n\n 4) My identity just needed to be verified, I think. I'll call back if I have any other issues -> Great, thank you for your call! \n\n Example Accounts: Name: Amy Lee - Birthdate: 19/6/1996 - Suburb: Box Hill - Driver's License number: 194027495 \nName: Jerry Khan - Birthdate: 24/9/1985 - Suburb: Lalor - Driver's License number: 659731685 \nName: Tony Banks - Birthdate: 14/9/2001 - Suburb: Ferngully - Driver's License number: 684231895";                    
                 break;
             default:
                 break;
@@ -483,6 +506,40 @@ public class TextScript : MonoBehaviour
                         "Happy to help, have a nice day.";
                     responseArray[2].response =
                         "Not a problem, call us back anytime you need help.";
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (Path == 3 | Path == 6 | Path == 9)
+        {
+            switch (Stage)
+            {
+                case (0):
+                    responseArray[0].response = "What's your account issue?";
+                    responseArray[1].response =
+                        "Thanks for holding, how can I help?";
+                    responseArray[2].response =
+                        "Thank you for holding, Amy. May I ask you a few questions to make sure I have the right person?";
+                    break;
+                case (1):
+                    responseArray[0].response = "Name, birthdate, suburb, driver's license.";
+                    responseArray[1].response =
+                        "I willl need the following in this order: Your name, birthdate, suburb, driver's license";
+                    responseArray[2].response =
+                        "Can you please confirm your name, birthdate, suburb, driver's license for me?";
+                    break;
+                case (2):
+                    responseArray[0].response = "Thanks for your cooperation, I'll go unlock it now.";
+                    responseArray[1].response =
+                        "This does look right according to our records";
+                    responseArray[2].response =
+                        "That doesn't look right. Are you sure about the information you provided?";
+                    break;
+                case (3):
+                    responseArray[0].response = "Thank you for letting me check! How can I help?";
+                    responseArray[1].response = "Ma'am, I don't think you're accessing your account";
+                    responseArray[2].response = "Thank you for your call but I can't authenticate you at this time.";
                     break;
                 default:
                     break;
@@ -628,6 +685,50 @@ public class TextScript : MonoBehaviour
                     break;
             }
             caller = "Lacie: ";
+            
+        }
+        if (Path == 3 || Path == 6 || Path == 9)
+        {
+            switch (Stage, Story)
+            {
+                case (0, false):
+                    SameTest = true;
+                    situation = "(You've been routed a call with a Amy Bell. The only Amy Bell who has an account with us has shared the following information with us: Name: Amy Bell \n Birthdate: 20/3/1992 \n Suburb: Malvern \n Driver's License number: 194048206. What do you do when you pick it up? )";
+                    ToPlay = Clip1;
+                    Debug.Log(Clip1.name);
+                    break;
+                case (1, false):
+                    situation = "Yeah, what do you need?";
+                    ToPlay = Clip8;
+                    break;
+                case (1, true):
+                    situation =
+                        "Yes! How can I help?";
+                    ToPlay = Clip8a;
+                    break;
+                case (2, false):
+                    situation =
+                        "Amy Bell, 20/3/92, Living in Malvern, and my driver's license number is 194047206";
+                    ToPlay = Clip9;
+                    break;
+                case (2, true):
+                    situation = "Of course, my name is Amy Bell, My birthday is 20/3/1992, I'm living in Malvern, and my driver's license number is 194047206";
+                    ToPlay = Clip9a;
+                    break;
+                case (3, false):
+                    situation = "Oh, um... I must have put in the wrong information the first time. Can you make an exception?";
+                    ToPlay = Clip10;
+                    SameTest = false;
+                    break;
+                case (3, true):
+                    situation = "This is really bad service!";
+                    ToPlay = Clip10a;
+                    SameTest = false;
+                    break;
+                default:
+                    break;
+            }
+            caller = "Amy: ";
             
         }
         Debug.Log("Stage "+Stage+", Story "+Story);
