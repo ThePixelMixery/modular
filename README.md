@@ -3,5 +3,5 @@ Load in Unity, build in WebGL, modify index.html to include instance modificatio
 
 Additional files:
 - The JSON file in the top of the repository includes the results captured during research.
-- The scripts include the results of live testing 
+- The scripts.docx file include the results of live testing 
 - Gamification.bib is the reference list for this research study. 
