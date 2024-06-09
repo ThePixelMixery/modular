@@ -9,7 +9,7 @@
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width=1280 height=720></canvas>
+      <canvas id="unity-canvas" width=1920 height=1080></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
@@ -23,26 +23,6 @@
         <div id="unity-build-title">ludology</div>
       </div>
     </div>
-    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-database.js"></script>
-    <script>
-      // Your web app's Firebase configuration
-      var firebaseConfig = {
-        apiKey: "AIzaSyBYrMwh41WbuLpSGatls52mdO_m4t6Ca8w",
-        authDomain: "gamification-test.firebaseapp.com",
-        databaseURL: "https://gamification-research-default-rtdb.firebaseio.com",
-        projectId: "gamification-research",
-        storageBucket: "gamification-research.appspot.com",
-        messagingSenderId: "397871464714",
-        //Gamification
-        appId: "1:397871464714:web:44c798f4a73f00cd513af3",
-        //Game Tester
-  //      appId: "1:397871464714:web:44c798f4a73f00cd513af3",
-        measurementId: "G-MH361MPHHV"
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-    </script>
     <script>
       var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");
@@ -115,8 +95,8 @@
       } else {
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 
-        canvas.style.width = "1280px";
-        canvas.style.height = "720px";
+        canvas.style.width = "1920px";
+        canvas.style.height = "1080px";
       }
 
       loadingBar.style.display = "block";
@@ -127,7 +107,6 @@
         createUnityInstance(canvas, config, (progress) => {
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
-          this.unityInstance = unityInstance;
           loadingBar.style.display = "none";
           fullscreenButton.onclick = () => {
             unityInstance.SetFullscreen(1);
